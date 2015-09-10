@@ -2,7 +2,7 @@
 C# client library for ownCloud
 ==============================
 
-This project is inspired by the `Python client library for ownCloud homepage <https://github.com/owncloud/pyocclient>`_ .
+This project is inspired by the [Python client library for ownCloud](https://github.com/owncloud/pyocclient) .
 
 Project status
 ==============
