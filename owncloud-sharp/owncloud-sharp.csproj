@@ -34,8 +34,4 @@
     <Compile Include="OwnCloud.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <ItemGroup>
-    <None Include="LICENSE" />
-    <None Include="README.md" />
-  </ItemGroup>
 </Project>
