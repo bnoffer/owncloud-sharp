@@ -16,11 +16,15 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
-//using System.Windows.Forms;
+using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace WebDav
 {
@@ -29,20 +33,8 @@ namespace WebDav
     /// </summary>
     public class WebDavManager
     {
-        #region EVENTS
-        /// <summary>
-        /// Event that fires when a download proceed.
-        /// </summary>
-        public event EventHandler<ProgressEventArgs> DownloadProgressEvent;
-        /// <summary>
-        /// Event that fires when an upload proceed.
-        /// </summary>
-        public event EventHandler<ProgressEventArgs> UploadProgressEvent;
-        #endregion
-
         #region PRIVATE PROPERTIES
-        private readonly ThreadSafeDictionary<Uri, string> _listDownloads = new ThreadSafeDictionary<Uri, string>();
-        private readonly ThreadSafeDictionary<Uri, string> _listUploads = new ThreadSafeDictionary<Uri, string>();
+		private WebClient client;
         #endregion
 
         #region CONSTRUCTORS
@@ -50,7 +42,9 @@ namespace WebDav
         /// Initializes a new instance of the <see cref="WebDavManager"/> class.
         /// </summary>
         public WebDavManager()
-        {}
+        {
+			client = new WebClient ();
+		}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebDavManager"/> class.
@@ -58,6 +52,7 @@ namespace WebDav
         /// <param name="credential">The credential.</param>
         public WebDavManager(WebDavCredential credential)
         {
+			client = new WebClient ();
             Credential = credential;
         }
         #endregion
@@ -91,7 +86,7 @@ namespace WebDav
         /// </summary>
         /// <param name="url">The Url.</param>
         public void Delete(string url)
-        {
+		{
         	Delete(new Uri(url));
         }
 
@@ -101,13 +96,13 @@ namespace WebDav
         /// <param name="uri">The Uri.</param>
         public void Delete(Uri uri)
         {
-        	HttpWebRequest webRequest = GetBaseRequest(uri, RequestMethod.Delete);
-            HttpWebResponse webResponse;
+			HttpRequestMessage webRequest = GetBaseRequest(uri, WebMethod.Delete);
+            HttpResponseMessage webResponse;
 
 
         	try
             {
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
+                webResponse = client.Execute(webRequest);
             }
             catch (Exception e)
             {
@@ -120,7 +115,7 @@ namespace WebDav
             if (webResponse == null)
             {
                 // TODO: Errorhandling
-                Debug.WriteLine("Empty WebResponse @'" + MethodBase.GetCurrentMethod().Name + "'" + Environment.NewLine + uri);
+				Debug.WriteLine("Empty WebResponse @'Delete'" + Environment.NewLine + uri);
 
                 return;
             }
@@ -143,12 +138,12 @@ namespace WebDav
         /// <returns></returns>
         public bool CreateDirectory(Uri uri)
         {
-        	HttpWebRequest webRequest = GetBaseRequest(uri, RequestMethod.MkCol);
-            HttpWebResponse webResponse;
+        	HttpRequestMessage webRequest = GetBaseRequest(uri, WebMethod.MkCol);
+            HttpResponseMessage webResponse;
 
 			try
             {
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
+                webResponse = client.Execute(webRequest);
             }
             catch (Exception e)
             {
@@ -161,7 +156,7 @@ namespace WebDav
             if (webResponse == null)
             {
                 // TODO: Errorhandling
-                Debug.WriteLine("Empty WebResponse @'" + MethodBase.GetCurrentMethod().Name + "'" + Environment.NewLine + uri);
+				Debug.WriteLine("Empty WebResponse @'CreateDirectory'" + Environment.NewLine + uri);
 
                 return false;
             }
@@ -189,8 +184,8 @@ namespace WebDav
         /// <returns></returns>
         public bool Copy(Uri sourceUri, Uri targetUri)
         {
-        	HttpWebRequest webRequest = GetBaseRequest(sourceUri, RequestMethod.Copy);
-            HttpWebResponse webResponse;
+        	HttpRequestMessage webRequest = GetBaseRequest(sourceUri, WebMethod.Copy);
+            HttpResponseMessage webResponse;
 
             webRequest.Headers.Add("Destination", targetUri.ToString());
         	
@@ -199,7 +194,7 @@ namespace WebDav
         	
             try
             {
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
+                webResponse = client.Execute(webRequest);
             }
             catch (Exception e)
             {
@@ -212,7 +207,7 @@ namespace WebDav
             if (webResponse == null)
             {
                 // TODO: Errorhandling
-                Debug.WriteLine("Empty WebResponse @'" + MethodBase.GetCurrentMethod().Name + "'" + Environment.NewLine + sourceUri);
+				Debug.WriteLine("Empty WebResponse @'Copy'" + Environment.NewLine + sourceUri);
 
                 return false;
             }
@@ -239,8 +234,8 @@ namespace WebDav
         /// <returns></returns>
         public bool Move(Uri sourceUri, Uri targetUri)
         {
-        	HttpWebRequest webRequest = GetBaseRequest(sourceUri, RequestMethod.Move);
-            HttpWebResponse webResponse;
+        	HttpRequestMessage webRequest = GetBaseRequest(sourceUri, WebMethod.Move);
+            HttpResponseMessage webResponse;
 
         	webRequest.Headers.Add("Destination", targetUri.ToString());
         	
@@ -250,7 +245,7 @@ namespace WebDav
         	
 			try
             {
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
+                webResponse = client.Execute(webRequest);
             }
             catch (Exception e)
             {
@@ -263,7 +258,7 @@ namespace WebDav
             if (webResponse == null)
             {
                 // TODO: Errorhandling
-                Debug.WriteLine("Empty WebResponse @'" + MethodBase.GetCurrentMethod().Name + "'" + Environment.NewLine + sourceUri);
+				Debug.WriteLine("Empty WebResponse @'Move'" + Environment.NewLine + sourceUri);
 
                 return false;
             }
@@ -288,12 +283,12 @@ namespace WebDav
         /// <returns></returns>
         public bool Exists(Uri uri)
         {
-        	HttpWebRequest webRequest = GetBaseRequest(uri, RequestMethod.Head);
-            HttpWebResponse webResponse;
+        	HttpRequestMessage webRequest = GetBaseRequest(uri, WebMethod.Head);
+            HttpResponseMessage webResponse;
 
 			try
             {
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
+                webResponse = client.Execute(webRequest);
             }
             catch (Exception e)
             {
@@ -306,7 +301,7 @@ namespace WebDav
             if (webResponse == null)
             {
                 // TODO: Errorhandling
-                Debug.WriteLine("Empty WebResponse @'" + MethodBase.GetCurrentMethod().Name + "'" + Environment.NewLine + uri);
+				Debug.WriteLine("Empty WebResponse @'Exists'" + Environment.NewLine + uri);
 
                 return false;
             }
@@ -333,17 +328,16 @@ namespace WebDav
         {
         	List<WebDavResource> listResource;
         	
-        	HttpWebRequest webRequest = GetBaseRequest(uri, RequestMethod.PropFind);
-            HttpWebResponse webResponse;
+        	HttpRequestMessage webRequest = GetBaseRequest(uri, WebMethod.PropFind);
+            HttpResponseMessage webResponse;
         	
         	// Retrieve only the requested folder
         	webRequest.Headers.Add("Depth", "1");
         	
 			try
             {
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
-
-                listResource = ExtractResources(webResponse.GetResponseStream());
+                webResponse = client.Execute(webRequest);
+				listResource = ExtractResources(webResponse.Content.ReadAsStreamAsync().Result, uri.AbsolutePath);
             }
             catch (Exception e)
             {
@@ -356,7 +350,7 @@ namespace WebDav
             if (webResponse == null)
             {
                 // TODO: Errorhandling
-                Debug.WriteLine("Empty WebResponse @'" + MethodBase.GetCurrentMethod().Name + "'" + Environment.NewLine + uri);
+				Debug.WriteLine("Empty WebResponse @'List'" + Environment.NewLine + uri);
 
                 return new List<WebDavResource>();
             }
@@ -368,336 +362,153 @@ namespace WebDav
         /// Uploads the file.
         /// </summary>
         /// <param name="url">The Url.</param>
-        /// <param name="localFile">The local file.</param>
-        public int UploadFile(string url, string localFile)
+		/// <param name="localStream">The local file.</param>
+		/// <param name="contentType">The files content type.</param>
+		/// <returns>true on success, false on error</returns>
+		public bool UploadFile(string url, Stream localStream, string contentType)
         {
-            return UploadFile(new Uri(url), localFile);
+			return UploadFile(new Uri(url), localStream, contentType);
         }
 
         /// <summary>
         /// Uploads the file.
         /// </summary>
         /// <param name="uri">The Uri.</param>
-        /// <param name="localFile">The local file.</param>
-        public int UploadFile(Uri uri, string localFile)
+		/// <param name="localStream">The local file.</param>
+		/// <param name="contentType">The files content type.</param>
+		/// <returns>true on success, false on error</returns>
+		public bool UploadFile(Uri uri, Stream localStream, string contentType)
         {
-            HttpWebRequest webRequest = GetBaseRequest(uri, RequestMethod.Put);
-            HttpWebResponse webResponse;
-
-            Stream remoteStream = null;
-            FileStream localStream = null;
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            int totalSent = 0;
+			HttpRequestMessage webRequest = GetBaseRequest(uri, WebMethod.Put);
+            HttpResponseMessage webResponse;
             
-            KeyValuePair<Uri, string> keyValuePair = new KeyValuePair<Uri, string>(uri, localFile);
-            _listUploads.Add(keyValuePair);
 
             try
-            {
-                // Read the local file
-                FileInfo fileInfo = new FileInfo(localFile);
-                localStream = fileInfo.OpenRead();
-
-                // Disable write buffer to avoid OutOfMemory situations with large files
-                webRequest.AllowWriteStreamBuffering = false;
-
-                // Have to set the ContentLength when AllowWriteStreamBuffering is disabled
-                webRequest.ContentLength = localStream.Length;
-
-                // Get the request stream
-                remoteStream = webRequest.GetRequestStream();
+			{
+				StreamContent content = new StreamContent(localStream);
+				content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+				content.Headers.ContentLength = localStream.Length;
+				webRequest.Content = content;
+                webResponse = client.Execute(webRequest);
                 
-                bool bRun;
-
-                // Loop through stream until no bytes are there anymore
-                do
-                {
-                	bRun = _listUploads.Contains(keyValuePair);
-                	
-                    // Read into the buffer from the remote stream
-                    bytesRead = localStream.Read(buffer, 0, buffer.Length);
-
-                    // Write into the file stream
-                    remoteStream.Write(buffer, 0, bytesRead);
-                    
-                    totalSent += bytesRead;
-                    
-                    if (UploadProgressEvent != null)
-                    	InvokeProgressEvent(UploadProgressEvent, new ProgressEventArgs(bytesRead <= 0, fileInfo.FullName, uri, totalSent, fileInfo.Length));
-                    
-                } while (bytesRead > 0 && bRun);
-
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
-                
-                // TODO: Extract possible status values from the response
+				Debug.WriteLine(webResponse.StatusCode.ToString());
             }
             catch (Exception e)
             {
                 // TODO: Errorhandling
                 Debug.WriteLine(e.Message);
                 
-                totalSent = -1;
-            }
-            finally
-            {
-                if (remoteStream != null)
-                {
-                    remoteStream.Close();
-                    remoteStream.Dispose();
-                }
-
-                if (localStream != null)
-                {
-                    localStream.Close();
-                    localStream.Dispose();
-                }
-
-                // Clear item of the upload list
-                if (_listUploads.Contains(keyValuePair))
-                	_listUploads.Remove(keyValuePair);
+				return false;
             }
             
-            return totalSent;
-        }
-        
-        /// <summary>
-        /// Uploads the file asynchronous.
-        /// </summary>
-        /// <param name="uri">The Uri.</param>
-        /// <param name="localFile">The local file.</param>
-        public UploadAsyncHandler UploadFileAsync(Uri uri, string localFile)
-        {
-        	UploadAsyncHandler handler = new UploadAsyncHandler(this, uri, localFile);
-        	
-        	ThreadPool.QueueUserWorkItem(delegate { UploadFile(uri, localFile); });
-        	
-        	return handler;
+            return true;
         }
 
         /// <summary>
         /// Downloads the file.
         /// </summary>
         /// <param name="url">The Url.</param>
-        /// <param name="localFile">The local file.</param>
-        public int DownloadFile(string url, string localFile)
+		/// <returns>File contents.</returns>
+        public Stream DownloadFile(string url)
         {
-            return DownloadFile(new Uri(url), localFile);
+            return DownloadFile(new Uri(url));
         }
 
         /// <summary>
         /// Downloads the file.
         /// </summary>
         /// <param name="uri">The Uri.</param>
-        /// <param name="localFile">The local file.</param>
-        public int DownloadFile(Uri uri, string localFile)
+		/// <returns>File contents.</returns>
+        public Stream DownloadFile(Uri uri)
         {
-            HttpWebRequest webRequest = GetBaseRequest(uri, RequestMethod.Get);
-            HttpWebResponse webResponse;
+            HttpRequestMessage webRequest = GetBaseRequest(uri, WebMethod.Get);
+            HttpResponseMessage webResponse;
+
+			MemoryStream remoteStream = new MemoryStream();
 
             try
             {
-                webResponse = (HttpWebResponse)webRequest.GetResponse();
+                webResponse = client.Execute(webRequest);
             }
             catch (Exception e)
             {
                 // TODO: Errorhandling
                 Debug.WriteLine(e.Message);
 
-                return -1;
+				return null;
             }
 
             if (webResponse == null)
             {
                 // TODO: Errorhandling
-                Debug.WriteLine("Empty WebResponse " + Environment.NewLine + uri + Environment.NewLine + localFile);
+                Debug.WriteLine("Empty WebResponse " + Environment.NewLine + uri + Environment.NewLine);
 
-                return -1;
+				return null;
             }
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            int totalRead = 0;
-
-            Stream remoteStream = null;
-            Stream localStream = null;
-
-            KeyValuePair<Uri, string> keyValuePair = new KeyValuePair<Uri, string>(uri, localFile);
-            _listDownloads.Add(keyValuePair);
 
             try
             {
                 // Get the stream object of the response
-                remoteStream = webResponse.GetResponseStream();
-
-                // Create the local file
-                FileInfo fileInfo = new FileInfo(localFile);
-                localStream = fileInfo.Create();
-
-                bool bRun;
-
-                // Loop through stream until no bytes are there anymore
-                do
-                {
-                    bRun = _listDownloads.Contains(keyValuePair);
-
-                    // Read into the buffer from the remote stream
-                    bytesRead = remoteStream.Read(buffer, 0, buffer.Length);
-
-                    // Write into the file stream
-                    localStream.Write(buffer, 0, bytesRead);
-                    
-                    totalRead += bytesRead;
-
-                    if (DownloadProgressEvent != null)
-                        InvokeProgressEvent(DownloadProgressEvent, new ProgressEventArgs(bytesRead <= 0, fileInfo.FullName, webResponse.ResponseUri, totalRead, webResponse.ContentLength));
-                } while (bytesRead > 0 && bRun);
+				webResponse.Content.ReadAsStreamAsync().Result.CopyTo(remoteStream);
             }
             catch (Exception e)
             {
                 // TODO: Errorhandling
                 Debug.WriteLine(e.Message);
                 
-                totalRead = -1;
-            }
-            finally
-            {
-                // Close and Dispose of all created objects
-                if (webResponse != null)
-                    webResponse.Close();
-
-                if (remoteStream != null)
-                {
-                    remoteStream.Close();
-                    remoteStream.Dispose();
-                }
-
-                if (localStream != null)
-                {
-                    localStream.Close();
-                    localStream.Dispose();
-                }
-
-                // Clear item of the download list
-                if (_listDownloads.Contains(keyValuePair))
-                    _listDownloads.Remove(keyValuePair);
+				return null;
             }
             
-            return totalRead;
-        }
-
-		/// <summary>
-        /// Downloads the file asynchronous.
-        /// </summary>
-        /// <param name="uri">The Uri.</param>
-        /// <param name="localFile">The local file.</param>
-        public DownloadAsyncHandler DownloadFileAsync(Uri uri, string localFile)
-        {
-            DownloadAsyncHandler handler = new DownloadAsyncHandler(this, uri, localFile);
-
-            ThreadPool.QueueUserWorkItem(delegate { DownloadFile(uri, localFile); });
-
-            return handler;
+			return remoteStream;
         }
         #endregion
 
         #region PRIVATE METHODS
-        internal void AbortDownload(Uri remoteUri, string localFile)
+		private HttpRequestMessage GetBaseRequest(Uri uri, HttpMethod method)
         {
-            KeyValuePair<Uri, string> pair = new KeyValuePair<Uri, string>(remoteUri, localFile);
-
-            if (_listDownloads.Contains(pair))
-                _listDownloads.Remove(pair);
-        }
-
-        internal void AbortUpload(Uri remoteUri, string localFile)
-        {
-        	KeyValuePair<Uri, string> pair = new KeyValuePair<Uri, string>(remoteUri, localFile);
-        	
-        	if (_listUploads.Contains(pair))
-        		_listUploads.Remove(pair);
-        }
-
-        private void InvokeProgressEvent(EventHandler<ProgressEventArgs> progressEventHandler, ProgressEventArgs args)
-        {
-            if (DownloadProgressEvent == null)
-                return;
-
-            foreach (Delegate handler in progressEventHandler.GetInvocationList())
-            {
-                /*if (handler.Target is Control)
-                {
-                    Control target = handler.Target as Control;
-
-                    if (target.IsHandleCreated)
-                        target.BeginInvoke(handler, this, args);
-                }
-                else*/ 
-				if (handler.Target is ISynchronizeInvoke)
-                {
-                    ISynchronizeInvoke target = handler.Target as ISynchronizeInvoke;
-                    target.BeginInvoke(handler, new object[] { this, args });
-                }
-                else
-                    handler.DynamicInvoke(this, args);
-            } 
-        }
-
-        private HttpWebRequest GetBaseRequest(Uri uri, RequestMethod method)
-        {
-            HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(uri);
+			HttpRequestMessage webRequest = new HttpRequestMessage (method, uri);
 
             // Set the credentials if available
-            if (Credential != null)
+			if ((Credential != null) && (client.Credentials == null))
             {
-                CredentialCache credentialCache = new CredentialCache {{uri, Credential.AuthenticationType.ToString(), Credential}};
-
-                webRequest.Credentials = credentialCache;
+				client.Credentials = Credential;
             }
             
             // Set the proxy if available
             if (Proxy != null)
             {
-                webRequest.Proxy = Proxy;
+                client.Proxy = Proxy;
             }
 
             // Set default headers
-            webRequest.Headers.Set("Pragma", "no-cache");
+            webRequest.Headers.Add("Pragma", "no-cache");
 
-            // Set the request timeout
-            if (Timeout < 1)
-                Timeout = 30000; // At least 30 Seconds
+			// Set the request timeout
+			if (Timeout < 1)
+				Timeout = 30000; // At least 30 Seconds
 
-            webRequest.Timeout = Timeout;
+			client.Timeout = new TimeSpan (0, 0, 0, 0, Timeout);
 
             // TODO: Check if PreAuthenticate is necessary
             // Set PreAuthenticate to assimilate authentication from the plain HEAD request
             //_WebRequest.PreAuthenticate = true;
 
-            // Set the request method
-            webRequest.Method = method.ToString().ToUpper(CultureInfo.InvariantCulture);
-
             return webRequest;
         }
 
-        private static List<WebDavResource> ExtractResources(Stream strm)
+		private static List<WebDavResource> ExtractResources(Stream strm, string rootpath)
         {
             List<WebDavResource> webDavResources = new List<WebDavResource>();
 
             try
             {
-                XmlReader xread = XmlReader.Create(strm);
-                XmlDocument xdoc = new XmlDocument();
+				TextReader treader = new StreamReader (strm);
+				string xml = treader.ReadToEnd ();
+				treader.Dispose ();
 
-                XmlNamespaceManager xman = new XmlNamespaceManager(xread.NameTable);
-                xman.AddNamespace("D", "DAV:");
+				XDocument xdoc = XDocument.Parse(xml);
 
-                xdoc.Load(xread);
-
-                XmlNodeList xlist = xdoc.SelectNodes("//D:response", xman);
-
-                for (int i = 0; i < xlist.Count; i++)
+				foreach (XElement element in xdoc.Descendants(XName.Get("response", "DAV:")))
                 {
                     WebDavResource resource = new WebDavResource();
 
@@ -705,38 +516,65 @@ namespace WebDav
                     // Hidden files cannot be downloaded from the IIs
                     // For further information see http://support.microsoft.com/kb/216803/
 
-                    XmlNode node = xdoc.SelectSingleNode("//D:response[" + (i + 1) + "]/D:propstat/D:prop/D:ishidden", xman);
-                    if (node != null && node.InnerText == "1")
-                        continue;
+					var prop = element.Descendants(XName.Get("prop", "DAV:")).FirstOrDefault();
 
-                    node = xdoc.SelectSingleNode("//D:response[" + (i + 1) + "]/D:propstat/D:prop/D:displayname", xman);
-                    if (node != null)
-                        resource.Name = node.InnerText;
+					var node = prop.Element(XName.Get("ishidden", "DAV:"));
+					if ((node != null) && (node.Value == "1"))
+						continue;
+					
+					node = prop.Element(XName.Get("displayname", "DAV:"));
+					if (node != null)
+						resource.Name = node.Value;
+					
+					node = element.Element(XName.Get("href", "DAV:"));
+					if (node != null) {
+						Uri href;
 
-                    node = xdoc.SelectSingleNode("//D:response[" + (i + 1) + "]/D:href", xman);
-                    if (node != null)
-                    {
-                    	Uri href;
+						if (Uri.TryCreate(node.Value, UriKind.Absolute, out href))
+							resource.Uri = href;
+					}
 
-                        if (Uri.TryCreate(node.InnerText, UriKind.Absolute, out href))
-                            resource.Uri = href;
-                    }
+					node = prop.Element(XName.Get("getcontentlength", "DAV:"));
+					if (node != null)
+						resource.Size = int.Parse(node.Value, CultureInfo.CurrentCulture);
 
-                    node = xdoc.SelectSingleNode("//D:response[" + (i + 1) + "]/D:propstat/D:prop/D:getcontentlength", xman);
-                    if (node != null)
-                        resource.Size = int.Parse(node.InnerText, CultureInfo.CurrentCulture);
+					node = prop.Element(XName.Get("creationdate", "DAV:"));
+					if (node != null)
+						resource.Created = DateTime.Parse(node.Value, CultureInfo.CurrentCulture);
 
-                    node = xdoc.SelectSingleNode("//D:response[" + (i + 1) + "]/D:propstat/D:prop/D:creationdate", xman);
-                    if (node != null)
-                        resource.Created = DateTime.Parse(node.InnerText, CultureInfo.CurrentCulture);
-
-                    node = xdoc.SelectSingleNode("//D:response[" + (i + 1) + "]/D:propstat/D:prop/D:getlastmodified", xman);
-                    if (node != null)
-                        resource.Modified = DateTime.Parse(node.InnerText, CultureInfo.CurrentCulture);
-
+					node = prop.Element(XName.Get("getlastmodified", "DAV:"));
+					if (node != null)
+						resource.Modified = DateTime.Parse(node.Value, CultureInfo.CurrentCulture);
+					
                     // Check if the resource is a collection
-                    node = xdoc.SelectSingleNode("//D:response[" + (i + 1) + "]/D:propstat/D:prop/D:resourcetype/D:collection", xman);
+					node = prop.Element(XName.Get("resourcetype", "DAV:")).Element(XName.Get("collection", "DAV:"));
                     resource.IsDirectory = node != null;
+					
+					node = prop.Element(XName.Get("getcontenttype", "DAV:"));
+					if (node != null)
+						resource.ContentType = node.Value;
+
+					node = prop.Element(XName.Get("getetag", "DAV:"));
+					if (node != null)
+						resource.Etag = node.Value;
+
+					node = prop.Element(XName.Get("quota-used-bytes", "DAV:"));
+					if (node != null)
+						resource.QuotaUsed = long.Parse(node.Value);
+
+					node = prop.Element(XName.Get("quota-available-bytes", "DAV:"));
+					if (node != null)
+						resource.QutoaAvailable = long.Parse(node.Value);
+
+					if (resource.Name == null) {
+						if (resource.IsDirectory)
+							resource.Name = resource.Uri.Segments.Last().TrimEnd(new char[]{'/'});
+						else
+							resource.Name = resource.Uri.Segments.Last();
+						
+						if (resource.Uri.AbsolutePath.Equals(rootpath))
+							resource.Name = "/";
+					}
 
                     webDavResources.Add(resource);
                 }

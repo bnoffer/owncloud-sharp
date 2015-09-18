@@ -1,11 +1,36 @@
 ﻿using System;
+using System.Net.Http;
 
-namespace webdavnet
+namespace WebDav
 {
-	public class WebMethod
+	public class WebMethod : HttpMethod
 	{
-		public WebMethod ()
+		public WebMethod (string method) : base(method)
 		{
+		}
+
+		public static HttpMethod MkCol {
+			get {
+				return new HttpMethod ("MKCOL");
+			}
+		}
+
+		public static HttpMethod Copy {
+			get {
+				return new HttpMethod ("COPY");
+			}
+		}
+
+		public static HttpMethod Move {
+			get {
+				return new HttpMethod ("MOVE");
+			}
+		}
+
+		public static HttpMethod PropFind {
+			get {
+				return new HttpMethod ("PROPFIND");
+			}
 		}
 	}
 }

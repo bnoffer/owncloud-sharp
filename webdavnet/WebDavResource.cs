@@ -62,5 +62,33 @@ namespace WebDav
         /// </value>
 		public bool IsDirectory
 		{ get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating the contenttype of a file.
+		/// </summary>
+		/// <value>The file content type.</value>
+		public string ContentType
+		{ get; set; }
+
+		/// <summary>
+		/// Gets or sets the etag.
+		/// </summary>
+		/// <value>The etag.</value>
+		public string Etag
+		{ get; set; }
+
+		/// <summary>
+		/// Gets or sets the quota used in bytes.
+		/// </summary>
+		/// <value>The quota used.</value>
+		public long QuotaUsed
+		{ get; set; }
+
+		/// <summary>
+		/// Gets or sets the qutoa available in bytes.
+		/// </summary>
+		/// <value>The qutoa available.</value>
+		public long QutoaAvailable
+		{ get; set; }
 	}
 }

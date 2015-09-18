@@ -31,7 +31,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OwnCloud.cs" />
+    <Compile Include="Exceptions\ResponseError.cs" />
+    <Compile Include="Exceptions\OCSResponseError.cs" />
+    <Compile Include="Types\PublicShare.cs" />
+    <Compile Include="Types\UserShare.cs" />
+    <Compile Include="Types\GroupShare.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="Types\OCS.cs" />
+    <Compile Include="Types\ResourceInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+    <Folder Include="Types\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="RestSharp.Build">
+      <HintPath>..\Binaries\RestSharp.Build.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\Binaries\RestSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\webdavnet\webdavnet.csproj">
+      <Project>{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}</Project>
+      <Name>webdavnet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

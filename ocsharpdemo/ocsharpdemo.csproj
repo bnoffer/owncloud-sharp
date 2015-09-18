@@ -35,4 +35,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\owncloud-sharp\owncloud-sharp.csproj">
+      <Project>{E2015378-CEFF-4913-A4A6-48706F2625D4}</Project>
+      <Name>owncloud-sharp</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

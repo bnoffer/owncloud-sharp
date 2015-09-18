@@ -9,17 +9,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{DB391865-4A19-4B01-9950-F0500D92526B}"
+	ProjectSection(SolutionItems) = preProject
+		Binaries\RestSharp.Build.dll = Binaries\RestSharp.Build.dll
+		Binaries\RestSharp.dll = Binaries\RestSharp.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ocsharpdemo", "ocsharpdemo\ocsharpdemo.csproj", "{27CD23AE-EB37-45AB-A8B9-59E270568375}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webdavnet", "webdavnet\webdavnet.csproj", "{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27CD23AE-EB37-45AB-A8B9-59E270568375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27CD23AE-EB37-45AB-A8B9-59E270568375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27CD23AE-EB37-45AB-A8B9-59E270568375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27CD23AE-EB37-45AB-A8B9-59E270568375}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2015378-CEFF-4913-A4A6-48706F2625D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2015378-CEFF-4913-A4A6-48706F2625D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2015378-CEFF-4913-A4A6-48706F2625D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2015378-CEFF-4913-A4A6-48706F2625D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{DB391865-4A19-4B01-9950-F0500D92526B} = {272AFCD1-32AC-4F20-A2CC-11C2D4D8FC8F}
 	EndGlobalSection
 EndGlobal

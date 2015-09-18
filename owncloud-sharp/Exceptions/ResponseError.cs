@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace owncloudsharp
+namespace owncloudsharp.Exceptions
 {
-	public class ResponseError
+	public class ResponseError : Exception
 	{
-		public ResponseError ()
+		public ResponseError () : base()
 		{
 		}
 	}
