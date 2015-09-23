@@ -22,6 +22,20 @@ Also required for the WebDAVNet and WebClient projects are the "Microsoft.BCL.Bu
 
 If those dependancies are met the solution should build just fine.
 
+API reference
+=============
+
+A up-to-date API reference generated using Doxygen is available in the */doc* folder.
+
+You can view the API reference online [here](https://rawgit.com/bnoffer/owncloud-sharp/master/doc/html/index.html) .
+
+Sample Code
+===========
+
+The *ocsharpdemo* project is a basic console application showing how the API works.
+
+Click [here](https://github.com/bnoffer/owncloud-sharp/blob/master/ocsharpdemo/Program.cs) to take a look at the Program.cs online.‚
+
 Credits
 =======
 
