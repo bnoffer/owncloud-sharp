@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Xml;
+using System.Xml.Linq;
 
 using RestSharp;
 using RestSharp.Authenticators;
@@ -353,7 +355,7 @@ namespace owncloudsharp
 		/// <param name="password">(optional) sets a password.</param>
 		/// <param name="public_upload">(optional) allows users to upload files or folders.</param>
 		public PublicShare ShareWithLink(string path, int perms = -1, string password = null, OcsBoolParam public_upload = OcsBoolParam.None) {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") + "/{id}", Method.POST);
+			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares"), Method.POST);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			request.AddParameter ("shareType", Convert.ToInt32 (OcsShareType.Link));
@@ -369,9 +371,14 @@ namespace owncloudsharp
 				request.AddParameter ("publicUpload", "false");
 
 			var response = rest.Execute (request);
-			var content = response.Content; 
-			// TODO: Parse Response for PublicShare
-			return new PublicShare();
+
+			PublicShare share = new PublicShare ();
+			share.ShareId = GetFromData(response.Content, "id");
+			share.Url = GetFromData(response.Content, "url");
+			share.Token = GetFromData(response.Content, "token");
+			share.TargetPath = path;
+
+			return share;
 		}
 
 		/// <summary>
@@ -950,6 +957,26 @@ namespace owncloudsharp
 		private string GetOcsPath(string service, string action) {
 			var slash = (!service.Equals("")) ? "/" : "";
 			return service + slash + action;
+		}
+		#endregion
+
+		#region OCS Response parsing
+		/// <summary>
+		/// Get element value from OCS Data.
+		/// </summary>
+		/// <returns>Element value.</returns>
+		/// <param name="response">XML OCS response.</param>
+		/// <param name="elementName">XML Element name.</param>
+		private string GetFromData(string response, string elementName) {
+			XDocument xdoc = XDocument.Parse(response);
+
+			foreach (XElement data in xdoc.Descendants(XName.Get("data"))) {
+				var node = data.Element(XName.Get(elementName));
+				if (node != null)
+					return node.Value;
+			}
+
+			return null;
 		}
 		#endregion
 	}
