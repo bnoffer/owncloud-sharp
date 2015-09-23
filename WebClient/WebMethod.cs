@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace WebDav
+namespace WebClient
 {
 	public class WebMethod : HttpMethod
 	{

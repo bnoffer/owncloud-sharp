@@ -26,6 +26,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
+using WebClient;
+
 namespace WebDav
 {
     /// <summary>
@@ -34,7 +36,7 @@ namespace WebDav
     public class WebDavManager
     {
         #region PRIVATE PROPERTIES
-		private WebClient client;
+		private WebClient.WebClient client;
         #endregion
 
         #region CONSTRUCTORS
@@ -43,7 +45,7 @@ namespace WebDav
         /// </summary>
         public WebDavManager()
         {
-			client = new WebClient ();
+			client = new WebClient.WebClient ();
 		}
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace WebDav
         /// <param name="credential">The credential.</param>
         public WebDavManager(WebDavCredential credential)
         {
-			client = new WebClient ();
+			client = new WebClient.WebClient ();
             Credential = credential;
         }
         #endregion
@@ -85,16 +87,18 @@ namespace WebDav
         /// Deletes the resource behind the specified Url.
         /// </summary>
         /// <param name="url">The Url.</param>
-        public void Delete(string url)
+		/// <returns>></returns>
+        public bool Delete(string url)
 		{
-        	Delete(new Uri(url));
+        	return Delete(new Uri(url));
         }
 
         /// <summary>
         /// Deletes the resource behind the specified Uri.
         /// </summary>
         /// <param name="uri">The Uri.</param>
-        public void Delete(Uri uri)
+		/// <returns>></returns>
+        public bool Delete(Uri uri)
         {
 			HttpRequestMessage webRequest = GetBaseRequest(uri, WebMethod.Delete);
             HttpResponseMessage webResponse;
@@ -109,7 +113,7 @@ namespace WebDav
                 // TODO: Errorhandling
                 Debug.WriteLine(e.Message);
 
-                return;
+				return false;
             }
 
             if (webResponse == null)
@@ -117,8 +121,10 @@ namespace WebDav
                 // TODO: Errorhandling
 				Debug.WriteLine("Empty WebResponse @'Delete'" + Environment.NewLine + uri);
 
-                return;
+				return false;
             }
+
+			return webResponse.StatusCode == HttpStatusCode.NoContent;
         }
 
         /// <summary>
@@ -485,13 +491,9 @@ namespace WebDav
 
 			// Set the request timeout
 			if (Timeout < 1)
-				Timeout = 30000; // At least 30 Seconds
+				Timeout = 300000; // At least 30 Seconds
 
 			client.Timeout = new TimeSpan (0, 0, 0, 0, Timeout);
-
-            // TODO: Check if PreAuthenticate is necessary
-            // Set PreAuthenticate to assimilate authentication from the plain HEAD request
-            //_WebRequest.PreAuthenticate = true;
 
             return webRequest;
         }

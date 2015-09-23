@@ -36,9 +36,6 @@
     <Compile Include="WebDavManager.cs" />
     <Compile Include="WebDavProperty.cs" />
     <Compile Include="WebDavResource.cs" />
-    <Compile Include="WebClient.cs" />
-    <Compile Include="WebMethod.cs" />
-    <Compile Include="ReusableContent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -56,5 +53,11 @@
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebClient\WebClient.csproj">
+      <Project>{47C1D318-90F3-44DC-8307-9A4ADC556E2E}</Project>
+      <Name>WebClient</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
