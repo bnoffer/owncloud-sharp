@@ -240,6 +240,9 @@ namespace owncloudsharp
 			var request = new RestRequest(GetOcsPath(ocsServiceShare, "remote_shares"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
 			var content = response.Content; 
 			// TODO: Parse response
 			return content;
@@ -372,6 +375,8 @@ namespace owncloudsharp
 
 			var response = rest.Execute (request);
 
+			CheckOcsStatus (response);
+
 			PublicShare share = new PublicShare ();
 			share.ShareId = GetFromData(response.Content, "id");
 			share.Url = GetFromData(response.Content, "url");
@@ -410,6 +415,8 @@ namespace owncloudsharp
 
 			var response = rest.Execute (request);
 
+			CheckOcsStatus (response);
+
             var share = new UserShare();
             share.ShareId = GetFromData(response.Content, "id");
             share.TargetPath = path;
@@ -442,6 +449,8 @@ namespace owncloudsharp
 			request.AddParameter ("shareWith", groupName);
 
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
 
             var share = new GroupShare();
             share.ShareId = GetFromData(response.Content, "id");
@@ -484,6 +493,8 @@ namespace owncloudsharp
 				request.AddQueryParameter("subfiles", "false");
 			
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
 
 			return GetShareList (response.Content);
 		}
@@ -539,12 +550,11 @@ namespace owncloudsharp
 		/// <summary>
 		/// Checks a user via provisioning API.
 		/// </summary>
-		/// <returns>The exists.</returns>
+		/// <returns><c>true</c>, if exists was usered, <c>false</c> otherwise.</returns>
 		/// <param name="username">name of user to be checked.</param>
-		public object UserExists(string username) {
+		public bool UserExists(string username) {
 			var result = SearchUsers (username);
-			// TODO: Implement query
-			return result;
+			return result.Contains(username);
 		}
 
 		/// <summary>
@@ -552,16 +562,17 @@ namespace owncloudsharp
 		/// </summary>
 		/// <returns>list of users.</returns>
 		/// <param name="username">name of user to be searched for.</param>
-		public object SearchUsers(string username) {
+		public List<string> SearchUsers(string username) {
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "?search={userid}", Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			request.AddUrlSegment ("userid", username);
 
 			var response = rest.Execute (request);
-			var content = response.Content; 
-			// TODO: Parse response
-			return content;
+
+			CheckOcsStatus (response);
+
+			return GetDataElements (response.Content);
 		}
 
 		/// <summary>
@@ -626,6 +637,9 @@ namespace owncloudsharp
 			request.AddUrlSegment ("userid", username);
 
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
 			var content = response.Content; 
 			// TODO: Parse response
 			return content;
@@ -703,6 +717,9 @@ namespace owncloudsharp
 			request.AddUrlSegment ("userid", username);
 
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
 			var content = response.Content; 
 			// TODO: Parse response
 			return content;
@@ -799,6 +816,9 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
 			var content = response.Content; 
 			// TODO: Parse response
 			return content;
@@ -824,6 +844,9 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
 			var content = response.Content; 
 			// TODO: Parse response
 			return content;
@@ -888,6 +911,9 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
 			var content = response.Content; 
 			// TODO: Parse response
 			return content;
@@ -972,6 +998,24 @@ namespace owncloudsharp
 
 		#region OCS Response parsing
 		/// <summary>
+		/// Get element value from OCS Meta.
+		/// </summary>
+		/// <returns>Element value.</returns>
+		/// <param name="response">XML OCS response.</param>
+		/// <param name="elementName">XML Element name.</param>
+		private string GetFromMeta(string response, string elementName) {
+			XDocument xdoc = XDocument.Parse(response);
+
+			foreach (XElement data in xdoc.Descendants(XName.Get("meta"))) {
+				var node = data.Element(XName.Get(elementName));
+				if (node != null)
+					return node.Value;
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// Get element value from OCS Data.
 		/// </summary>
 		/// <returns>Element value.</returns>
@@ -989,6 +1033,29 @@ namespace owncloudsharp
 			return null;
 		}
 
+		/// <summary>
+		/// Gets the data element values.
+		/// </summary>
+		/// <returns>The data elements.</returns>
+		/// <param name="response">XML OCS Response.</param>
+		private List<string> GetDataElements(string response) {
+			List<string> result = new List<string> ();
+			XDocument xdoc = XDocument.Parse(response);
+
+			foreach (XElement data in xdoc.Descendants(XName.Get("data"))) {
+				foreach (XElement node in data.Descendants(XName.Get("element")) ){
+					result.Add(node.Value);
+				}
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Gets the share list from a OCS Data response.
+		/// </summary>
+		/// <returns>The share list.</returns>
+		/// <param name="response">XML OCS Response.</param>
         private List<Share> GetShareList(string response)
         {
             List<Share> shares = new List<Share>();
@@ -1109,6 +1176,22 @@ namespace owncloudsharp
 
             return shares;
         }
+
+		/// <summary>
+		/// Checks the validity of the OCS Request. If invalid a exception is thrown.
+		/// </summary>
+		/// <param name="response">OCS Response.</param>
+		public void CheckOcsStatus(IRestResponse response) {
+			if (response.Content == null)
+				throw new ResponseError (response.ErrorMessage);
+			else {
+				var ocsStatus = GetFromMeta (response.Content, "statuscode");
+				if (ocsStatus == null)
+					throw new ResponseError ("Empty response");
+				if (!ocsStatus.Equals ("100"))
+					throw new OCSResponseError (GetFromMeta (response.Content, "message"), ocsStatus);
+			}
+		}
         #endregion
     }
 }

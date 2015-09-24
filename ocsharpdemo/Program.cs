@@ -45,8 +45,9 @@ namespace ocsharpdemo
             //var ps = c.ShareWithLink("/demo", Convert.ToInt32(OcsPermission.All), "demo", OcsBoolParam.True);
             //var us = c.ShareWithUser("/demo", "test", Convert.ToInt32(OcsPermission.All), OcsBoolParam.False);
             //var gs = c.ShareWithGroup("/demo", "Test123", Convert.ToInt32(OcsPermission.All));
-			var result = c.IsShared("/demo") ? "is shared" : "is not shared";
-			Console.WriteLine ("/demo " + result + ".");
+			/*var result = c.IsShared("/demo") ? "is shared" : "is not shared";
+			Console.WriteLine ("/demo " + result + ".");*/
+			var result = c.SearchUsers ("test");
 		}
 	}
 }
