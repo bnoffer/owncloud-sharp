@@ -11,7 +11,7 @@ namespace ocsharpdemo
 		public static void Main (string[] args)
 		{
 			var c = new Client ("http://192.168.2.245/owncloud-devel", "admin", "Bno131083");
-			Console.Write ("Testing DAV:List ... ");
+			/*Console.Write ("Testing DAV:List ... ");
 			var list = c.List ("/");
 			Console.WriteLine ("Received " + list.Count + " item(s)");
 			foreach (var item in list) {
@@ -31,21 +31,22 @@ namespace ocsharpdemo
 						Console.WriteLine ("DONE");
 					else
 						Console.WriteLine ("FAILED");
-					/*Console.Write ("Testing DAV:Deleting " + item.Name + " from /demo/ ... ");
+					Console.Write ("Testing DAV:Deleting " + item.Name + " from /demo/ ... ");
 					status = c.Delete ("/demo/" + item.Name);
 					if (status)
 						Console.WriteLine ("DONE");
 					else
-						Console.WriteLine ("FAILED");*/
+						Console.WriteLine ("FAILED");
 				} else
 					continue;
 			}
-			Console.Write ("Testing OCS:ListOpenRemoteShare ... ");
+			Console.Write ("Testing OCS:ListOpenRemoteShare ... ");*/
             //c.CreateUser ("test2", "8cs!38s");
             //var ps = c.ShareWithLink("/demo", Convert.ToInt32(OcsPermission.All), "demo", OcsBoolParam.True);
             //var us = c.ShareWithUser("/demo", "test", Convert.ToInt32(OcsPermission.All), OcsBoolParam.False);
             //var gs = c.ShareWithGroup("/demo", "Test123", Convert.ToInt32(OcsPermission.All));
-            var shares = c.GetShares("/demo");
+			var result = c.IsShared("/demo") ? "is shared" : "is not shared";
+			Console.WriteLine ("/demo " + result + ".");
 		}
 	}
 }

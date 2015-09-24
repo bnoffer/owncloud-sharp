@@ -7,6 +7,10 @@ namespace owncloudsharp.Types
     /// </summary>
 	public class GroupShare : Share
 	{
+		/// <summary>
+		/// Name of the user the target is being shared with
+		/// </summary>
+		public string SharedWith { get; set; }
 	}
 }
 

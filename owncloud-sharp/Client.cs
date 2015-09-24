@@ -414,6 +414,7 @@ namespace owncloudsharp
             share.ShareId = GetFromData(response.Content, "id");
             share.TargetPath = path;
             share.Perms = perms;
+			share.SharedWith = username;
 
             return share;
 		}
@@ -446,6 +447,7 @@ namespace owncloudsharp
             share.ShareId = GetFromData(response.Content, "id");
             share.TargetPath = path;
             share.Perms = perms;
+			share.SharedWith = groupName;
 
             return share;
         }
@@ -455,10 +457,9 @@ namespace owncloudsharp
 		/// </summary>
 		/// <returns><c>true</c> if this instance is shared the specified path; otherwise, <c>false</c>.</returns>
 		/// <param name="path">path to the share to be checked.</param>
-		public object IsShared(string path) {
+		public bool IsShared(string path) {
 			var result = GetShares (path);
-			// TODO: Perform query
-			return result;
+			return result.Count > 0;
 		}
 
 		/// <summary>
@@ -468,7 +469,7 @@ namespace owncloudsharp
 		/// <param name="path">path to the share to be checked.</param>
 		/// <param name="reshares">(optional) returns not only the shares from	the current user but all shares from the given file.</param>
 		/// <param name="subfiles">(optional) returns all shares within	a folder, given that path defines a folder.</param>
-		public object GetShares(string path, OcsBoolParam reshares = OcsBoolParam.None, OcsBoolParam subfiles = OcsBoolParam.None) {
+		public List<Share> GetShares(string path, OcsBoolParam reshares = OcsBoolParam.None, OcsBoolParam subfiles = OcsBoolParam.None) {
 			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") , Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
@@ -483,9 +484,8 @@ namespace owncloudsharp
 				request.AddQueryParameter("subfiles", "false");
 			
 			var response = rest.Execute (request);
-			var content = response.Content; 
-			// TODO: Parse results
-			return content;
+
+			return GetShareList (response.Content);
 		}
 		#endregion
 
@@ -996,10 +996,114 @@ namespace owncloudsharp
 
             foreach (XElement data in xdoc.Descendants(XName.Get("element")))
             {
+				Share share = null;
                 var node = data.Element(XName.Get("share_type"));
                 if (node != null)
                 {
-                    
+					#region Share Type
+					var shareType = Convert.ToInt32 (node.Value);
+					if (shareType == Convert.ToInt32 (OcsShareType.Link))
+						share = new PublicShare ();
+					else if (shareType == Convert.ToInt32 (OcsShareType.User))
+						share = new UserShare ();
+					else if (shareType == Convert.ToInt32 (OcsShareType.Group))
+						share = new GroupShare ();
+					else
+						share = new Share ();
+					share.AdvancedProperties = new AdvancedShareProperties ();
+					#endregion
+
+					#region General Properties
+					node = data.Element(XName.Get("id"));
+					if (node != null)
+						share.ShareId = node.Value;
+
+					node = data.Element(XName.Get("file_target"));
+					if (node != null)
+						share.TargetPath = node.Value;
+
+					node = data.Element(XName.Get("permissions"));
+					if (node != null)
+						share.Perms = Convert.ToInt32(node.Value);
+					#endregion
+
+					#region Advanced Properties
+					node = data.Element(XName.Get("item_type"));
+					if (node != null)
+						share.AdvancedProperties.ItemType = node.Value;
+					
+					node = data.Element(XName.Get("item_source"));
+					if (node != null)
+						share.AdvancedProperties.ItemSource = node.Value;
+
+					node = data.Element(XName.Get("parent"));
+					if (node != null)
+						share.AdvancedProperties.Parent = node.Value;
+
+					node = data.Element(XName.Get("file_source"));
+					if (node != null)
+						share.AdvancedProperties.FileSource = node.Value;
+
+					node = data.Element(XName.Get("stime"));
+					if (node != null)
+						share.AdvancedProperties.STime = node.Value;
+
+					node = data.Element(XName.Get("expiration"));
+					if (node != null)
+						share.AdvancedProperties.Expiration = node.Value;
+
+					node = data.Element(XName.Get("mail_send"));
+					if (node != null)
+						share.AdvancedProperties.MailSend = node.Value;
+
+					node = data.Element(XName.Get("uid_owner"));
+					if (node != null)
+						share.AdvancedProperties.Owner = node.Value;
+
+					node = data.Element(XName.Get("storage_id"));
+					if (node != null)
+						share.AdvancedProperties.StorageId = node.Value;
+
+					node = data.Element(XName.Get("storage"));
+					if (node != null)
+						share.AdvancedProperties.Storage = node.Value;
+
+					node = data.Element(XName.Get("file_parent"));
+					if (node != null)
+						share.AdvancedProperties.FileParent = node.Value;
+
+					node = data.Element(XName.Get("share_with_displayname"));
+					if (node != null)
+						share.AdvancedProperties.ShareWithDisplayname = node.Value;
+
+					node = data.Element(XName.Get("displayname_owner"));
+					if (node != null)
+						share.AdvancedProperties.DisplaynameOwner = node.Value;
+					#endregion
+
+					#region ShareType specific
+					if (shareType == Convert.ToInt32(OcsShareType.Link)) {
+						node = data.Element(XName.Get("url"));
+						if (node != null)
+							((PublicShare)share).Url = node.Value;
+
+						node = data.Element(XName.Get("token"));
+						if (node != null)
+							((PublicShare)share).Token = node.Value;
+					}
+					else if (shareType == Convert.ToInt32(OcsShareType.User)) {
+						node = data.Element(XName.Get("share_with"));
+						if (node != null)
+							((UserShare)share).SharedWith = node.Value;
+					}
+					else if (shareType == Convert.ToInt32(OcsShareType.Group)) {
+						node = data.Element(XName.Get("share_with"));
+						if (node != null)
+							((GroupShare)share).SharedWith = node.Value;
+					}
+					#endregion
+
+					shares.Add (share);
                 }
             }
 
