@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,6 +35,7 @@
     <Compile Include="Exceptions\ResponseError.cs" />
     <Compile Include="Exceptions\OCSResponseError.cs" />
     <Compile Include="Types\PublicShare.cs" />
+    <Compile Include="Types\Share.cs" />
     <Compile Include="Types\UserShare.cs" />
     <Compile Include="Types\GroupShare.cs" />
     <Compile Include="Client.cs" />
@@ -44,10 +45,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-    <Folder Include="Types\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="RestSharp.Build">
       <HintPath>..\Binaries\RestSharp.Build.dll</HintPath>

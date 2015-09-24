@@ -377,6 +377,7 @@ namespace owncloudsharp
 			share.Url = GetFromData(response.Content, "url");
 			share.Token = GetFromData(response.Content, "token");
 			share.TargetPath = path;
+            share.Perms = (perms > -1) ? perms : Convert.ToInt32(OcsPermission.Read);
 
 			return share;
 		}
@@ -408,9 +409,13 @@ namespace owncloudsharp
 			request.AddParameter ("shareWith", username);
 
 			var response = rest.Execute (request);
-			var content = response.Content; 
-			// TODO: Implement parse to UserShare
-			return new UserShare();
+
+            var share = new UserShare();
+            share.ShareId = GetFromData(response.Content, "id");
+            share.TargetPath = path;
+            share.Perms = perms;
+
+            return share;
 		}
 
 		/// <summary>
@@ -436,10 +441,14 @@ namespace owncloudsharp
 			request.AddParameter ("shareWith", groupName);
 
 			var response = rest.Execute (request);
-			var content = response.Content; 
-			// TODO: Implement parse to GroupShare
-			return new GroupShare();
-		}
+
+            var share = new GroupShare();
+            share.ShareId = GetFromData(response.Content, "id");
+            share.TargetPath = path;
+            share.Perms = perms;
+
+            return share;
+        }
 
 		/// <summary>
 		/// Checks whether a path is already shared.
@@ -460,17 +469,18 @@ namespace owncloudsharp
 		/// <param name="reshares">(optional) returns not only the shares from	the current user but all shares from the given file.</param>
 		/// <param name="subfiles">(optional) returns all shares within	a folder, given that path defines a folder.</param>
 		public object GetShares(string path, OcsBoolParam reshares = OcsBoolParam.None, OcsBoolParam subfiles = OcsBoolParam.None) {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "") , Method.GET);
+			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") , Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
+            request.AddQueryParameter("path", path);
 			if (reshares == OcsBoolParam.True)
-				request.AddParameter ("reshares", "true");
+				request.AddQueryParameter("reshares", "true");
 			else if (reshares == OcsBoolParam.False)
-				request.AddParameter ("reshares", "false");
+				request.AddQueryParameter("reshares", "false");
 			if (subfiles == OcsBoolParam.True)
-				request.AddParameter ("subfiles", "true");
+				request.AddQueryParameter("subfiles", "true");
 			else if (subfiles == OcsBoolParam.False)
-				request.AddParameter ("subfiles", "false");
+				request.AddQueryParameter("subfiles", "false");
 			
 			var response = rest.Execute (request);
 			var content = response.Content; 
@@ -978,7 +988,24 @@ namespace owncloudsharp
 
 			return null;
 		}
-		#endregion
-	}
+
+        private List<Share> GetShareList(string response)
+        {
+            List<Share> shares = new List<Share>();
+            XDocument xdoc = XDocument.Parse(response);
+
+            foreach (XElement data in xdoc.Descendants(XName.Get("element")))
+            {
+                var node = data.Element(XName.Get("share_type"));
+                if (node != null)
+                {
+                    
+                }
+            }
+
+            return shares;
+        }
+        #endregion
+    }
 }
 

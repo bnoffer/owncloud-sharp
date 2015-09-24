@@ -2,14 +2,19 @@
 
 namespace owncloudsharp.Types
 {
-	public class PublicShare
+    /// <summary>
+    /// Provides information of a public ownCloud share.
+    /// </summary>
+	public class PublicShare : Share
 	{
-		public string ShareId { get; set; }
-		public string TargetPath { get; set; }
+        /// <summary>
+        /// Remote access URL
+        /// </summary>
 		public string Url { get; set; }
+        /// <summary>
+        /// The shares token
+        /// </summary>
 		public string Token { get; set; }
-
-		public PublicShare () {	}
 	}
 }
 

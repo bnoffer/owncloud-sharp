@@ -41,9 +41,11 @@ namespace ocsharpdemo
 					continue;
 			}
 			Console.Write ("Testing OCS:ListOpenRemoteShare ... ");
-			//c.CreateUser ("test2", "8cs!38s");
-			var details = c.ShareWithLink("/demo", Convert.ToInt32(OcsPermission.All), "demo", OcsBoolParam.True);
-
+            //c.CreateUser ("test2", "8cs!38s");
+            //var ps = c.ShareWithLink("/demo", Convert.ToInt32(OcsPermission.All), "demo", OcsBoolParam.True);
+            //var us = c.ShareWithUser("/demo", "test", Convert.ToInt32(OcsPermission.All), OcsBoolParam.False);
+            //var gs = c.ShareWithGroup("/demo", "Test123", Convert.ToInt32(OcsPermission.All));
+            var shares = c.GetShares("/demo");
 		}
 	}
 }
