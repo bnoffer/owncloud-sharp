@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['client',['Client',['../classowncloudsharp_1_1_client.html',1,'owncloudsharp']]]
+  ['advancedshareproperties',['AdvancedShareProperties',['../classowncloudsharp_1_1_types_1_1_advanced_share_properties.html',1,'owncloudsharp::Types']]]
 ];

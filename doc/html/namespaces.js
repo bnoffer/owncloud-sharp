@@ -1,4 +1,4 @@
 var namespaces =
 [
-    [ "owncloudsharp", "namespaceowncloudsharp.html", null ]
+    [ "owncloudsharp", "namespaceowncloudsharp.html", "namespaceowncloudsharp" ]
 ];

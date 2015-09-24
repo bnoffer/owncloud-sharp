@@ -10,9 +10,9 @@ own\+Cloud O\+C\+S and D\+A\+V access client
 \item 
 \hyperlink{classowncloudsharp_1_1_client_a67d23283e5c2cfb84a2c170888992f19}{Client} (string url, string user\+\_\+id, string password)
 \begin{DoxyCompactList}\small\item\em Initializes a new instance of the \hyperlink{classowncloudsharp_1_1_client}{owncloudsharp.\+Client} class. \end{DoxyCompactList}\item 
-List$<$ Resource\+Info $>$ \hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List} (string path)
+List$<$ \hyperlink{classowncloudsharp_1_1_types_1_1_resource_info}{Resource\+Info} $>$ \hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List} (string path)
 \begin{DoxyCompactList}\small\item\em List the specified remote path. \end{DoxyCompactList}\item 
-Resource\+Info \hyperlink{classowncloudsharp_1_1_client_aa482194c404ccba36a4095b513c4cf7a}{Get\+Resource\+Info} (string path)
+\hyperlink{classowncloudsharp_1_1_types_1_1_resource_info}{Resource\+Info} \hyperlink{classowncloudsharp_1_1_client_aa482194c404ccba36a4095b513c4cf7a}{Get\+Resource\+Info} (string path)
 \begin{DoxyCompactList}\small\item\em Gets the resource info for the remote path. \end{DoxyCompactList}\item 
 Stream \hyperlink{classowncloudsharp_1_1_client_a3a71b182537b36e924e7df1ae3bbac89}{Download} (string path)
 \begin{DoxyCompactList}\small\item\em Download the specified file. \end{DoxyCompactList}\item 
@@ -40,15 +40,15 @@ bool \hyperlink{classowncloudsharp_1_1_client_a7499d8f0c4fae0b22da4a35327547cca}
 \begin{DoxyCompactList}\small\item\em Unshares a file or directory. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a096e6b5540091d8b3f296d899f4807dd}{Update\+Share} (int share\+Id, int perms=-\/1, string password=null, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} public\+\_\+upload=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
 \begin{DoxyCompactList}\small\item\em Updates a given share \end{DoxyCompactList}\item 
-Public\+Share \hyperlink{classowncloudsharp_1_1_client_ac44012d849ddbbbdab86509344d6504d}{Share\+With\+Link} (string path, int perms=-\/1, string password=null, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} public\+\_\+upload=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
+\hyperlink{classowncloudsharp_1_1_types_1_1_public_share}{Public\+Share} \hyperlink{classowncloudsharp_1_1_client_ac44012d849ddbbbdab86509344d6504d}{Share\+With\+Link} (string path, int perms=-\/1, string password=null, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} public\+\_\+upload=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
 \begin{DoxyCompactList}\small\item\em Shares a remote file with link. \end{DoxyCompactList}\item 
-User\+Share \hyperlink{classowncloudsharp_1_1_client_a69d7df9c2e91b8716bb0c5a2f5ff7878}{Share\+With\+User} (string path, string username, int perms=-\/1, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} remote\+User=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
+\hyperlink{classowncloudsharp_1_1_types_1_1_user_share}{User\+Share} \hyperlink{classowncloudsharp_1_1_client_a69d7df9c2e91b8716bb0c5a2f5ff7878}{Share\+With\+User} (string path, string username, int perms=-\/1, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} remote\+User=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
 \begin{DoxyCompactList}\small\item\em Shares a remote file with specified user. \end{DoxyCompactList}\item 
-Group\+Share \hyperlink{classowncloudsharp_1_1_client_a22625407b475bd43c292fc80fbcebad9}{Share\+With\+Group} (string path, string group\+Name, int perms=-\/1)
+\hyperlink{classowncloudsharp_1_1_types_1_1_group_share}{Group\+Share} \hyperlink{classowncloudsharp_1_1_client_a22625407b475bd43c292fc80fbcebad9}{Share\+With\+Group} (string path, string group\+Name, int perms=-\/1)
 \begin{DoxyCompactList}\small\item\em Shares a remote file with specified group. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a241b88019805ddd87e8d596a6cf6c7a9}{Is\+Shared} (string path)
 \begin{DoxyCompactList}\small\item\em Checks whether a path is already shared. \end{DoxyCompactList}\item 
-\hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List}$<$ \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178}{Share} $>$ \hyperlink{classowncloudsharp_1_1_client_acd8b3359561282563c774b6e4784cb3d}{Get\+Shares} (string path, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} reshares=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None}, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} subfiles=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
+\hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List}$<$ \hyperlink{classowncloudsharp_1_1_types_1_1_share}{Share} $>$ \hyperlink{classowncloudsharp_1_1_client_acd8b3359561282563c774b6e4784cb3d}{Get\+Shares} (string path, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} reshares=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None}, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} subfiles=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
 \begin{DoxyCompactList}\small\item\em Returns array of shares. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a7e285455e3f0cf437d9359956b6feaa5}{Create\+User} (string username, string initial\+Password)
 \begin{DoxyCompactList}\small\item\em Create a new user with an initial password via provisioning A\+P\+I. \end{DoxyCompactList}\item 
@@ -536,7 +536,7 @@ The config.
 \end{DoxyReturn}
 \hypertarget{classowncloudsharp_1_1_client_aa482194c404ccba36a4095b513c4cf7a}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Get\+Resource\+Info@{Get\+Resource\+Info}}
 \index{Get\+Resource\+Info@{Get\+Resource\+Info}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
-\subsubsection[{Get\+Resource\+Info(string path)}]{\setlength{\rightskip}{0pt plus 5cm}Resource\+Info owncloudsharp.\+Client.\+Get\+Resource\+Info (
+\subsubsection[{Get\+Resource\+Info(string path)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Resource\+Info} owncloudsharp.\+Client.\+Get\+Resource\+Info (
 \begin{DoxyParamCaption}
 \item[{string}]{path}
 \end{DoxyParamCaption}
@@ -656,7 +656,7 @@ Checks whether a path is already shared.
 \end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!List@{List}}
 \index{List@{List}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
-\subsubsection[{List(string path)}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Resource\+Info$>$ owncloudsharp.\+Client.\+List (
+\subsubsection[{List(string path)}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Resource\+Info}$>$ owncloudsharp.\+Client.\+List (
 \begin{DoxyParamCaption}
 \item[{string}]{path}
 \end{DoxyParamCaption}
@@ -802,7 +802,7 @@ Sets a user attribute.
 \end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_a22625407b475bd43c292fc80fbcebad9}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Share\+With\+Group@{Share\+With\+Group}}
 \index{Share\+With\+Group@{Share\+With\+Group}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
-\subsubsection[{Share\+With\+Group(string path, string group\+Name, int perms=-\/1)}]{\setlength{\rightskip}{0pt plus 5cm}Group\+Share owncloudsharp.\+Client.\+Share\+With\+Group (
+\subsubsection[{Share\+With\+Group(string path, string group\+Name, int perms=-\/1)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Group\+Share} owncloudsharp.\+Client.\+Share\+With\+Group (
 \begin{DoxyParamCaption}
 \item[{string}]{path, }
 \item[{string}]{group\+Name, }
@@ -827,7 +827,7 @@ instance of Group\+Share with the share info.
 \end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_ac44012d849ddbbbdab86509344d6504d}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Share\+With\+Link@{Share\+With\+Link}}
 \index{Share\+With\+Link@{Share\+With\+Link}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
-\subsubsection[{Share\+With\+Link(string path, int perms=-\/1, string password=null, Ocs\+Bool\+Param public\+\_\+upload=\+Ocs\+Bool\+Param.\+None)}]{\setlength{\rightskip}{0pt plus 5cm}Public\+Share owncloudsharp.\+Client.\+Share\+With\+Link (
+\subsubsection[{Share\+With\+Link(string path, int perms=-\/1, string password=null, Ocs\+Bool\+Param public\+\_\+upload=\+Ocs\+Bool\+Param.\+None)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Public\+Share} owncloudsharp.\+Client.\+Share\+With\+Link (
 \begin{DoxyParamCaption}
 \item[{string}]{path, }
 \item[{int}]{perms = {\ttfamily -\/1}, }
@@ -855,7 +855,7 @@ instance of Public\+Share with the share info.
 \end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_a69d7df9c2e91b8716bb0c5a2f5ff7878}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Share\+With\+User@{Share\+With\+User}}
 \index{Share\+With\+User@{Share\+With\+User}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
-\subsubsection[{Share\+With\+User(string path, string username, int perms=-\/1, Ocs\+Bool\+Param remote\+User=\+Ocs\+Bool\+Param.\+None)}]{\setlength{\rightskip}{0pt plus 5cm}User\+Share owncloudsharp.\+Client.\+Share\+With\+User (
+\subsubsection[{Share\+With\+User(string path, string username, int perms=-\/1, Ocs\+Bool\+Param remote\+User=\+Ocs\+Bool\+Param.\+None)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf User\+Share} owncloudsharp.\+Client.\+Share\+With\+User (
 \begin{DoxyParamCaption}
 \item[{string}]{path, }
 \item[{string}]{username, }

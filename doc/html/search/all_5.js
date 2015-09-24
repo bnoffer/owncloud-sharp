@@ -8,5 +8,6 @@ var searchData=
   ['getusergroups',['GetUserGroups',['../classowncloudsharp_1_1_client.html#a0ab2a296d77fa4def48b46a8d7b99da2',1,'owncloudsharp::Client']]],
   ['getusersubadmingroups',['GetUserSubAdminGroups',['../classowncloudsharp_1_1_client.html#aef2ea7c0321e3094867f456df6929e47',1,'owncloudsharp::Client']]],
   ['group',['Group',['../namespaceowncloudsharp.html#a51141c9a2e84eaced736ab96ea4b2f0ba03937134cedab9078be39a77ee3a48a0',1,'owncloudsharp']]],
-  ['groupexists',['GroupExists',['../classowncloudsharp_1_1_client.html#a0eb9c35f345906e16175605b0cc08ade',1,'owncloudsharp::Client']]]
+  ['groupexists',['GroupExists',['../classowncloudsharp_1_1_client.html#a0eb9c35f345906e16175605b0cc08ade',1,'owncloudsharp::Client']]],
+  ['groupshare',['GroupShare',['../classowncloudsharp_1_1_types_1_1_group_share.html',1,'owncloudsharp::Types']]]
 ];

@@ -7,6 +7,7 @@ var searchData=
   ['deleteshare',['DeleteShare',['../classowncloudsharp_1_1_client.html#a7499d8f0c4fae0b22da4a35327547cca',1,'owncloudsharp::Client']]],
   ['deleteuser',['DeleteUser',['../classowncloudsharp_1_1_client.html#a0603de03c323c55dc53cea24516ecf31',1,'owncloudsharp::Client']]],
   ['disableapp',['DisableApp',['../classowncloudsharp_1_1_client.html#a77306ba08609c9cf128e62b955227648',1,'owncloudsharp::Client']]],
+  ['displaynameowner',['DisplaynameOwner',['../classowncloudsharp_1_1_types_1_1_advanced_share_properties.html#add275aead35226f84b36e447e4104f0d',1,'owncloudsharp::Types::AdvancedShareProperties']]],
   ['download',['Download',['../classowncloudsharp_1_1_client.html#a3a71b182537b36e924e7df1ae3bbac89',1,'owncloudsharp::Client']]],
   ['downloaddirectoryaszip',['DownloadDirectoryAsZip',['../classowncloudsharp_1_1_client.html#aa5b9f5fb73514eeee4242d57605bdcd5',1,'owncloudsharp::Client']]]
 ];

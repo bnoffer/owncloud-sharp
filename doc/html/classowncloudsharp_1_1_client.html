@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -121,10 +122,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a67d23283e5c2cfb84a2c170888992f19"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a67d23283e5c2cfb84a2c170888992f19">Client</a> (string url, string user_id, string password)</td></tr>
 <tr class="memdesc:a67d23283e5c2cfb84a2c170888992f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="classowncloudsharp_1_1_client.html" title="ownCloud OCS and DAV access client ">owncloudsharp.Client</a> class.  <a href="#a67d23283e5c2cfb84a2c170888992f19">More...</a><br /></td></tr>
 <tr class="separator:a67d23283e5c2cfb84a2c170888992f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a914c144ebbe207958829523f7eda3609"><td class="memItemLeft" align="right" valign="top">List&lt; ResourceInfo &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a> (string path)</td></tr>
+<tr class="memitem:a914c144ebbe207958829523f7eda3609"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classowncloudsharp_1_1_types_1_1_resource_info.html">ResourceInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a> (string path)</td></tr>
 <tr class="memdesc:a914c144ebbe207958829523f7eda3609"><td class="mdescLeft">&#160;</td><td class="mdescRight">List the specified remote path.  <a href="#a914c144ebbe207958829523f7eda3609">More...</a><br /></td></tr>
 <tr class="separator:a914c144ebbe207958829523f7eda3609"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa482194c404ccba36a4095b513c4cf7a"><td class="memItemLeft" align="right" valign="top">ResourceInfo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#aa482194c404ccba36a4095b513c4cf7a">GetResourceInfo</a> (string path)</td></tr>
+<tr class="memitem:aa482194c404ccba36a4095b513c4cf7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_types_1_1_resource_info.html">ResourceInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#aa482194c404ccba36a4095b513c4cf7a">GetResourceInfo</a> (string path)</td></tr>
 <tr class="memdesc:aa482194c404ccba36a4095b513c4cf7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the resource info for the remote path.  <a href="#aa482194c404ccba36a4095b513c4cf7a">More...</a><br /></td></tr>
 <tr class="separator:aa482194c404ccba36a4095b513c4cf7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a71b182537b36e924e7df1ae3bbac89"><td class="memItemLeft" align="right" valign="top">Stream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a3a71b182537b36e924e7df1ae3bbac89">Download</a> (string path)</td></tr>
@@ -166,19 +167,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a096e6b5540091d8b3f296d899f4807dd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a096e6b5540091d8b3f296d899f4807dd">UpdateShare</a> (int shareId, int perms=-1, string password=null, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> public_upload=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
 <tr class="memdesc:a096e6b5540091d8b3f296d899f4807dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a given share  <a href="#a096e6b5540091d8b3f296d899f4807dd">More...</a><br /></td></tr>
 <tr class="separator:a096e6b5540091d8b3f296d899f4807dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac44012d849ddbbbdab86509344d6504d"><td class="memItemLeft" align="right" valign="top">PublicShare&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#ac44012d849ddbbbdab86509344d6504d">ShareWithLink</a> (string path, int perms=-1, string password=null, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> public_upload=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
+<tr class="memitem:ac44012d849ddbbbdab86509344d6504d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_types_1_1_public_share.html">PublicShare</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#ac44012d849ddbbbdab86509344d6504d">ShareWithLink</a> (string path, int perms=-1, string password=null, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> public_upload=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
 <tr class="memdesc:ac44012d849ddbbbdab86509344d6504d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shares a remote file with link.  <a href="#ac44012d849ddbbbdab86509344d6504d">More...</a><br /></td></tr>
 <tr class="separator:ac44012d849ddbbbdab86509344d6504d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69d7df9c2e91b8716bb0c5a2f5ff7878"><td class="memItemLeft" align="right" valign="top">UserShare&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a69d7df9c2e91b8716bb0c5a2f5ff7878">ShareWithUser</a> (string path, string username, int perms=-1, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> remoteUser=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
+<tr class="memitem:a69d7df9c2e91b8716bb0c5a2f5ff7878"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_types_1_1_user_share.html">UserShare</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a69d7df9c2e91b8716bb0c5a2f5ff7878">ShareWithUser</a> (string path, string username, int perms=-1, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> remoteUser=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
 <tr class="memdesc:a69d7df9c2e91b8716bb0c5a2f5ff7878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shares a remote file with specified user.  <a href="#a69d7df9c2e91b8716bb0c5a2f5ff7878">More...</a><br /></td></tr>
 <tr class="separator:a69d7df9c2e91b8716bb0c5a2f5ff7878"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22625407b475bd43c292fc80fbcebad9"><td class="memItemLeft" align="right" valign="top">GroupShare&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a22625407b475bd43c292fc80fbcebad9">ShareWithGroup</a> (string path, string groupName, int perms=-1)</td></tr>
+<tr class="memitem:a22625407b475bd43c292fc80fbcebad9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_types_1_1_group_share.html">GroupShare</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a22625407b475bd43c292fc80fbcebad9">ShareWithGroup</a> (string path, string groupName, int perms=-1)</td></tr>
 <tr class="memdesc:a22625407b475bd43c292fc80fbcebad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shares a remote file with specified group.  <a href="#a22625407b475bd43c292fc80fbcebad9">More...</a><br /></td></tr>
 <tr class="separator:a22625407b475bd43c292fc80fbcebad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a241b88019805ddd87e8d596a6cf6c7a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a241b88019805ddd87e8d596a6cf6c7a9">IsShared</a> (string path)</td></tr>
 <tr class="memdesc:a241b88019805ddd87e8d596a6cf6c7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a path is already shared.  <a href="#a241b88019805ddd87e8d596a6cf6c7a9">More...</a><br /></td></tr>
 <tr class="separator:a241b88019805ddd87e8d596a6cf6c7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd8b3359561282563c774b6e4784cb3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt; <a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178">Share</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#acd8b3359561282563c774b6e4784cb3d">GetShares</a> (string path, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> reshares=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> subfiles=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
+<tr class="memitem:acd8b3359561282563c774b6e4784cb3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt; <a class="el" href="classowncloudsharp_1_1_types_1_1_share.html">Share</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#acd8b3359561282563c774b6e4784cb3d">GetShares</a> (string path, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> reshares=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> subfiles=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
 <tr class="memdesc:acd8b3359561282563c774b6e4784cb3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns array of shares.  <a href="#acd8b3359561282563c774b6e4784cb3d">More...</a><br /></td></tr>
 <tr class="separator:acd8b3359561282563c774b6e4784cb3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e285455e3f0cf437d9359956b6feaa5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a7e285455e3f0cf437d9359956b6feaa5">CreateUser</a> (string username, string initialPassword)</td></tr>
@@ -876,7 +877,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ResourceInfo owncloudsharp.Client.GetResourceInfo </td>
+          <td class="memname"><a class="el" href="classowncloudsharp_1_1_types_1_1_resource_info.html">ResourceInfo</a> owncloudsharp.Client.GetResourceInfo </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
@@ -901,7 +902,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt;<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178">Share</a>&gt; owncloudsharp.Client.GetShares </td>
+          <td class="memname"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt;<a class="el" href="classowncloudsharp_1_1_types_1_1_share.html">Share</a>&gt; owncloudsharp.Client.GetShares </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -1044,7 +1045,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">List&lt;ResourceInfo&gt; owncloudsharp.Client.List </td>
+          <td class="memname">List&lt;<a class="el" href="classowncloudsharp_1_1_types_1_1_resource_info.html">ResourceInfo</a>&gt; owncloudsharp.Client.List </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
@@ -1270,7 +1271,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">GroupShare owncloudsharp.Client.ShareWithGroup </td>
+          <td class="memname"><a class="el" href="classowncloudsharp_1_1_types_1_1_group_share.html">GroupShare</a> owncloudsharp.Client.ShareWithGroup </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -1313,7 +1314,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">PublicShare owncloudsharp.Client.ShareWithLink </td>
+          <td class="memname"><a class="el" href="classowncloudsharp_1_1_types_1_1_public_share.html">PublicShare</a> owncloudsharp.Client.ShareWithLink </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -1363,7 +1364,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">UserShare owncloudsharp.Client.ShareWithUser </td>
+          <td class="memname"><a class="el" href="classowncloudsharp_1_1_types_1_1_user_share.html">UserShare</a> owncloudsharp.Client.ShareWithUser </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>path</em>, </td>
