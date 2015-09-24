@@ -630,7 +630,7 @@ namespace owncloudsharp
 		/// </summary>
 		/// <returns>list of groups.</returns>
 		/// <param name="username">name of user to list groups.</param>
-		public object GetUserGroups (string username) {
+		public List<string> GetUserGroups (string username) {
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/groups", Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
@@ -640,9 +640,7 @@ namespace owncloudsharp
 
 			CheckOcsStatus (response);
 
-			var content = response.Content; 
-			// TODO: Parse response
-			return content;
+			return GetDataElements (response.Content);
 		}
 
 		/// <summary>
@@ -651,10 +649,9 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if user is in group, <c>false</c> otherwise.</returns>
 		/// <param name="username">name of user.</param>
 		/// <param name="groupName">name of group.</param>
-		public bool UserIsInGroup (string username, string groupName) {
+		public bool IsUserInGroup (string username, string groupName) {
 			var groups = GetUserGroups (username);
-			// TODO: Implement query
-			return false;
+			return groups.Contains (groupName);
 		}
 
 		/// <summary>
