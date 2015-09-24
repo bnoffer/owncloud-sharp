@@ -1,13 +1,11 @@
-﻿==============================
-C# client library for ownCloud
-==============================
+﻿#C# client library for ownCloud
 
-This project is inspired by the [Python client library for ownCloud](https://github.com/owncloud/pyocclient) .
+A portable class library to interact with ownCloud servers through WebDAV and the ownCloud OCS API.
 
 Project status
 ==============
 
-This project is in its very early stages. Get back in a few weeks and we'll see where we are by then.
+The library has all calls present and work is currently focussed on parsing complex OCS API responses. A first usable release is planned for October 1st.
 
 Instructions
 ============
@@ -44,7 +42,11 @@ ownCloud# relies on the following projects:
 * webDAVNet - http://webdavnet.codeplex.com/
 * RestSharp - https://github.com/restsharp/RestSharp
 
+This project is inspired by the
+
+* Python client library for ownCloud - https://github.com/owncloud/pyocclient
+
 Authors
 =======
 
-Bastian Noffer (@bnoffer)
+Bastian Noffer ( [@bnoffer](https://github.com/bnoffer) )
