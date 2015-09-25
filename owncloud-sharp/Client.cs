@@ -707,7 +707,7 @@ namespace owncloudsharp
 		/// </summary>
 		/// <returns>list of subadmin groups.</returns>
 		/// <param name="username">name of user.</param>
-		public object GetUserSubAdminGroups (string username) {
+		public List<string> GetUserSubAdminGroups (string username) {
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
@@ -715,11 +715,14 @@ namespace owncloudsharp
 
 			var response = rest.Execute (request);
 
-			CheckOcsStatus (response);
+			try {
+				CheckOcsStatus (response);
+			} catch (OCSResponseError ocserr) {
+				if (ocserr.StatusCode.Equals ("102")) // empty response results in a OCS 102 Error
+					return new List<string> ();
+			}
 
-			var content = response.Content; 
-			// TODO: Parse response
-			return content;
+			return GetDataElements (response.Content);
 		}
 
 		/// <summary>
@@ -728,10 +731,9 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if user is in sub admin group, <c>false</c> otherwise.</returns>
 		/// <param name="username">name of user.</param>
 		/// <param name="groupNname">name of subadmin group.</param>
-		public bool UserIsInSubAdminGroup (string username, string groupNname) {
+		public bool IsUserInSubAdminGroup (string username, string groupNname) {
 			var groups = GetUserSubAdminGroups (username);
-			// TODO: Implement query
-			return false;
+			return groups.Contains (groupNname);
 		}
 		#endregion
 
