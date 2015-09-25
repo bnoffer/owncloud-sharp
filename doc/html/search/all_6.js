@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['host',['Host',['../classowncloudsharp_1_1_config.html#adf3604ef39a679dbaa980bf8d020d0a8',1,'owncloudsharp::Config']]]
+  ['host',['Host',['../classowncloudsharp_1_1_types_1_1_config.html#a36887dfa541a00bd4b8f7def693150b5',1,'owncloudsharp::Types::Config']]]
 ];

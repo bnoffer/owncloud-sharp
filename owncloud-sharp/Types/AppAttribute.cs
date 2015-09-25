@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace owncloudsharp
+namespace owncloudsharp.Types
 {
 	/// <summary>
 	/// Represents a Apps OCS attribute.
