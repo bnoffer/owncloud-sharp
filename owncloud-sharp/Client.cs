@@ -833,10 +833,10 @@ namespace owncloudsharp
 		/// <summary>
 		/// Returns an application attribute
 		/// </summary>
-		/// <returns>The attribute.</returns>
+		/// <returns>App Attribute List.</returns>
 		/// <param name="app">application id.</param>
 		/// <param name="key">attribute key or None to retrieve all values for the given application.</param>
-		public object GetAttribute(string app = "", string key = "") {
+		public List<AppAttribute> GetAttribute(string app = "", string key = "") {
 			var path = "getattribute";
 			if (!app.Equals ("")) {
 				path += "/" + app;
@@ -851,9 +851,7 @@ namespace owncloudsharp
 
 			CheckOcsStatus (response);
 
-			var content = response.Content; 
-			// TODO: Parse response
-			return content;
+			return GetAttributeList (response.Content);
 		}
 
 		/// <summary>
@@ -1193,6 +1191,38 @@ namespace owncloudsharp
 				if (!ocsStatus.Equals ("100"))
 					throw new OCSResponseError (GetFromMeta (response.Content, "message"), ocsStatus);
 			}
+		}
+
+		/// <summary>
+		/// Returns a list of application attributes.
+		/// </summary>
+		/// <returns>List of application attributes.</returns>
+		/// <param name="response">XML OCS Response.</param>
+		public List<AppAttribute> GetAttributeList(string response) {
+			List<AppAttribute> result = new List<AppAttribute> ();
+			XDocument xdoc = XDocument.Parse(response);
+
+			foreach (XElement data in xdoc.Descendants(XName.Get("data"))) {
+				foreach (XElement element in data.Descendants(XName.Get("element")) ){
+					AppAttribute attr = new AppAttribute ();
+
+					var node = element.Element(XName.Get("app"));
+					if (node != null)
+						attr.App = node.Value;
+
+					node = element.Element(XName.Get("key"));
+					if (node != null)
+						attr.Key = node.Value;
+
+					node = element.Element(XName.Get("value"));
+					if (node != null)
+						attr.value = node.Value;
+
+					result.Add (attr);
+				}
+			}
+
+			return result;
 		}
         #endregion
     }
