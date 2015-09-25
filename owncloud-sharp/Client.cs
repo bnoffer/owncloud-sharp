@@ -910,7 +910,7 @@ namespace owncloudsharp
 		/// List all enabled apps through the provisioning api.
 		/// </summary>
 		/// <returns>a list of apps and their enabled state.</returns>
-		public object GetApp() {
+		public List<string> GetApps() {
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
@@ -918,9 +918,7 @@ namespace owncloudsharp
 
 			CheckOcsStatus (response);
 
-			var content = response.Content; 
-			// TODO: Parse response
-			return content;
+			return GetDataElements (response.Content);
 		}
 
 		/// <summary>
