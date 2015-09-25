@@ -262,7 +262,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -283,7 +283,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -306,7 +306,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -342,7 +342,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -518,7 +518,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -540,7 +540,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -594,7 +594,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -618,7 +618,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -671,7 +671,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -695,7 +695,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -753,7 +753,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -775,7 +775,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -797,7 +797,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -872,7 +872,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -895,7 +895,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -934,7 +934,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
@@ -956,7 +956,7 @@ namespace owncloudsharp
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
-				else if (response.Data.Meta.StatusCode > 900)
+				else
 					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
 			}
 
