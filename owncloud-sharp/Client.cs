@@ -810,7 +810,7 @@ namespace owncloudsharp
 		/// Returns ownCloud config information.
 		/// </summary>
 		/// <returns>The config.</returns>
-		public object GetConfig() {
+		public Config GetConfig() {
 			var request = new RestRequest(GetOcsPath("", "config"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
@@ -818,9 +818,14 @@ namespace owncloudsharp
 
 			CheckOcsStatus (response);
 
-			var content = response.Content; 
-			// TODO: Parse response
-			return content;
+			Config cfg = new Config ();
+			cfg.Contact = GetFromData (response.Content, "contact");
+			cfg.Host = GetFromData (response.Content, "host");
+			cfg.Ssl  = GetFromData (response.Content, "ssl");
+			cfg.Version = GetFromData (response.Content, "version");
+			cfg.website = GetFromData (response.Content, "website");
+
+			return cfg;
 		}
 		#endregion
 
