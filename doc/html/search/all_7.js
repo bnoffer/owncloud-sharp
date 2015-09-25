@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['lastmodified',['LastModified',['../classowncloudsharp_1_1_types_1_1_resource_info.html#af03ea962da598a33df3f098031566bf6',1,'owncloudsharp::Types::ResourceInfo']]],
-  ['link',['Link',['../namespaceowncloudsharp.html#a51141c9a2e84eaced736ab96ea4b2f0ba97e7c9a7d06eac006a28bf05467fcc8b',1,'owncloudsharp']]],
-  ['list',['List',['../classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609',1,'owncloudsharp::Client']]],
-  ['listopenremoteshare',['ListOpenRemoteShare',['../classowncloudsharp_1_1_client.html#a47f02b74f8beb72a312ff92a07636096',1,'owncloudsharp::Client']]]
+  ['isshared',['IsShared',['../classowncloudsharp_1_1_client.html#a241b88019805ddd87e8d596a6cf6c7a9',1,'owncloudsharp::Client']]],
+  ['isuseringroup',['IsUserInGroup',['../classowncloudsharp_1_1_client.html#a3ad615fa0f35fe632d80a8149c8cad74',1,'owncloudsharp::Client']]],
+  ['isuserinsubadmingroup',['IsUserInSubAdminGroup',['../classowncloudsharp_1_1_client.html#a62e091c3df9d3dcd40794b89de04e481',1,'owncloudsharp::Client']]],
+  ['itemsource',['ItemSource',['../classowncloudsharp_1_1_types_1_1_advanced_share_properties.html#a6372a722cd53c858a4d4b4871ce7f14c',1,'owncloudsharp::Types::AdvancedShareProperties']]],
+  ['itemtype',['ItemType',['../classowncloudsharp_1_1_types_1_1_advanced_share_properties.html#a27befd7724a4772825dc9f6c1edf43c1',1,'owncloudsharp::Types::AdvancedShareProperties']]]
 ];

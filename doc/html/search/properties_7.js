@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mailsend',['MailSend',['../classowncloudsharp_1_1_types_1_1_advanced_share_properties.html#a73d194741812b8cc3c21dc22c620fd5f',1,'owncloudsharp::Types::AdvancedShareProperties']]]
+  ['key',['Key',['../classowncloudsharp_1_1_app_attribute.html#a769a8bd5697d9f17fbb51060195f4a3a',1,'owncloudsharp::AppAttribute']]]
 ];

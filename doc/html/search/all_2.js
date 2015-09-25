@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['data',['Data',['../classowncloudsharp_1_1_types_1_1_o_c_s.html#ad64d4fa0e0f73ba19a0eb97b9d30f2bd',1,'owncloudsharp::Types::OCS']]],
   ['declineremoteshare',['DeclineRemoteShare',['../classowncloudsharp_1_1_client.html#a8936411abf14870d211e4a62be3d7840',1,'owncloudsharp::Client']]],
   ['delete',['Delete',['../classowncloudsharp_1_1_client.html#a6465df479d098af428bc9bcdd2edbc7f',1,'owncloudsharp.Client.Delete()'],['../namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157af2a6c498fb90ee345d997f888fce3b18',1,'owncloudsharp.Delete()']]],
   ['deleteattribute',['DeleteAttribute',['../classowncloudsharp_1_1_client.html#ad94e83b297c9de310beafd878fd99bc4',1,'owncloudsharp::Client']]],
