@@ -6,13 +6,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{272AFCD1-32AC-4F20-A2CC-11C2D4D8FC8F}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		LICENSE = LICENSE
+		LICENSE.md = LICENSE.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{DB391865-4A19-4B01-9950-F0500D92526B}"
 	ProjectSection(SolutionItems) = preProject
 		Binaries\RestSharp.Build.dll = Binaries\RestSharp.Build.dll
 		Binaries\RestSharp.dll = Binaries\RestSharp.dll
+		Binaries\README.md = Binaries\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{1C5E5AC4-DFEF-4B54-A2A5-511F41AAF2E6}"
