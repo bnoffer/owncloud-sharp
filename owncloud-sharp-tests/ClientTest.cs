@@ -36,6 +36,9 @@ namespace owncloudsharp.Tests
 		{
 			c = new Client (TestSettings.ownCloudInstanceUrl, TestSettings.ownCloudUser, TestSettings.ownCloudPassword);
 			payloadData = System.Text.Encoding.UTF8.GetBytes ("owncloud# NUnit Payload\r\nPlease feel free to delete");
+			c.CreateUser ("sharetest", "test");
+			c.CreateGroup ("testgroup");
+			c.AddUserToGroup ("sharetest", "testgroup");
 		}
 
 		/// <summary>
@@ -61,6 +64,73 @@ namespace owncloudsharp.Tests
 				c.Delete ("/zip-test/file.txt");
 				c.Delete ("/zip-test");
 			}
+
+			if (c.Exists ("/share-link-test.txt")) {
+				if (c.IsShared ("/share-link-test.txt")) {
+					var shares = c.GetShares ("/share-link-test.txt");
+					foreach (var share in shares)
+						c.DeleteShare (share.ShareId);
+				}
+				c.Delete ("/share-link-test.txt");
+			}
+
+			if (c.Exists ("/share-user-test.txt")) {
+				if (c.IsShared ("/share-user-test.txt")) {
+					var shares = c.GetShares ("/share-user-test.txt");
+					foreach (var share in shares)
+						c.DeleteShare (share.ShareId);
+				}
+				c.Delete ("/share-user-test.txt");
+			}
+
+			if (c.Exists ("/share-group-test.txt")) {
+				if (c.IsShared ("/share-group-test.txt")) {
+					var shares = c.GetShares ("/share-group-test.txt");
+					foreach (var share in shares)
+						c.DeleteShare (share.ShareId);
+				}
+				c.Delete ("/share-group-test.txt");
+			}
+
+			if (c.Exists ("/share-update-test.txt")) {
+				if (c.IsShared ("/share-update-test.txt")) {
+					var shares = c.GetShares ("/share-update-test.txt");
+					foreach (var share in shares)
+						c.DeleteShare (share.ShareId);
+				}
+				c.Delete ("/share-update-test.txt");
+			}
+
+			if (c.Exists ("/share-delete-test.txt")) {
+				if (c.IsShared ("/share-delete-test.txt")) {
+					var shares = c.GetShares ("/share-delete-test.txt");
+					foreach (var share in shares)
+						c.DeleteShare (share.ShareId);
+				}
+				c.Delete ("/share-delete-test.txt");
+			}
+
+			if (c.Exists ("/share-shared-test.txt")) {
+				if (c.IsShared ("/share-shared-test.txt")) {
+					var shares = c.GetShares ("/share-shared-test.txt");
+					foreach (var share in shares)
+						c.DeleteShare (share.ShareId);
+				}
+				c.Delete ("/share-shared-test.txt");
+			}
+
+			if (c.Exists ("/share-get-test.txt")) {
+				if (c.IsShared ("/share-get-test.txt")) {
+					var shares = c.GetShares ("/share-get-test.txt");
+					foreach (var share in shares)
+						c.DeleteShare (share.ShareId);
+				}
+				c.Delete ("/share-get-test.txt");
+			}
+
+			c.RemoveUserFromGroup ("sharetest", "testgroup");
+			c.DeleteGroup ("testgroup");
+			c.DeleteUser ("sharetest");
 		}
 		#endregion
 
@@ -231,6 +301,114 @@ namespace owncloudsharp.Tests
 
 			Assert.True (result);
 		}
+		#endregion
+
+		#region OCS Tests
+		#region Remote Shares
+		/*
+		 * Deactivated because of testability limitations.
+		 * OC 8.2 is not officialy released and currently I have only one OC 8.2 dev instance running.
+		[Test ()]
+		public void ListOpenRemoteShare() {
+			// TODO: Implement ListOpenRemoteShare Test
+		}
+
+		[Test ()]
+		public void AcceptRemoteShare() {
+			// TODO: Implement AcceptRemoteShare Test
+		}
+
+		[Test ()]
+		public void DeclineRemoteShare() {
+			// TODO: Implement AcceptRemoteShare Test
+		}
+
+		[Test ()]
+		public void ShareWithRemote() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-remote-test.txt", payload, "text/plain");
+			var share = c.ShareWithUser ("/share-remote-test.txt", "user@example.com", Convert.ToInt32 (OcsPermission.All), OcsBoolParam.True);
+
+			Assert.NotNull (share);
+		}*/
+		#endregion
+
+		#region Shares
+		[Test ()]
+		public void ShareWithLink() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-link-test.txt", payload, "text/plain");
+			var share = c.ShareWithLink ("/share-link-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
+
+			Assert.NotNull (share);
+		}
+
+		[Test ()]
+		public void ShareWithUser() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-user-test.txt", payload, "text/plain");
+			var share = c.ShareWithUser ("/share-user-test.txt", "sharetest", Convert.ToInt32 (OcsPermission.All), OcsBoolParam.False);
+
+			Assert.NotNull (share);
+		}
+
+		[Test ()]
+		public void ShareWithGroup() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-group-test.txt", payload, "text/plain");
+			var share = c.ShareWithGroup ("/share-group-test.txt", "testgroup", Convert.ToInt32 (OcsPermission.All));
+
+			Assert.NotNull (share);
+		}
+
+		[Test ()]
+		public void UpdateShare() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-update-test.txt", payload, "text/plain");
+			var share = c.ShareWithLink ("/share-update-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
+
+			result = c.UpdateShare (share.ShareId, -1, "test123test");
+			Assert.True (result);
+		}
+
+		[Test ()]
+		public void DeleteShare() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-delete-test.txt", payload, "text/plain");
+			var share = c.ShareWithLink ("/share-delete-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
+
+			result = c.DeleteShare (share.ShareId);
+			Assert.True (result);
+		}
+
+		[Test ()]
+		public void IsShare() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-shared-test.txt", payload, "text/plain");
+			var share = c.ShareWithLink ("/share-shared-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
+
+			result = c.IsShared ("/share-shared-test.txt");
+			Assert.True (result);
+		}
+
+		[Test ()]
+		public void GetShares() {
+			MemoryStream payload = new MemoryStream (payloadData);
+
+			var result = c.Upload ("/share-get-test.txt", payload, "text/plain");
+			var share = c.ShareWithLink ("/share-get-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
+
+			var content = c.GetShares ("/share-get-test.txt");
+			Assert.Greater (content.Count, 0);
+		}
+		#endregion
 		#endregion
 	}
 }
