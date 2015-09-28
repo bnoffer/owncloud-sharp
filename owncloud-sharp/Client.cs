@@ -576,6 +576,24 @@ namespace owncloudsharp
 		}
 
 		/// <summary>
+		/// Gets the user's attributes.
+		/// </summary>
+		/// <returns>The user attributes.</returns>
+		/// <param name="username">Username.</param>
+		public User GetUserAttributes(string username) {
+			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.GET);
+			request.AddHeader("OCS-APIREQUEST", "true");
+
+			request.AddUrlSegment ("userid", username);
+
+			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
+			return GetUser (response.Content);
+		}
+
+		/// <summary>
 		/// Sets a user attribute.
 		/// </summary>
 		/// <returns><c>true</c>, if user attribute was set, <c>false</c> otherwise.</returns>
@@ -1181,7 +1199,7 @@ namespace owncloudsharp
 		/// Checks the validity of the OCS Request. If invalid a exception is thrown.
 		/// </summary>
 		/// <param name="response">OCS Response.</param>
-		public void CheckOcsStatus(IRestResponse response) {
+		private void CheckOcsStatus(IRestResponse response) {
 			if (response.Content == null)
 				throw new ResponseError (response.ErrorMessage);
 			else {
@@ -1198,7 +1216,7 @@ namespace owncloudsharp
 		/// </summary>
 		/// <returns>List of application attributes.</returns>
 		/// <param name="response">XML OCS Response.</param>
-		public List<AppAttribute> GetAttributeList(string response) {
+		private List<AppAttribute> GetAttributeList(string response) {
 			List<AppAttribute> result = new List<AppAttribute> ();
 			XDocument xdoc = XDocument.Parse(response);
 
@@ -1223,6 +1241,54 @@ namespace owncloudsharp
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Gets the user attributes from a OCS XML Response.
+		/// </summary>
+		/// <returns>The user attributes.</returns>
+		/// <param name="response">OCS XML Response.</param>
+		private User GetUser(string response) {
+			var user = new User ();
+			XDocument xdoc = XDocument.Parse(response);
+
+			foreach (XElement data in xdoc.Descendants(XName.Get("data"))) {
+				var node = data.Element(XName.Get("displayname"));
+				if (node != null)
+					user.DisplayName = node.Value;
+
+				node = data.Element(XName.Get("email"));
+				if (node != null)
+					user.EMail = node.Value;
+
+				node = data.Element(XName.Get("enabled"));
+				if (node != null)
+					user.Enabled = (node.Value.Equals ("true")) ? true : false;
+				
+				foreach (XElement element in data.Descendants(XName.Get("quota")) ){
+					var quota = new Quota ();
+
+					node = element.Element(XName.Get("free"));
+					if (node != null)
+						quota.Free = Convert.ToInt64(node.Value);
+
+					node = element.Element(XName.Get("used"));
+					if (node != null)
+						quota.Used = Convert.ToInt64(node.Value);
+
+					node = element.Element(XName.Get("total"));
+					if (node != null)
+						quota.Total = Convert.ToInt64(node.Value);
+
+					node = element.Element(XName.Get("relative"));
+					if (node != null)
+						quota.Relative = Convert.ToInt64(node.Value);
+
+					user.Quota = quota;
+				}
+			}
+
+			return user;
 		}
         #endregion
     }
