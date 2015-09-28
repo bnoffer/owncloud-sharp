@@ -5,7 +5,7 @@ A portable class library to interact with ownCloud servers through WebDAV and th
 Project status
 ==============
 
-The library has all calls present and work is currently focussed on parsing complex OCS API responses. A first usable release is planned for October 1st.
+The library is currently undergoing its first testing cycle based on the unit tests. Release v.0.1.0 is currently still on schedule.
 
 Instructions
 ============
@@ -33,6 +33,15 @@ Sample Code
 The *ocsharpdemo* project is a basic console application showing how the API works.
 
 Click [here](https://github.com/bnoffer/owncloud-sharp/blob/master/ocsharpdemo/Program.cs) to take a look at the Program.cs online.‚
+
+Unit Tests
+==========
+
+The owncloud-sharp-test project contains all unit tests for ownCloud# and relies on the NUnit Framework. In order to perform the unit tests the NUnit NuGet Package is required.
+
+**NOTE:** The owncloud-sharp-test project conains a class TestSettings that contains the configuration for the ownCloud v.8.2+ server installation to be used for testing. Ideally this should be a development server installation. You can find instructions on how to setup a development installation of ownCloud [here](https://doc.owncloud.org/server/8.2/developer_manual/general/devenv.html).
+
+ownCloud Version 8.2 or higher is required for all tests to complete successfully. This is because the OCS Share API only supports Federated Cloud Shares starting with version 8.2.
 
 Credits
 =======
