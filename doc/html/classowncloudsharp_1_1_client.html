@@ -198,7 +198,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad3907603f1510c65ec3de52897257457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the user's attributes.  <a href="#ad3907603f1510c65ec3de52897257457">More...</a><br /></td></tr>
 <tr class="separator:ad3907603f1510c65ec3de52897257457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a788f66e2d774a7c47e0a46918a50c5b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a788f66e2d774a7c47e0a46918a50c5b5">SetUserAttribute</a> (string username, string key, string value)</td></tr>
-<tr class="memdesc:a788f66e2d774a7c47e0a46918a50c5b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a user attribute.  <a href="#a788f66e2d774a7c47e0a46918a50c5b5">More...</a><br /></td></tr>
+<tr class="memdesc:a788f66e2d774a7c47e0a46918a50c5b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a user attribute. See <a href="https://doc.owncloud.com/server/7.0EE/admin_manual/configuration_auth_backends/user_provisioning_api.html#users-edituser">https://doc.owncloud.com/server/7.0EE/admin_manual/configuration_auth_backends/user_provisioning_api.html#users-edituser</a> for reference.  <a href="#a788f66e2d774a7c47e0a46918a50c5b5">More...</a><br /></td></tr>
 <tr class="separator:a788f66e2d774a7c47e0a46918a50c5b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b8657d971f2b1a9f27f2b8cfc73a21b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a7b8657d971f2b1a9f27f2b8cfc73a21b">AddUserToGroup</a> (string username, string groupName)</td></tr>
 <tr class="memdesc:a7b8657d971f2b1a9f27f2b8cfc73a21b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a user to a group.  <a href="#a7b8657d971f2b1a9f27f2b8cfc73a21b">More...</a><br /></td></tr>
@@ -221,6 +221,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a62e091c3df9d3dcd40794b89de04e481"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a62e091c3df9d3dcd40794b89de04e481">IsUserInSubAdminGroup</a> (string username, string groupNname)</td></tr>
 <tr class="memdesc:a62e091c3df9d3dcd40794b89de04e481"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a user is in a subadmin group.  <a href="#a62e091c3df9d3dcd40794b89de04e481">More...</a><br /></td></tr>
 <tr class="separator:a62e091c3df9d3dcd40794b89de04e481"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc52bbdd5e176151e3ba3c51184872dc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#adc52bbdd5e176151e3ba3c51184872dc">RemoveUserFromSubAdminGroup</a> (string username, string groupName)</td></tr>
+<tr class="memdesc:adc52bbdd5e176151e3ba3c51184872dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the user from sub admin group.  <a href="#adc52bbdd5e176151e3ba3c51184872dc">More...</a><br /></td></tr>
+<tr class="separator:adc52bbdd5e176151e3ba3c51184872dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3f6b18765fa47eed193eae4db94ae2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#ae3f6b18765fa47eed193eae4db94ae2c">CreateGroup</a> (string groupName)</td></tr>
 <tr class="memdesc:ae3f6b18765fa47eed193eae4db94ae2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new group via provisioning API.  <a href="#ae3f6b18765fa47eed193eae4db94ae2c">More...</a><br /></td></tr>
 <tr class="separator:ae3f6b18765fa47eed193eae4db94ae2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1255,6 +1258,42 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="adc52bbdd5e176151e3ba3c51184872dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool owncloudsharp.Client.RemoveUserFromSubAdminGroup </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>username</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>groupName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes the user from sub admin group. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code>, if user from sub admin group was removed, <code>false</code> otherwise.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">username</td><td>Username.</td></tr>
+    <tr><td class="paramname">groupName</td><td>Group name.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ae50362f45f53ffe21fde6651f0873c0e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1353,7 +1392,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets a user attribute. </p>
+<p>Sets a user attribute. See <a href="https://doc.owncloud.com/server/7.0EE/admin_manual/configuration_auth_backends/user_provisioning_api.html#users-edituser">https://doc.owncloud.com/server/7.0EE/admin_manual/configuration_auth_backends/user_provisioning_api.html#users-edituser</a> for reference. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code>, if user attribute was set, <code>false</code> otherwise.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

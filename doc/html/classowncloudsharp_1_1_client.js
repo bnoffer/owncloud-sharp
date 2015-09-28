@@ -35,6 +35,7 @@ var classowncloudsharp_1_1_client =
     [ "ListOpenRemoteShare", "classowncloudsharp_1_1_client.html#a47f02b74f8beb72a312ff92a07636096", null ],
     [ "Move", "classowncloudsharp_1_1_client.html#a2ea83b74c926b1ff7a8443f75bf4ebd2", null ],
     [ "RemoveUserFromGroup", "classowncloudsharp_1_1_client.html#a8c2bcb8ca08d661bb4c15b8cc07eaf5d", null ],
+    [ "RemoveUserFromSubAdminGroup", "classowncloudsharp_1_1_client.html#adc52bbdd5e176151e3ba3c51184872dc", null ],
     [ "SearchUsers", "classowncloudsharp_1_1_client.html#ae50362f45f53ffe21fde6651f0873c0e", null ],
     [ "SetAttribute", "classowncloudsharp_1_1_client.html#a0939782439f44c5250d66147755d4c25", null ],
     [ "SetUserAttribute", "classowncloudsharp_1_1_client.html#a788f66e2d774a7c47e0a46918a50c5b5", null ],

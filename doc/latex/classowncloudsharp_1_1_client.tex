@@ -61,7 +61,7 @@ bool \hyperlink{classowncloudsharp_1_1_client_a59adb4a3ad62adbaad112c1a6fa8201e}
 \hyperlink{classowncloudsharp_1_1_types_1_1_user}{User} \hyperlink{classowncloudsharp_1_1_client_ad3907603f1510c65ec3de52897257457}{Get\+User\+Attributes} (string username)
 \begin{DoxyCompactList}\small\item\em Gets the user\textquotesingle{}s attributes. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a788f66e2d774a7c47e0a46918a50c5b5}{Set\+User\+Attribute} (string username, string key, string value)
-\begin{DoxyCompactList}\small\item\em Sets a user attribute. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Sets a user attribute. See \href{https://doc.owncloud.com/server/7.0EE/admin_manual/configuration_auth_backends/user_provisioning_api.html#users-edituser}{\tt https\+://doc.\+owncloud.\+com/server/7.\+0\+E\+E/admin\+\_\+manual/configuration\+\_\+auth\+\_\+backends/user\+\_\+provisioning\+\_\+api.\+html\#users-\/edituser} for reference. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a7b8657d971f2b1a9f27f2b8cfc73a21b}{Add\+User\+To\+Group} (string username, string group\+Name)
 \begin{DoxyCompactList}\small\item\em Adds a user to a group. \end{DoxyCompactList}\item 
 \hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List}$<$ string $>$ \hyperlink{classowncloudsharp_1_1_client_a18acf90fef2b57c03effffb6f052e873}{Get\+User\+Groups} (string username)
@@ -76,6 +76,8 @@ bool \hyperlink{classowncloudsharp_1_1_client_a99a393c20b57e50c10ee337b09ed75b3}
 \begin{DoxyCompactList}\small\item\em Get a list of subadmin groups associated to a user. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a62e091c3df9d3dcd40794b89de04e481}{Is\+User\+In\+Sub\+Admin\+Group} (string username, string group\+Nname)
 \begin{DoxyCompactList}\small\item\em Check if a user is in a subadmin group. \end{DoxyCompactList}\item 
+bool \hyperlink{classowncloudsharp_1_1_client_adc52bbdd5e176151e3ba3c51184872dc}{Remove\+User\+From\+Sub\+Admin\+Group} (string username, string group\+Name)
+\begin{DoxyCompactList}\small\item\em Removes the user from sub admin group. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_ae3f6b18765fa47eed193eae4db94ae2c}{Create\+Group} (string group\+Name)
 \begin{DoxyCompactList}\small\item\em Create a new group via provisioning A\+P\+I. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a83390a9710020ecc7513dd03a23e192f}{Delete\+Group} (string group\+Name)
@@ -796,6 +798,28 @@ Removes a user from a group.
 {\em group\+Name} & name of group user is to be removed from.\\
 \hline
 \end{DoxyParams}
+\hypertarget{classowncloudsharp_1_1_client_adc52bbdd5e176151e3ba3c51184872dc}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Remove\+User\+From\+Sub\+Admin\+Group@{Remove\+User\+From\+Sub\+Admin\+Group}}
+\index{Remove\+User\+From\+Sub\+Admin\+Group@{Remove\+User\+From\+Sub\+Admin\+Group}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
+\subsubsection[{Remove\+User\+From\+Sub\+Admin\+Group(string username, string group\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}bool owncloudsharp.\+Client.\+Remove\+User\+From\+Sub\+Admin\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{group\+Name}
+\end{DoxyParamCaption}
+)}\label{classowncloudsharp_1_1_client_adc52bbdd5e176151e3ba3c51184872dc}
+
+
+Removes the user from sub admin group. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user from sub admin group was removed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em group\+Name} & Group name.\\
+\hline
+\end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_ae50362f45f53ffe21fde6651f0873c0e}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Search\+Users@{Search\+Users}}
 \index{Search\+Users@{Search\+Users}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
 \subsubsection[{Search\+Users(string username)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List}$<$string$>$ owncloudsharp.\+Client.\+Search\+Users (
@@ -851,7 +875,7 @@ Sets an application attribute.
 )}\label{classowncloudsharp_1_1_client_a788f66e2d774a7c47e0a46918a50c5b5}
 
 
-Sets a user attribute. 
+Sets a user attribute. See \href{https://doc.owncloud.com/server/7.0EE/admin_manual/configuration_auth_backends/user_provisioning_api.html#users-edituser}{\tt https\+://doc.\+owncloud.\+com/server/7.\+0\+E\+E/admin\+\_\+manual/configuration\+\_\+auth\+\_\+backends/user\+\_\+provisioning\+\_\+api.\+html\#users-\/edituser} for reference. 
 
 \begin{DoxyReturn}{Returns}
 {\ttfamily true}, if user attribute was set, {\ttfamily false} otherwise.
