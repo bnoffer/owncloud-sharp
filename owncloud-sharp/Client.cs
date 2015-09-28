@@ -314,7 +314,7 @@ namespace owncloudsharp
 		}
 
 		/// <summary>
-		/// Updates a given share
+		/// Updates a given share. NOTE: Only one of the update parameters can be specified at once.
 		/// </summary>
 		/// <returns><c>true</c>, if share was updated, <c>false</c> otherwise.</returns>
 		/// <param name="shareId">Share identifier.</param>
@@ -330,13 +330,13 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			if (perms != Convert.ToInt32(OcsPermission.None))
-				request.AddParameter("permissions", Convert.ToInt32(perms) + "");
+				request.AddQueryParameter ("permissions", Convert.ToInt32(perms) + "");
 			if (password != null)
-				request.AddParameter ("password", password);
+				request.AddQueryParameter ("password", password);
 			if (public_upload == OcsBoolParam.True)
-				request.AddParameter ("publicUpload", "true");
+				request.AddQueryParameter ("publicUpload", "true");
 			else if (public_upload == OcsBoolParam.False)
-				request.AddParameter ("publicUpload", "false");
+				request.AddQueryParameter ("publicUpload", "false");
 
 			var response = rest.Execute<OCS>(request);
 			if (response.Data != null) {
