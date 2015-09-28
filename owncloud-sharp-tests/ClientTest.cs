@@ -36,9 +36,12 @@ namespace owncloudsharp.Tests
 		{
 			c = new Client (TestSettings.ownCloudInstanceUrl, TestSettings.ownCloudUser, TestSettings.ownCloudPassword);
 			payloadData = System.Text.Encoding.UTF8.GetBytes ("owncloud# NUnit Payload\r\nPlease feel free to delete");
-			c.CreateUser ("sharetest", "test");
-			c.CreateGroup ("testgroup");
-			c.AddUserToGroup ("sharetest", "testgroup");
+			if (!c.UserExists("sharetest"))
+				c.CreateUser ("sharetest", "test");
+			if (!c.GroupExists("testgroup"))
+				c.CreateGroup ("testgroup");
+			if (!c.IsUserInGroup("sharetest", "testgroup"))
+				c.AddUserToGroup ("sharetest", "testgroup");
 		}
 
 		/// <summary>
@@ -47,6 +50,7 @@ namespace owncloudsharp.Tests
 		[TestFixtureTearDown]
 		public void Cleanup()
 		{
+			#region DAV Test CleanUp
 			if (c.Exists(TestSettings.testFileName))
 				c.Delete (TestSettings.testFileName);
 			if (c.Exists(TestSettings.testDirName))
@@ -64,7 +68,9 @@ namespace owncloudsharp.Tests
 				c.Delete ("/zip-test/file.txt");
 				c.Delete ("/zip-test");
 			}
+			#endregion
 
+			#region OCS Share Test CleanUp
 			if (c.Exists ("/share-link-test.txt")) {
 				if (c.IsShared ("/share-link-test.txt")) {
 					var shares = c.GetShares ("/share-link-test.txt");
@@ -127,10 +133,20 @@ namespace owncloudsharp.Tests
 				}
 				c.Delete ("/share-get-test.txt");
 			}
+			#endregion
 
+			#region OCS User Test cleanup
+			if (c.UserExists("octestusr1"))
+				c.DeleteUser("octestusr1");
+			if (c.UserExists("octestusr"))
+				c.DeleteUser("octestusr");
+			#endregion
+
+			#region General CleanUp
 			c.RemoveUserFromGroup ("sharetest", "testgroup");
 			c.DeleteGroup ("testgroup");
 			c.DeleteUser ("sharetest");
+			#endregion
 		}
 		#endregion
 
@@ -335,36 +351,48 @@ namespace owncloudsharp.Tests
 		#endregion
 
 		#region Shares
+		/// <summary>
+		/// Test ShareWithLink;
+		/// </summary>
 		[Test ()]
 		public void ShareWithLink() {
 			MemoryStream payload = new MemoryStream (payloadData);
 
-			var result = c.Upload ("/share-link-test.txt", payload, "text/plain");
+			c.Upload ("/share-link-test.txt", payload, "text/plain");
 			var share = c.ShareWithLink ("/share-link-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
 
 			Assert.NotNull (share);
 		}
 
+		/// <summary>
+		/// Test ShareWithUser.
+		/// </summary>
 		[Test ()]
 		public void ShareWithUser() {
 			MemoryStream payload = new MemoryStream (payloadData);
 
-			var result = c.Upload ("/share-user-test.txt", payload, "text/plain");
+			c.Upload ("/share-user-test.txt", payload, "text/plain");
 			var share = c.ShareWithUser ("/share-user-test.txt", "sharetest", Convert.ToInt32 (OcsPermission.All), OcsBoolParam.False);
 
 			Assert.NotNull (share);
 		}
 
+		/// <summary>
+		/// Test ShareWithGroup.
+		/// </summary>
 		[Test ()]
 		public void ShareWithGroup() {
 			MemoryStream payload = new MemoryStream (payloadData);
 
-			var result = c.Upload ("/share-group-test.txt", payload, "text/plain");
+			c.Upload ("/share-group-test.txt", payload, "text/plain");
 			var share = c.ShareWithGroup ("/share-group-test.txt", "testgroup", Convert.ToInt32 (OcsPermission.All));
 
 			Assert.NotNull (share);
 		}
 
+		/// <summary>
+		/// Test UpdateShare.
+		/// </summary>
 		[Test ()]
 		public void UpdateShare() {
 			MemoryStream payload = new MemoryStream (payloadData);
@@ -376,6 +404,9 @@ namespace owncloudsharp.Tests
 			Assert.True (result);
 		}
 
+		/// <summary>
+		/// Test DeleteShare.
+		/// </summary>
 		[Test ()]
 		public void DeleteShare() {
 			MemoryStream payload = new MemoryStream (payloadData);
@@ -388,11 +419,11 @@ namespace owncloudsharp.Tests
 		}
 
 		[Test ()]
-		public void IsShare() {
+		public void IsShared() {
 			MemoryStream payload = new MemoryStream (payloadData);
 
 			var result = c.Upload ("/share-shared-test.txt", payload, "text/plain");
-			var share = c.ShareWithLink ("/share-shared-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
+			c.ShareWithLink ("/share-shared-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
 
 			result = c.IsShared ("/share-shared-test.txt");
 			Assert.True (result);
@@ -402,11 +433,193 @@ namespace owncloudsharp.Tests
 		public void GetShares() {
 			MemoryStream payload = new MemoryStream (payloadData);
 
-			var result = c.Upload ("/share-get-test.txt", payload, "text/plain");
-			var share = c.ShareWithLink ("/share-get-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
+			c.Upload ("/share-get-test.txt", payload, "text/plain");
+			c.ShareWithLink ("/share-get-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
 
 			var content = c.GetShares ("/share-get-test.txt");
 			Assert.Greater (content.Count, 0);
+		}
+		#endregion
+
+		#region Users
+		/// <summary>
+		/// Test CreateUser.
+		/// </summary>
+		[Test ()]
+		public void CreateUser() {
+			var result = c.CreateUser ("octestusr1", "octestpwd");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test DeleteUser.
+		/// </summary>
+		[Test ()]
+		public void DeleteUser() {
+			var result = c.CreateUser ("deluser", "delpwd");
+			if (result)
+				result = c.DeleteUser ("deluser");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test UserExists.
+		/// </summary>
+		[Test ()]
+		public void UserExists() {
+			var result = c.UserExists ("sharetest");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test SearchUsers.
+		/// </summary>
+		[Test ()]
+		public void SearchUsers() {
+			var result = c.SearchUsers ("sharetest");
+			Assert.Greater (result.Count, 0);
+		}
+
+		/// <summary>
+		/// Test GetUserAttributes.
+		/// </summary>
+		[Test ()]
+		public void GetUserAttributes() {
+			var result = c.GetUserAttributes ("sharetest");
+			Assert.NotNull (result);
+		}
+
+		/// <summary>
+		/// Test SetUserAttribute.
+		/// </summary>
+		[Test ()]
+		public void SetUserAttribute() {
+			var result = c.SetUserAttribute ("sharetest", "email", "demo@example.com");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test AddUserToGroup.
+		/// </summary>
+		[Test ()]
+		public void AddUserToGroup() {
+			if (!c.UserExists("octestusr"))
+				c.CreateUser ("octestusr", "octestpwd");
+
+			var result = c.AddUserToGroup ("octestusr", "testgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test GetUserGroups.
+		/// </summary>
+		[Test ()]
+		public void GetUserGroups() {
+			var result = c.GetUserGroups ("octestusr");
+			Assert.GreaterOrEqual (result.Count, 0);
+		}
+
+		/// <summary>
+		/// Test IsUserInGroup.
+		/// </summary>
+		/// <returns><c>true</c> if this instance is user in group; otherwise, <c>false</c>.</returns>
+		[Test ()]
+		public void IsUserInGroup() {
+			if (!c.UserExists ("octestusr")) {
+				c.CreateUser ("octestusr", "octestpwd");
+				c.AddUserToGroup ("octestusr", "testgroup");
+			}
+
+			var result = c.IsUserInGroup ("octestusr", "testgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test IsUserNotInGroup.
+		/// </summary>
+		/// <returns><c>true</c> if this instance is user not in group; otherwise, <c>false</c>.</returns>
+		[Test ()]
+		public void IsUserNotInGroup() {
+			var result = c.IsUserInGroup (TestSettings.ownCloudUser, "testgroup");
+			Assert.False (result);
+		}
+
+		/// <summary>
+		/// Test RemoveUserFromGroup.
+		/// </summary>
+		[Test ()]
+		public void RemoveUserFromGroup() {
+			if (!c.UserExists ("octestusr")) {
+				c.CreateUser ("octestusr", "octestpwd");
+				c.AddUserToGroup ("octestusr", "testgroup");
+			}
+			if (!c.IsUserInGroup("octestusr", "testgroup"))
+				c.AddUserToGroup ("octestusr", "testgroup");
+
+			var result = c.RemoveUserFromGroup("octestusr", "testgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test AddUserToSubAdminGroup.
+		/// </summary>
+		[Test ()]
+		public void AddUserToSubAdminGroup() {
+			if (!c.UserExists ("octestusr")) {
+				c.CreateUser ("octestusr", "octestpwd");
+				c.AddUserToGroup ("octestusr", "testgroup");
+			}
+
+			var result = c.AddUserToSubAdminGroup("octestusr", "testgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test GetUserSubAdminGroups.
+		/// </summary>
+		[Test ()]
+		public void GetUserSubAdminGroups() {
+			if (!c.UserExists ("octestusr")) {
+				c.CreateUser ("octestusr", "octestpwd");
+				c.AddUserToGroup ("octestusr", "testgroup");
+			}
+			if (!c.IsUserInSubAdminGroup("octestusr", "testgroup"))
+				c.AddUserToSubAdminGroup("octestusr", "testgroup");
+
+			var result = c.GetUserSubAdminGroups ("octestusr");
+			Assert.NotNull (result);
+		}
+
+		/// <summary>
+		/// Test IsUserInSubAdminGroup.
+		/// </summary>
+		/// <returns><c>true</c> if this instance is user in sub admin group; otherwise, <c>false</c>.</returns>
+		[Test ()]
+		public void IsUserInSubAdminGroup() {
+			if (!c.UserExists ("octestusr")) {
+				c.CreateUser ("octestusr", "octestpwd");
+				c.AddUserToGroup ("octestusr", "testgroup");
+			}
+			if (!c.IsUserInSubAdminGroup("octestusr", "testgroup"))
+				c.AddUserToSubAdminGroup("octestusr", "testgroup");
+
+			var result = c.IsUserInSubAdminGroup("octestusr", "testgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test RemoveUserFromSubAdminGroup.
+		/// </summary>
+		public void RemoveUserFromSubAdminGroup() {
+			if (!c.UserExists ("octestusr")) {
+				c.CreateUser ("octestusr", "octestpwd");
+				c.AddUserToGroup ("octestusr", "testgroup");
+			}
+			if (!c.IsUserInSubAdminGroup("octestusr", "testgroup"))
+				c.AddUserToSubAdminGroup("octestusr", "testgroup");
+
+			var result = c.RemoveUserFromSubAdminGroup("octestusr", "testgroup");
+			Assert.True (result);
 		}
 		#endregion
 		#endregion
