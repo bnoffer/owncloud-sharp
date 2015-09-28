@@ -39,7 +39,7 @@ bool \hyperlink{classowncloudsharp_1_1_client_a8936411abf14870d211e4a62be3d7840}
 bool \hyperlink{classowncloudsharp_1_1_client_a7499d8f0c4fae0b22da4a35327547cca}{Delete\+Share} (int share\+Id)
 \begin{DoxyCompactList}\small\item\em Unshares a file or directory. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a096e6b5540091d8b3f296d899f4807dd}{Update\+Share} (int share\+Id, int perms=-\/1, string password=null, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} public\+\_\+upload=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
-\begin{DoxyCompactList}\small\item\em Updates a given share \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Updates a given share. N\+O\+T\+E\+: Only one of the update parameters can be specified at once. \end{DoxyCompactList}\item 
 \hyperlink{classowncloudsharp_1_1_types_1_1_public_share}{Public\+Share} \hyperlink{classowncloudsharp_1_1_client_ac44012d849ddbbbdab86509344d6504d}{Share\+With\+Link} (string path, int perms=-\/1, string password=null, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} public\+\_\+upload=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
 \begin{DoxyCompactList}\small\item\em Shares a remote file with link. \end{DoxyCompactList}\item 
 \hyperlink{classowncloudsharp_1_1_types_1_1_user_share}{User\+Share} \hyperlink{classowncloudsharp_1_1_client_a69d7df9c2e91b8716bb0c5a2f5ff7878}{Share\+With\+User} (string path, string username, int perms=-\/1, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} remote\+User=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
@@ -58,6 +58,8 @@ bool \hyperlink{classowncloudsharp_1_1_client_a59adb4a3ad62adbaad112c1a6fa8201e}
 \begin{DoxyCompactList}\small\item\em Checks a user via provisioning A\+P\+I. \end{DoxyCompactList}\item 
 \hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List}$<$ string $>$ \hyperlink{classowncloudsharp_1_1_client_ae50362f45f53ffe21fde6651f0873c0e}{Search\+Users} (string username)
 \begin{DoxyCompactList}\small\item\em Searches for users via provisioning A\+P\+I. \end{DoxyCompactList}\item 
+\hyperlink{classowncloudsharp_1_1_types_1_1_user}{User} \hyperlink{classowncloudsharp_1_1_client_ad3907603f1510c65ec3de52897257457}{Get\+User\+Attributes} (string username)
+\begin{DoxyCompactList}\small\item\em Gets the user\textquotesingle{}s attributes. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a788f66e2d774a7c47e0a46918a50c5b5}{Set\+User\+Attribute} (string username, string key, string value)
 \begin{DoxyCompactList}\small\item\em Sets a user attribute. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a7b8657d971f2b1a9f27f2b8cfc73a21b}{Add\+User\+To\+Group} (string username, string group\+Name)
@@ -93,11 +95,7 @@ bool \hyperlink{classowncloudsharp_1_1_client_ad94e83b297c9de310beafd878fd99bc4}
 bool \hyperlink{classowncloudsharp_1_1_client_a4023a60f6fa18288d4b9cf8cba705e7c}{Enable\+App} (string app\+Name)
 \begin{DoxyCompactList}\small\item\em Enable an app through provisioning\+\_\+api. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a77306ba08609c9cf128e62b955227648}{Disable\+App} (string app\+Name)
-\begin{DoxyCompactList}\small\item\em Disable an app through provisioning\+\_\+api \end{DoxyCompactList}\item 
-void \hyperlink{classowncloudsharp_1_1_client_ab667d522c8def08d7ccaddb8df6122b4}{Check\+Ocs\+Status} (I\+Rest\+Response response)
-\begin{DoxyCompactList}\small\item\em Checks the validity of the O\+C\+S Request. If invalid a exception is thrown. \end{DoxyCompactList}\item 
-\hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List}$<$ \hyperlink{classowncloudsharp_1_1_types_1_1_app_attribute}{App\+Attribute} $>$ \hyperlink{classowncloudsharp_1_1_client_a4813e2598c44457fefc645b77d96a81b}{Get\+Attribute\+List} (string response)
-\begin{DoxyCompactList}\small\item\em Returns a list of application attributes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Disable an app through provisioning\+\_\+api \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -192,22 +190,6 @@ Adds a user to a subadmin group.
 {\em username} & name of user to be added to subadmin group.\\
 \hline
 {\em group\+Name} & name of subadmin group.\\
-\hline
-\end{DoxyParams}
-\hypertarget{classowncloudsharp_1_1_client_ab667d522c8def08d7ccaddb8df6122b4}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Check\+Ocs\+Status@{Check\+Ocs\+Status}}
-\index{Check\+Ocs\+Status@{Check\+Ocs\+Status}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
-\subsubsection[{Check\+Ocs\+Status(\+I\+Rest\+Response response)}]{\setlength{\rightskip}{0pt plus 5cm}void owncloudsharp.\+Client.\+Check\+Ocs\+Status (
-\begin{DoxyParamCaption}
-\item[{I\+Rest\+Response}]{response}
-\end{DoxyParamCaption}
-)}\label{classowncloudsharp_1_1_client_ab667d522c8def08d7ccaddb8df6122b4}
-
-
-Checks the validity of the O\+C\+S Request. If invalid a exception is thrown. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em response} & O\+C\+S Response.\\
 \hline
 \end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_ad20dcb23c0158e491d54401b2809b903}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Copy@{Copy}}
@@ -540,25 +522,6 @@ App Attribute List.
 {\em key} & attribute key or None to retrieve all values for the given application.\\
 \hline
 \end{DoxyParams}
-\hypertarget{classowncloudsharp_1_1_client_a4813e2598c44457fefc645b77d96a81b}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Get\+Attribute\+List@{Get\+Attribute\+List}}
-\index{Get\+Attribute\+List@{Get\+Attribute\+List}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
-\subsubsection[{Get\+Attribute\+List(string response)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List}$<${\bf App\+Attribute}$>$ owncloudsharp.\+Client.\+Get\+Attribute\+List (
-\begin{DoxyParamCaption}
-\item[{string}]{response}
-\end{DoxyParamCaption}
-)}\label{classowncloudsharp_1_1_client_a4813e2598c44457fefc645b77d96a81b}
-
-
-Returns a list of application attributes. 
-
-\begin{DoxyReturn}{Returns}
-List of application attributes.
-\end{DoxyReturn}
-
-\begin{DoxyParams}{Parameters}
-{\em response} & X\+M\+L O\+C\+S Response.\\
-\hline
-\end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_a6c228561d4c74c310b898ad8bd60095b}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Get\+Config@{Get\+Config}}
 \index{Get\+Config@{Get\+Config}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
 \subsubsection[{Get\+Config()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Config} owncloudsharp.\+Client.\+Get\+Config (
@@ -615,6 +578,25 @@ array of shares or empty array if the operation failed.
 {\em reshares} & (optional) returns not only the shares from the current user but all shares from the given file.\\
 \hline
 {\em subfiles} & (optional) returns all shares within a folder, given that path defines a folder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classowncloudsharp_1_1_client_ad3907603f1510c65ec3de52897257457}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Get\+User\+Attributes@{Get\+User\+Attributes}}
+\index{Get\+User\+Attributes@{Get\+User\+Attributes}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
+\subsubsection[{Get\+User\+Attributes(string username)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf User} owncloudsharp.\+Client.\+Get\+User\+Attributes (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)}\label{classowncloudsharp_1_1_client_ad3907603f1510c65ec3de52897257457}
+
+
+Gets the user\textquotesingle{}s attributes. 
+
+\begin{DoxyReturn}{Returns}
+The user attributes.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
 \hline
 \end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_a18acf90fef2b57c03effffb6f052e873}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Get\+User\+Groups@{Get\+User\+Groups}}
@@ -976,7 +958,7 @@ instance of User\+Share with the share info.
 )}\label{classowncloudsharp_1_1_client_a096e6b5540091d8b3f296d899f4807dd}
 
 
-Updates a given share 
+Updates a given share. N\+O\+T\+E\+: Only one of the update parameters can be specified at once. 
 
 \begin{DoxyReturn}{Returns}
 {\ttfamily true}, if share was updated, {\ttfamily false} otherwise.

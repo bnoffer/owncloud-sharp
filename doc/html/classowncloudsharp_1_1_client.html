@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ownCloud#
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
    <div id="projectbrief">C# client library for ownCloud</div>
   </td>
@@ -165,7 +165,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7499d8f0c4fae0b22da4a35327547cca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unshares a file or directory.  <a href="#a7499d8f0c4fae0b22da4a35327547cca">More...</a><br /></td></tr>
 <tr class="separator:a7499d8f0c4fae0b22da4a35327547cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a096e6b5540091d8b3f296d899f4807dd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a096e6b5540091d8b3f296d899f4807dd">UpdateShare</a> (int shareId, int perms=-1, string password=null, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> public_upload=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
-<tr class="memdesc:a096e6b5540091d8b3f296d899f4807dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a given share  <a href="#a096e6b5540091d8b3f296d899f4807dd">More...</a><br /></td></tr>
+<tr class="memdesc:a096e6b5540091d8b3f296d899f4807dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a given share. NOTE: Only one of the update parameters can be specified at once.  <a href="#a096e6b5540091d8b3f296d899f4807dd">More...</a><br /></td></tr>
 <tr class="separator:a096e6b5540091d8b3f296d899f4807dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac44012d849ddbbbdab86509344d6504d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_types_1_1_public_share.html">PublicShare</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#ac44012d849ddbbbdab86509344d6504d">ShareWithLink</a> (string path, int perms=-1, string password=null, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> public_upload=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
 <tr class="memdesc:ac44012d849ddbbbdab86509344d6504d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shares a remote file with link.  <a href="#ac44012d849ddbbbdab86509344d6504d">More...</a><br /></td></tr>
@@ -194,6 +194,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae50362f45f53ffe21fde6651f0873c0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#ae50362f45f53ffe21fde6651f0873c0e">SearchUsers</a> (string username)</td></tr>
 <tr class="memdesc:ae50362f45f53ffe21fde6651f0873c0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches for users via provisioning API.  <a href="#ae50362f45f53ffe21fde6651f0873c0e">More...</a><br /></td></tr>
 <tr class="separator:ae50362f45f53ffe21fde6651f0873c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3907603f1510c65ec3de52897257457"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_types_1_1_user.html">User</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#ad3907603f1510c65ec3de52897257457">GetUserAttributes</a> (string username)</td></tr>
+<tr class="memdesc:ad3907603f1510c65ec3de52897257457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the user's attributes.  <a href="#ad3907603f1510c65ec3de52897257457">More...</a><br /></td></tr>
+<tr class="separator:ad3907603f1510c65ec3de52897257457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a788f66e2d774a7c47e0a46918a50c5b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a788f66e2d774a7c47e0a46918a50c5b5">SetUserAttribute</a> (string username, string key, string value)</td></tr>
 <tr class="memdesc:a788f66e2d774a7c47e0a46918a50c5b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a user attribute.  <a href="#a788f66e2d774a7c47e0a46918a50c5b5">More...</a><br /></td></tr>
 <tr class="separator:a788f66e2d774a7c47e0a46918a50c5b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,12 +251,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a77306ba08609c9cf128e62b955227648"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a77306ba08609c9cf128e62b955227648">DisableApp</a> (string appName)</td></tr>
 <tr class="memdesc:a77306ba08609c9cf128e62b955227648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable an app through provisioning_api  <a href="#a77306ba08609c9cf128e62b955227648">More...</a><br /></td></tr>
 <tr class="separator:a77306ba08609c9cf128e62b955227648"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab667d522c8def08d7ccaddb8df6122b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#ab667d522c8def08d7ccaddb8df6122b4">CheckOcsStatus</a> (IRestResponse response)</td></tr>
-<tr class="memdesc:ab667d522c8def08d7ccaddb8df6122b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the validity of the OCS Request. If invalid a exception is thrown.  <a href="#ab667d522c8def08d7ccaddb8df6122b4">More...</a><br /></td></tr>
-<tr class="separator:ab667d522c8def08d7ccaddb8df6122b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4813e2598c44457fefc645b77d96a81b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt; <a class="el" href="classowncloudsharp_1_1_types_1_1_app_attribute.html">AppAttribute</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a4813e2598c44457fefc645b77d96a81b">GetAttributeList</a> (string response)</td></tr>
-<tr class="memdesc:a4813e2598c44457fefc645b77d96a81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of application attributes.  <a href="#a4813e2598c44457fefc645b77d96a81b">More...</a><br /></td></tr>
-<tr class="separator:a4813e2598c44457fefc645b77d96a81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>ownCloud OCS and DAV access client </p>
@@ -392,30 +389,6 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">username</td><td>name of user to be added to subadmin group.</td></tr>
     <tr><td class="paramname">groupName</td><td>name of subadmin group.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ab667d522c8def08d7ccaddb8df6122b4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void owncloudsharp.Client.CheckOcsStatus </td>
-          <td>(</td>
-          <td class="paramtype">IRestResponse&#160;</td>
-          <td class="paramname"><em>response</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Checks the validity of the OCS Request. If invalid a exception is thrown. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">response</td><td>OCS Response.</td></tr>
   </table>
   </dd>
 </dl>
@@ -884,31 +857,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4813e2598c44457fefc645b77d96a81b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt;<a class="el" href="classowncloudsharp_1_1_types_1_1_app_attribute.html">AppAttribute</a>&gt; owncloudsharp.Client.GetAttributeList </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>response</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a list of application attributes. </p>
-<dl class="section return"><dt>Returns</dt><dd>List of application attributes.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">response</td><td>XML OCS Response.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a class="anchor" id="a6c228561d4c74c310b898ad8bd60095b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -989,6 +937,31 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramname">path</td><td>path to the share to be checked.</td></tr>
     <tr><td class="paramname">reshares</td><td>(optional) returns not only the shares from the current user but all shares from the given file.</td></tr>
     <tr><td class="paramname">subfiles</td><td>(optional) returns all shares within a folder, given that path defines a folder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad3907603f1510c65ec3de52897257457"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classowncloudsharp_1_1_types_1_1_user.html">User</a> owncloudsharp.Client.GetUserAttributes </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>username</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the user's attributes. </p>
+<dl class="section return"><dt>Returns</dt><dd>The user attributes.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">username</td><td>Username.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1572,7 +1545,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Updates a given share </p>
+<p>Updates a given share. NOTE: Only one of the update parameters can be specified at once. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code>, if share was updated, <code>false</code> otherwise.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
