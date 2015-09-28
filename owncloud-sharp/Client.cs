@@ -594,7 +594,7 @@ namespace owncloudsharp
 		}
 
 		/// <summary>
-		/// Sets a user attribute.
+		/// Sets a user attribute. See https://doc.owncloud.com/server/7.0EE/admin_manual/configuration_auth_backends/user_provisioning_api.html#users-edituser for reference.
 		/// </summary>
 		/// <returns><c>true</c>, if user attribute was set, <c>false</c> otherwise.</returns>
 		/// <param name="username">name of user to modify.</param>
@@ -605,8 +605,8 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			request.AddUrlSegment ("userid", username);
-			request.AddParameter ("key", key);
-			request.AddParameter ("value", value);
+			request.AddQueryParameter ("key", key);
+			request.AddQueryParameter ("value", value);
 
 			var response = rest.Execute<OCS>(request);
 			if (response.Data != null) {
@@ -752,6 +752,30 @@ namespace owncloudsharp
 		public bool IsUserInSubAdminGroup (string username, string groupNname) {
 			var groups = GetUserSubAdminGroups (username);
 			return groups.Contains (groupNname);
+		}
+
+		/// <summary>
+		/// Removes the user from sub admin group.
+		/// </summary>
+		/// <returns><c>true</c>, if user from sub admin group was removed, <c>false</c> otherwise.</returns>
+		/// <param name="username">Username.</param>
+		/// <param name="groupName">Group name.</param>
+		public bool RemoveUserFromSubAdminGroup(string username, string groupName) {
+			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.DELETE);
+			request.AddHeader("OCS-APIREQUEST", "true");
+
+			request.AddUrlSegment ("userid", username);
+			request.AddParameter ("groupid", groupName);
+
+			var response = rest.Execute<OCS>(request);
+			if (response.Data != null) {
+				if (response.Data.Meta.StatusCode == 100)
+					return true;
+				else
+					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+			}
+
+			return false;
 		}
 		#endregion
 

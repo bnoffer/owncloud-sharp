@@ -3,6 +3,9 @@ using System.Diagnostics;
 
 namespace owncloudsharp.Exceptions
 {
+	/// <summary>
+	/// Response error.
+	/// </summary>
 	public class ResponseError : Exception
 	{
 		/// <summary>

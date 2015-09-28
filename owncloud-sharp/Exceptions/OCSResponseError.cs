@@ -2,6 +2,9 @@
 
 namespace owncloudsharp.Exceptions
 {
+	/// <summary>
+	/// OCS API response error.
+	/// </summary>
 	public class OCSResponseError : ResponseError
 	{
 		/// <summary>
