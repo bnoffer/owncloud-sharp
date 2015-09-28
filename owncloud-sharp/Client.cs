@@ -378,7 +378,7 @@ namespace owncloudsharp
 			CheckOcsStatus (response);
 
 			PublicShare share = new PublicShare ();
-			share.ShareId = GetFromData(response.Content, "id");
+			share.ShareId = Convert.ToInt32(GetFromData(response.Content, "id"));
 			share.Url = GetFromData(response.Content, "url");
 			share.Token = GetFromData(response.Content, "token");
 			share.TargetPath = path;
@@ -418,7 +418,7 @@ namespace owncloudsharp
 			CheckOcsStatus (response);
 
             var share = new UserShare();
-            share.ShareId = GetFromData(response.Content, "id");
+			share.ShareId = Convert.ToInt32(GetFromData(response.Content, "id"));
             share.TargetPath = path;
             share.Perms = perms;
 			share.SharedWith = username;
@@ -453,7 +453,7 @@ namespace owncloudsharp
 			CheckOcsStatus (response);
 
             var share = new GroupShare();
-            share.ShareId = GetFromData(response.Content, "id");
+			share.ShareId = Convert.ToInt32(GetFromData(response.Content, "id"));
             share.TargetPath = path;
             share.Perms = perms;
 			share.SharedWith = groupName;
@@ -1083,7 +1083,7 @@ namespace owncloudsharp
 					#region General Properties
 					node = data.Element(XName.Get("id"));
 					if (node != null)
-						share.ShareId = node.Value;
+						share.ShareId = Convert.ToInt32(node.Value);
 
 					node = data.Element(XName.Get("file_target"));
 					if (node != null)

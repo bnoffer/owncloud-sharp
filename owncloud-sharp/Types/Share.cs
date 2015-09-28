@@ -14,7 +14,7 @@ namespace owncloudsharp.Types
         /// <summary>
         /// The shares Id assigned by ownCloud
         /// </summary>
-        public string ShareId { get; set; }
+        public int ShareId { get; set; }
         /// <summary>
         /// The path to the target file/folder
         /// </summary>
