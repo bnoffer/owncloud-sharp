@@ -49,7 +49,7 @@ bool \hyperlink{classowncloudsharp_1_1_client_a096e6b5540091d8b3f296d899f4807dd}
 bool \hyperlink{classowncloudsharp_1_1_client_a241b88019805ddd87e8d596a6cf6c7a9}{Is\+Shared} (string path)
 \begin{DoxyCompactList}\small\item\em Checks whether a path is already shared. \end{DoxyCompactList}\item 
 \hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List}$<$ \hyperlink{classowncloudsharp_1_1_types_1_1_share}{Share} $>$ \hyperlink{classowncloudsharp_1_1_client_acd8b3359561282563c774b6e4784cb3d}{Get\+Shares} (string path, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} reshares=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None}, \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+Bool\+Param} subfiles=\hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None})
-\begin{DoxyCompactList}\small\item\em Returns array of shares. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gets all shares for the current user when {\ttfamily path} is not set, otherwise it gets shares for the specific file or folder \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a7e285455e3f0cf437d9359956b6feaa5}{Create\+User} (string username, string initial\+Password)
 \begin{DoxyCompactList}\small\item\em Create a new user with an initial password via provisioning A\+P\+I. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a0603de03c323c55dc53cea24516ecf31}{Delete\+User} (string username)
@@ -94,6 +94,8 @@ bool \hyperlink{classowncloudsharp_1_1_client_ad94e83b297c9de310beafd878fd99bc4}
 \begin{DoxyCompactList}\small\item\em Deletes an application attribute. \end{DoxyCompactList}\item 
 \hyperlink{classowncloudsharp_1_1_client_a914c144ebbe207958829523f7eda3609}{List}$<$ string $>$ \hyperlink{classowncloudsharp_1_1_client_a52851315d9d1273b6f674baafe3a5840}{Get\+Apps} ()
 \begin{DoxyCompactList}\small\item\em List all enabled apps through the provisioning api. \end{DoxyCompactList}\item 
+\hyperlink{classowncloudsharp_1_1_types_1_1_app_info}{App\+Info} \hyperlink{classowncloudsharp_1_1_client_a55a02342fcec4161abe9c5798c36dabf}{Get\+App} (string app\+Name)
+\begin{DoxyCompactList}\small\item\em Gets information about the specified app. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a4023a60f6fa18288d4b9cf8cba705e7c}{Enable\+App} (string app\+Name)
 \begin{DoxyCompactList}\small\item\em Enable an app through provisioning\+\_\+api. \end{DoxyCompactList}\item 
 bool \hyperlink{classowncloudsharp_1_1_client_a77306ba08609c9cf128e62b955227648}{Disable\+App} (string app\+Name)
@@ -488,6 +490,25 @@ Checks if the specified remote path exists.
 \begin{DoxyReturn}{Returns}
 {\ttfamily true}, if remote path exists, {\ttfamily false} otherwise.
 \end{DoxyReturn}
+\hypertarget{classowncloudsharp_1_1_client_a55a02342fcec4161abe9c5798c36dabf}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Get\+App@{Get\+App}}
+\index{Get\+App@{Get\+App}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
+\subsubsection[{Get\+App(string app\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf App\+Info} owncloudsharp.\+Client.\+Get\+App (
+\begin{DoxyParamCaption}
+\item[{string}]{app\+Name}
+\end{DoxyParamCaption}
+)}\label{classowncloudsharp_1_1_client_a55a02342fcec4161abe9c5798c36dabf}
+
+
+Gets information about the specified app. 
+
+\begin{DoxyReturn}{Returns}
+App information.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em app\+Name} & App name.\\
+\hline
+\end{DoxyParams}
 \hypertarget{classowncloudsharp_1_1_client_a52851315d9d1273b6f674baafe3a5840}{}\index{owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}!Get\+Apps@{Get\+Apps}}
 \index{Get\+Apps@{Get\+Apps}!owncloudsharp\+::\+Client@{owncloudsharp\+::\+Client}}
 \subsubsection[{Get\+Apps()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List}$<$string$>$ owncloudsharp.\+Client.\+Get\+Apps (
@@ -568,14 +589,14 @@ The resource info.
 )}\label{classowncloudsharp_1_1_client_acd8b3359561282563c774b6e4784cb3d}
 
 
-Returns array of shares. 
+Gets all shares for the current user when {\ttfamily path} is not set, otherwise it gets shares for the specific file or folder 
 
 \begin{DoxyReturn}{Returns}
 array of shares or empty array if the operation failed.
 \end{DoxyReturn}
 
 \begin{DoxyParams}{Parameters}
-{\em path} & path to the share to be checked.\\
+{\em path} & (optional) path to the share to be checked.\\
 \hline
 {\em reshares} & (optional) returns not only the shares from the current user but all shares from the given file.\\
 \hline

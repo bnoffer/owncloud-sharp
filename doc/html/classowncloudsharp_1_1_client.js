@@ -19,6 +19,7 @@ var classowncloudsharp_1_1_client =
     [ "DownloadDirectoryAsZip", "classowncloudsharp_1_1_client.html#aa5b9f5fb73514eeee4242d57605bdcd5", null ],
     [ "EnableApp", "classowncloudsharp_1_1_client.html#a4023a60f6fa18288d4b9cf8cba705e7c", null ],
     [ "Exists", "classowncloudsharp_1_1_client.html#a6f2160610e85aa278d235be8ba613bbd", null ],
+    [ "GetApp", "classowncloudsharp_1_1_client.html#a55a02342fcec4161abe9c5798c36dabf", null ],
     [ "GetApps", "classowncloudsharp_1_1_client.html#a52851315d9d1273b6f674baafe3a5840", null ],
     [ "GetAttribute", "classowncloudsharp_1_1_client.html#a8f843f60b178973e988c0edabef26c49", null ],
     [ "GetConfig", "classowncloudsharp_1_1_client.html#a6c228561d4c74c310b898ad8bd60095b", null ],

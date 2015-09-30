@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "owncloudsharp.Types.AdvancedShareProperties", "classowncloudsharp_1_1_types_1_1_advanced_share_properties.html", null ],
     [ "owncloudsharp.Types.AppAttribute", "classowncloudsharp_1_1_types_1_1_app_attribute.html", null ],
+    [ "owncloudsharp.Types.AppInfo", "classowncloudsharp_1_1_types_1_1_app_info.html", null ],
     [ "owncloudsharp.Client", "classowncloudsharp_1_1_client.html", null ],
     [ "owncloudsharp.Types.Config", "classowncloudsharp_1_1_types_1_1_config.html", null ],
     [ "Exception", null, [

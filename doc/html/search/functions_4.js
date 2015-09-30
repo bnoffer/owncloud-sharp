@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['getapp',['GetApp',['../classowncloudsharp_1_1_client.html#a55a02342fcec4161abe9c5798c36dabf',1,'owncloudsharp::Client']]],
   ['getapps',['GetApps',['../classowncloudsharp_1_1_client.html#a52851315d9d1273b6f674baafe3a5840',1,'owncloudsharp::Client']]],
   ['getattribute',['GetAttribute',['../classowncloudsharp_1_1_client.html#a8f843f60b178973e988c0edabef26c49',1,'owncloudsharp::Client']]],
   ['getconfig',['GetConfig',['../classowncloudsharp_1_1_client.html#a6c228561d4c74c310b898ad8bd60095b',1,'owncloudsharp::Client']]],

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['id',['Id',['../classowncloudsharp_1_1_types_1_1_app_info.html#ac12addd408514cce9faac8898bb70b70',1,'owncloudsharp::Types::AppInfo']]],
+  ['info',['Info',['../classowncloudsharp_1_1_types_1_1_app_info.html#ad3b2d2f748b0752b632d9034b19e4503',1,'owncloudsharp::Types::AppInfo']]],
   ['isshared',['IsShared',['../classowncloudsharp_1_1_client.html#a241b88019805ddd87e8d596a6cf6c7a9',1,'owncloudsharp::Client']]],
   ['isuseringroup',['IsUserInGroup',['../classowncloudsharp_1_1_client.html#a3ad615fa0f35fe632d80a8149c8cad74',1,'owncloudsharp::Client']]],
   ['isuserinsubadmingroup',['IsUserInSubAdminGroup',['../classowncloudsharp_1_1_client.html#a62e091c3df9d3dcd40794b89de04e481',1,'owncloudsharp::Client']]],

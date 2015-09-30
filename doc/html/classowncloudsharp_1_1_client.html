@@ -180,7 +180,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a241b88019805ddd87e8d596a6cf6c7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a path is already shared.  <a href="#a241b88019805ddd87e8d596a6cf6c7a9">More...</a><br /></td></tr>
 <tr class="separator:a241b88019805ddd87e8d596a6cf6c7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd8b3359561282563c774b6e4784cb3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt; <a class="el" href="classowncloudsharp_1_1_types_1_1_share.html">Share</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#acd8b3359561282563c774b6e4784cb3d">GetShares</a> (string path, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> reshares=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>, <a class="el" href="namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5">OcsBoolParam</a> subfiles=<a class="el" href="namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754">OcsBoolParam.None</a>)</td></tr>
-<tr class="memdesc:acd8b3359561282563c774b6e4784cb3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns array of shares.  <a href="#acd8b3359561282563c774b6e4784cb3d">More...</a><br /></td></tr>
+<tr class="memdesc:acd8b3359561282563c774b6e4784cb3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all shares for the current user when <code>path</code> is not set, otherwise it gets shares for the specific file or folder  <a href="#acd8b3359561282563c774b6e4784cb3d">More...</a><br /></td></tr>
 <tr class="separator:acd8b3359561282563c774b6e4784cb3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e285455e3f0cf437d9359956b6feaa5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a7e285455e3f0cf437d9359956b6feaa5">CreateUser</a> (string username, string initialPassword)</td></tr>
 <tr class="memdesc:a7e285455e3f0cf437d9359956b6feaa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new user with an initial password via provisioning API.  <a href="#a7e285455e3f0cf437d9359956b6feaa5">More...</a><br /></td></tr>
@@ -248,6 +248,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a52851315d9d1273b6f674baafe3a5840"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_client.html#a914c144ebbe207958829523f7eda3609">List</a>&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a52851315d9d1273b6f674baafe3a5840">GetApps</a> ()</td></tr>
 <tr class="memdesc:a52851315d9d1273b6f674baafe3a5840"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all enabled apps through the provisioning api.  <a href="#a52851315d9d1273b6f674baafe3a5840">More...</a><br /></td></tr>
 <tr class="separator:a52851315d9d1273b6f674baafe3a5840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55a02342fcec4161abe9c5798c36dabf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classowncloudsharp_1_1_types_1_1_app_info.html">AppInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a55a02342fcec4161abe9c5798c36dabf">GetApp</a> (string appName)</td></tr>
+<tr class="memdesc:a55a02342fcec4161abe9c5798c36dabf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets information about the specified app.  <a href="#a55a02342fcec4161abe9c5798c36dabf">More...</a><br /></td></tr>
+<tr class="separator:a55a02342fcec4161abe9c5798c36dabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4023a60f6fa18288d4b9cf8cba705e7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classowncloudsharp_1_1_client.html#a4023a60f6fa18288d4b9cf8cba705e7c">EnableApp</a> (string appName)</td></tr>
 <tr class="memdesc:a4023a60f6fa18288d4b9cf8cba705e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable an app through provisioning_api.  <a href="#a4023a60f6fa18288d4b9cf8cba705e7c">More...</a><br /></td></tr>
 <tr class="separator:a4023a60f6fa18288d4b9cf8cba705e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -806,6 +809,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a55a02342fcec4161abe9c5798c36dabf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classowncloudsharp_1_1_types_1_1_app_info.html">AppInfo</a> owncloudsharp.Client.GetApp </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>appName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets information about the specified app. </p>
+<dl class="section return"><dt>Returns</dt><dd>App information.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">appName</td><td>App name.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a52851315d9d1273b6f674baafe3a5840"></a>
 <div class="memitem">
 <div class="memproto">
@@ -933,11 +961,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns array of shares. </p>
+<p>Gets all shares for the current user when <code>path</code> is not set, otherwise it gets shares for the specific file or folder </p>
 <dl class="section return"><dt>Returns</dt><dd>array of shares or empty array if the operation failed.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path</td><td>path to the share to be checked.</td></tr>
+    <tr><td class="paramname">path</td><td>(optional) path to the share to be checked.</td></tr>
     <tr><td class="paramname">reshares</td><td>(optional) returns not only the shares from the current user but all shares from the given file.</td></tr>
     <tr><td class="paramname">subfiles</td><td>(optional) returns all shares within a folder, given that path defines a folder.</td></tr>
   </table>
