@@ -5,8 +5,6 @@ A portable class library to interact with ownCloud servers through WebDAV and th
 Project status
 ==============
 
-The library is currently undergoing its first testing cycle based on the unit tests. Release v.0.1.0 is currently still on schedule.
-
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/6488/badge.svg)](https://scan.coverity.com/projects/bnoffer-owncloud-sharp)
 
 Instructions

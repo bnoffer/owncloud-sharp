@@ -63,4 +63,8 @@ Global
 		{A6075667-C782-4762-9594-72091CAAC54C} = {1C5E5AC4-DFEF-4B54-A2A5-511F41AAF2E6}
 		{DF6104F5-3448-4266-A9CF-DCBE6ECD5F56} = {1C5E5AC4-DFEF-4B54-A2A5-511F41AAF2E6}
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		description = A portable class library to interact with ownCloud servers through WebDAV and the ownCloud OCS API.
+		version = 0.1.0
+	EndGlobalSection
 EndGlobal
