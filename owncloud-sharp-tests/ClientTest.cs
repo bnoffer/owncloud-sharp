@@ -748,6 +748,16 @@ namespace owncloudsharp.Tests
 		}
 
 		/// <summary>
+		/// Test GetApp.
+		/// </summary>
+		[Test ()]
+		public void GetApp() {
+			var result = c.GetApp ("files");
+			Assert.NotNull (result);
+			Assert.IsNotEmpty (result.Id);
+		}
+
+		/// <summary>
 		/// Test EnableApp.
 		/// </summary>
 		[Test ()]

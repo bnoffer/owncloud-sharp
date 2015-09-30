@@ -963,6 +963,23 @@ namespace owncloudsharp
 		}
 
 		/// <summary>
+		/// Gets information about the specified app.
+		/// </summary>
+		/// <returns>App information.</returns>
+		/// <param name="appName">App name.</param>
+		public AppInfo GetApp(string appName) {
+			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps") + "/{appid}", Method.GET);
+			request.AddHeader("OCS-APIREQUEST", "true");
+			request.AddUrlSegment ("appid", appName);
+
+			var response = rest.Execute (request);
+
+			CheckOcsStatus (response);
+
+			return GetAppInfo (response.Content);
+		}
+
+		/// <summary>
 		/// Enable an app through provisioning_api.
 		/// </summary>
 		/// <returns><c>true</c>, if app was enabled, <c>false</c> otherwise.</returns>
@@ -1314,6 +1331,105 @@ namespace owncloudsharp
 			}
 
 			return user;
+		}
+
+		private AppInfo GetAppInfo(string response) {
+			AppInfo app = new AppInfo ();
+			XDocument xdoc = XDocument.Parse(response);
+
+			foreach (XElement data in xdoc.Descendants(XName.Get("data"))) {
+				var node = data.Element (XName.Get ("id"));
+				if (node != null)
+					app.Id = node.Value;
+
+				node = data.Element (XName.Get ("name"));
+				if (node != null)
+					app.Name = node.Value;
+
+				node = data.Element (XName.Get ("description"));
+				if (node != null)
+					app.Description = node.Value;
+
+				node = data.Element (XName.Get ("licence"));
+				if (node != null)
+					app.Licence = node.Value;
+
+				node = data.Element (XName.Get ("author"));
+				if (node != null)
+					app.Author = node.Value;
+
+				node = data.Element (XName.Get ("requiremin"));
+				if (node != null)
+					app.RequireMin = node.Value;
+
+				node = data.Element (XName.Get ("shipped"));
+				if (node != null)
+					app.Shipped = (node.Value.Equals ("true")) ? true : false;
+
+				node = data.Element (XName.Get ("standalone"));
+				if (node != null)
+					app.Standalone = true;
+				else
+					app.Standalone = false;
+
+				node = data.Element (XName.Get ("default_enable"));
+				if (node != null)
+					app.DefaultEnable = true;
+				else
+					app.DefaultEnable = false;
+
+				node = data.Element (XName.Get ("types"));
+				if (node != null)
+					app.Types = XmlElementsToList (node);
+
+				node = data.Element (XName.Get ("remote"));
+				if (node != null)
+					app.Remote = XmlElementsToDict (node);
+
+				node = data.Element (XName.Get ("documentation"));
+				if (node != null)
+					app.Documentation = XmlElementsToDict (node);
+
+				node = data.Element (XName.Get ("info"));
+				if (node != null)
+					app.Info = XmlElementsToDict (node);
+
+				node = data.Element (XName.Get ("public"));
+				if (node != null)
+					app.Public = XmlElementsToDict (node);
+			}
+
+			return app;
+		}
+
+		/// <summary>
+		/// Returns the elements of a XML Element as a List.
+		/// </summary>
+		/// <returns>The elements as list.</returns>
+		/// <param name="element">XML Element.</param>
+		private List<string> XmlElementsToList(XElement element) {
+			List<string> result = new List<string> ();
+
+			foreach (XElement node in element.Descendants(XName.Get("element"))) {
+				result.Add (node.Value);
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns the elements of a XML Element as a Dictionary.
+		/// </summary>
+		/// <returns>The elements as dictionary.</returns>
+		/// <param name="element">XML Element.</param>
+		private Dictionary<string, string> XmlElementsToDict(XElement element) {
+			Dictionary<string, string> result = new Dictionary<string, string>();
+
+			foreach (XElement node in element.Descendants()) {
+				result.Add (node.Name.ToString(), node.Value);
+			}
+
+			return result;
 		}
         #endregion
     }
