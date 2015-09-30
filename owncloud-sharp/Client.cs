@@ -472,17 +472,18 @@ namespace owncloudsharp
 		}
 
 		/// <summary>
-		/// Returns array of shares.
+		/// Gets all shares for the current user when <c>path</c> is not set, otherwise it gets shares for the specific file or folder
 		/// </summary>
 		/// <returns>array of shares or empty array if the operation failed.</returns>
-		/// <param name="path">path to the share to be checked.</param>
+		/// <param name="path">(optional) path to the share to be checked.</param>
 		/// <param name="reshares">(optional) returns not only the shares from	the current user but all shares from the given file.</param>
 		/// <param name="subfiles">(optional) returns all shares within	a folder, given that path defines a folder.</param>
 		public List<Share> GetShares(string path, OcsBoolParam reshares = OcsBoolParam.None, OcsBoolParam subfiles = OcsBoolParam.None) {
 			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") , Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-            request.AddQueryParameter("path", path);
+			if ((path != null) && (!path.Equals("")))
+            	request.AddQueryParameter("path", path);
 			if (reshares == OcsBoolParam.True)
 				request.AddQueryParameter("reshares", "true");
 			else if (reshares == OcsBoolParam.False)
