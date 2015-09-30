@@ -136,13 +136,32 @@ namespace owncloudsharp.Tests
 			#endregion
 
 			#region OCS User Test cleanup
-			if (c.UserExists("octestusr1"))
+			if (c.UserExists("octestusr1")) {
+				var c1 = new Client(TestSettings.ownCloudInstanceUrl, "octestusr1", "test");
+				var shares = c1.GetShares("");
+				foreach (var share in shares)
+					c1.DeleteShare(share.ShareId);
 				c.DeleteUser("octestusr1");
-			if (c.UserExists("octestusr"))
+			}
+			if (c.UserExists("octestusr")) {
+				var c2 = new Client(TestSettings.ownCloudInstanceUrl, "octestusr", "test");
+				var shares = c2.GetShares("");
+				foreach (var share in shares)
+					c2.DeleteShare(share.ShareId);
 				c.DeleteUser("octestusr");
+			}
+			#endregion
+
+			#region OCS App Attribute Test Cleanup
+			if (c.GetAttribute("files", "test").Count > 0)
+				c.DeleteAttribute ("files", "test");
 			#endregion
 
 			#region General CleanUp
+			var c3 = new Client(TestSettings.ownCloudInstanceUrl, "sharetest", "test");
+			var c3shares = c3.GetShares("");
+			foreach (var share in c3shares)
+				c3.DeleteShare(share.ShareId);
 			c.RemoveUserFromGroup ("sharetest", "testgroup");
 			c.DeleteGroup ("testgroup");
 			c.DeleteUser ("sharetest");
@@ -418,6 +437,10 @@ namespace owncloudsharp.Tests
 			Assert.True (result);
 		}
 
+		/// <summary>
+		/// Test IsShared.
+		/// </summary>
+		/// <returns><c>true</c> if this instance is shared; otherwise, <c>false</c>.</returns>
 		[Test ()]
 		public void IsShared() {
 			MemoryStream payload = new MemoryStream (payloadData);
@@ -429,14 +452,26 @@ namespace owncloudsharp.Tests
 			Assert.True (result);
 		}
 
+		/// <summary>
+		/// Test GetShares for a given path.
+		/// </summary>
 		[Test ()]
-		public void GetShares() {
+		public void GetSharesForPath() {
 			MemoryStream payload = new MemoryStream (payloadData);
 
 			c.Upload ("/share-get-test.txt", payload, "text/plain");
 			c.ShareWithLink ("/share-get-test.txt", Convert.ToInt32 (OcsPermission.All), "test", OcsBoolParam.True);
 
 			var content = c.GetShares ("/share-get-test.txt");
+			Assert.Greater (content.Count, 0);
+		}
+
+		/// <summary>
+		/// Test GetShares for the current user.
+		/// </summary>
+		[Test ()]
+		public void GetSharesForUser() {
+			var content = c.GetShares ("");
 			Assert.Greater (content.Count, 0);
 		}
 		#endregion
@@ -619,6 +654,114 @@ namespace owncloudsharp.Tests
 				c.AddUserToSubAdminGroup("octestusr", "testgroup");
 
 			var result = c.RemoveUserFromSubAdminGroup("octestusr", "testgroup");
+			Assert.True (result);
+		}
+		#endregion
+
+		#region Groups
+		/// <summary>
+		/// Test CreateGroup.
+		/// </summary>
+		[Test ()]
+		public void CreateGroup() {
+			var result = c.CreateGroup ("ocsgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test DeleteGroup.
+		/// </summary>
+		[Test ()]
+		public void DeleteGroup() {
+			if (!c.GroupExists("ocsgroup"))
+				c.CreateGroup ("ocsgroup");
+			var result = c.DeleteGroup ("ocsgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test GroupExists with existing group.
+		/// </summary>
+		[Test ()]
+		public void GroupExists() {
+			var result = c.GroupExists ("testgroup");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test GroupExists with not existing group.
+		/// </summary>
+		public void GroupNotExists() {
+			var result = c.GroupExists ("ocs-does-not-exist");
+			Assert.False (result);
+		}
+		#endregion
+
+		#region Config
+		/// <summary>
+		/// Test GetConfig.
+		/// </summary>
+		[Test ()]
+		public void GetConfig() {
+			var result = c.GetConfig ();
+			Assert.NotNull (result);
+		}
+		#endregion
+
+		#region Application attributes
+		/// <summary>
+		/// Test GetAttribute.
+		/// </summary>
+		public void GetAttribute() {
+			var result = c.GetAttribute ("files");
+			Assert.NotNull (result);
+		}
+
+		/// <summary>
+		/// Test SetAttribute.
+		/// </summary>
+		public void SetAttribute() {
+			var result = c.SetAttribute ("files", "test", "true");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test DeleteAttribute.
+		/// </summary>
+		public void DeleteAttribute() {
+			if (c.GetAttribute("files", "test").Count == 0)
+				c.SetAttribute ("files", "test", "true");
+
+			var result = c.DeleteAttribute ("files", "test");
+			Assert.True (result);
+		}
+		#endregion
+
+		#region Apps
+		/// <summary>
+		/// Test GetApps.
+		/// </summary>
+		[Test ()]
+		public void GetApps() {
+			var result = c.GetApps ();
+			Assert.Greater (result.Count, 0);
+		}
+
+		/// <summary>
+		/// Test EnableApp.
+		/// </summary>
+		[Test ()]
+		public void EnableApp() {
+			var result = c.EnableApp ("news");
+			Assert.True (result);
+		}
+
+		/// <summary>
+		/// Test DisableApp.
+		/// </summary>
+		[Test ()]
+		public void DisableApp() {
+			var result = c.DisableApp ("news");
 			Assert.True (result);
 		}
 		#endregion
