@@ -24,11 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "latex", "latex", "{DF6104F5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ocsharpdemo", "ocsharpdemo\ocsharpdemo.csproj", "{27CD23AE-EB37-45AB-A8B9-59E270568375}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webdavnet", "webdavnet\webdavnet.csproj", "{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{47C1D318-90F3-44DC-8307-9A4ADC556E2E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "owncloud-sharp-tests", "owncloud-sharp-tests\owncloud-sharp-tests.csproj", "{A059F1B7-49F6-44A9-ADBD-013FFF9A349D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "webdavnet\WebClient\WebClient.csproj", "{47C1D318-90F3-44DC-8307-9A4ADC556E2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webdavnet", "webdavnet\webdavnet\webdavnet.csproj", "{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
