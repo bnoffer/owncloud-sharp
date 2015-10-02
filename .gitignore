@@ -38,3 +38,9 @@ Thumbs.db
 
 #dotCover
 *.dotCover
+Binaries/RestSharp.dll
+Binaries/RestSharp.pdb
+Binaries/RestSharp.xml
+Binaries/RestSharp.Build.dll
+Binaries/RestSharp.Build.pdb
+cov-int
