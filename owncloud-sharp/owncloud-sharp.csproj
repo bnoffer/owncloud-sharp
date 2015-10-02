@@ -61,16 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\webdavnet\webdavnet.csproj">
-      <Project>{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}</Project>
-      <Name>webdavnet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WebClient\WebClient.csproj">
-      <Project>{47C1D318-90F3-44DC-8307-9A4ADC556E2E}</Project>
-      <Name>WebClient</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
 </Project>
