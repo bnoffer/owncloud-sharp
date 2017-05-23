@@ -602,12 +602,12 @@ namespace owncloudsharp
 		/// <param name="username">name of user to modify.</param>
 		/// <param name="key">key of the attribute to set.</param>
 		/// <param name="value">value to set.</param>
-		public bool SetUserAttribute(string username, string key, string value) {
+		public bool SetUserAttribute(string username, OCSUserAttributeKey key, string value) {
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.PUT);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			request.AddUrlSegment ("userid", username);
-			request.AddParameter ("key", key);
+			request.AddParameter ("key", OCSUserAttributeKeyName[Convert.ToInt32(key)]);
 			request.AddParameter ("value", value);
 
 			var response = rest.Execute<OCS>(request);
@@ -1432,6 +1432,15 @@ namespace owncloudsharp
 
 			return result;
 		}
+        #endregion
+
+        #region Helpers
+        public static string[] OCSUserAttributeKeyName = new string[] {
+        "display",
+        "quota",
+        "password",
+        "email"
+        };
         #endregion
     }
 }
