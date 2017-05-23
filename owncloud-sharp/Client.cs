@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -606,8 +607,8 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			request.AddUrlSegment ("userid", username);
-			request.AddQueryParameter ("key", key);
-			request.AddQueryParameter ("value", value);
+			request.AddParameter ("key", key);
+			request.AddParameter ("value", value);
 
 			var response = rest.Execute<OCS>(request);
 			if (response.Data != null) {
@@ -1312,21 +1313,21 @@ namespace owncloudsharp
 
 					node = element.Element(XName.Get("free"));
 					if (node != null)
-						quota.Free = Convert.ToInt64(node.Value);
+						quota.Free = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					node = element.Element(XName.Get("used"));
+                    node = element.Element(XName.Get("used"));
 					if (node != null)
-						quota.Used = Convert.ToInt64(node.Value);
+						quota.Used = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					node = element.Element(XName.Get("total"));
+                    node = element.Element(XName.Get("total"));
 					if (node != null)
-						quota.Total = Convert.ToInt64(node.Value);
+						quota.Total = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					node = element.Element(XName.Get("relative"));
-					if (node != null)
-						quota.Relative = Convert.ToInt64(node.Value);
+                    node = element.Element(XName.Get("relative"));
+                    if (node != null)
+                        quota.Relative = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					user.Quota = quota;
+                    user.Quota = quota;
 				}
 			}
 
