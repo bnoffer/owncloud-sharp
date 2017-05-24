@@ -832,29 +832,36 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if group exists, <c>false</c> otherwise.</returns>
 		/// <param name="groupName">name of group to be checked.</param>
 		public bool GroupExists(string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "?search={groupid}", Method.GET);
-			request.AddHeader("OCS-APIREQUEST", "true");
-
-			request.AddUrlSegment ("groupid", groupName);
-
-			var response = rest.Execute<OCS>(request);
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
-					return true;
-				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
-			}
-
-			return false;
+            var results = SearchGroups(groupName);
+            return results.Contains(groupName);
 		}
-		#endregion
 
-		#region Config
-		/// <summary>
-		/// Returns ownCloud config information.
+        /// <summary>
+		/// Searches for groups via provisioning API.
 		/// </summary>
-		/// <returns>The config.</returns>
-		public Config GetConfig() {
+		/// <returns>list of groups.</returns>
+		/// <param name="name">name of group to be searched for.</param>
+		public List<string> SearchGroups(string name)
+        {
+            var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "?search={groupid}", Method.GET);
+            request.AddHeader("OCS-APIREQUEST", "true");
+
+            request.AddUrlSegment("groupid", name);
+
+            var response = rest.Execute(request);
+
+            CheckOcsStatus(response);
+
+            return GetDataElements(response.Content);
+        }
+        #endregion
+
+        #region Config
+        /// <summary>
+        /// Returns ownCloud config information.
+        /// </summary>
+        /// <returns>The config.</returns>
+        public Config GetConfig() {
 			var request = new RestRequest(GetOcsPath("", "config"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
