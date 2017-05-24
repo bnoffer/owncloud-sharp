@@ -10,7 +10,7 @@ var searchData=
   ['deleteuser',['DeleteUser',['../classowncloudsharp_1_1_client.html#a0603de03c323c55dc53cea24516ecf31',1,'owncloudsharp::Client']]],
   ['description',['Description',['../classowncloudsharp_1_1_types_1_1_app_info.html#a3fe8c924b76d206ea155ff7df8afa08b',1,'owncloudsharp::Types::AppInfo']]],
   ['disableapp',['DisableApp',['../classowncloudsharp_1_1_client.html#a77306ba08609c9cf128e62b955227648',1,'owncloudsharp::Client']]],
-  ['displayname',['DisplayName',['../classowncloudsharp_1_1_types_1_1_user.html#a9b885e34f7c1e695e5d9867931b64d9c',1,'owncloudsharp::Types::User']]],
+  ['displayname',['DisplayName',['../classowncloudsharp_1_1_types_1_1_user.html#a9b885e34f7c1e695e5d9867931b64d9c',1,'owncloudsharp.Types.User.DisplayName()'],['../namespaceowncloudsharp.html#a5896a4bf1799666b1f52193038b27685a3b868ced6f60acf5ee565ac021d42941',1,'owncloudsharp.DisplayName()']]],
   ['displaynameowner',['DisplaynameOwner',['../classowncloudsharp_1_1_types_1_1_advanced_share_properties.html#add275aead35226f84b36e447e4104f0d',1,'owncloudsharp::Types::AdvancedShareProperties']]],
   ['documentation',['Documentation',['../classowncloudsharp_1_1_types_1_1_app_info.html#ae9ef7fbc3cdcf9f49cd7372d13249225',1,'owncloudsharp::Types::AppInfo']]],
   ['download',['Download',['../classowncloudsharp_1_1_client.html#a3a71b182537b36e924e7df1ae3bbac89',1,'owncloudsharp::Client']]],

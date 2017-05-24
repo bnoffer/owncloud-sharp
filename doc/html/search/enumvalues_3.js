@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['false',['False',['../namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5af8320b26d30ab433c5a54546d21f414c',1,'owncloudsharp']]]
+  ['email',['EMail',['../namespaceowncloudsharp.html#a5896a4bf1799666b1f52193038b27685a1dfcd881b8444c6f3effb453edaf9108',1,'owncloudsharp']]]
 ];

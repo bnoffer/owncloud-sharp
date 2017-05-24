@@ -529,7 +529,7 @@ namespace owncloudsharp.Tests
 		/// </summary>
 		[Test ()]
 		public void SetUserAttribute() {
-			var result = c.SetUserAttribute ("sharetest", "email", "demo@example.com");
+			var result = c.SetUserAttribute ("sharetest", OCSUserAttributeKey.EMail, "demo@example.com");
 			Assert.True (result);
 		}
 
@@ -695,13 +695,23 @@ namespace owncloudsharp.Tests
 			var result = c.GroupExists ("ocs-does-not-exist");
 			Assert.False (result);
 		}
-		#endregion
 
-		#region Config
-		/// <summary>
-		/// Test GetConfig.
+        /// <summary>
+		/// Test SearchGroups.
 		/// </summary>
-		[Test ()]
+		[Test()]
+        public void SearchGroups()
+        {
+            var result = c.SearchGroups("testgroup");
+            Assert.Greater(result.Count, 0);
+        }
+        #endregion
+
+        #region Config
+        /// <summary>
+        /// Test GetConfig.
+        /// </summary>
+        [Test ()]
 		public void GetConfig() {
 			var result = c.GetConfig ();
 			Assert.NotNull (result);

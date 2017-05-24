@@ -2,36 +2,32 @@
 \label{namespaceowncloudsharp}\index{owncloudsharp@{owncloudsharp}}
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
-\item 
-namespace \hyperlink{namespaceowncloudsharp_1_1_exceptions}{Exceptions}
-\item 
-namespace \hyperlink{namespaceowncloudsharp_1_1_types}{Types}
 \end{DoxyCompactItemize}
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 class \hyperlink{classowncloudsharp_1_1_client}{Client}
-\begin{DoxyCompactList}\small\item\em own\+Cloud O\+C\+S and D\+A\+V access client \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em own\+Cloud O\+CS and D\+AV access client \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157}{Ocs\+Permission} \{ \\*
+enum \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157}{Ocs\+Permission} \{ \newline
 \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a7a1a5f3e79fdc91edf2f5ead9d66abb4}{Ocs\+Permission.\+Read} = 1, 
 \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a06933067aafd48425d67bcb01bba5cb6}{Ocs\+Permission.\+Update} = 2, 
 \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a686e697538050e4664636337cc3b834f}{Ocs\+Permission.\+Create} = 4, 
 \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157af2a6c498fb90ee345d997f888fce3b18}{Ocs\+Permission.\+Delete} = 8, 
-\\*
+\newline
 \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178}{Ocs\+Permission.\+Share} = 16, 
 \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157ab1c94ca2fbc3e78fc30069c8d0f01680}{Ocs\+Permission.\+All} = 31, 
 \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Permission.\+None} = -\/1
  \}\begin{DoxyCompactList}\small\item\em Share permissions. Add values to a int in order to set multiple permissions. See {\ttfamily \href{https://doc.owncloud.org/server/8.2/developer_manual/core/ocs-share-api.html}{\tt https\+://doc.\+owncloud.\+org/server/8.\+2/developer\+\_\+manual/core/ocs-\/share-\/api.\+html}} for reference. \end{DoxyCompactList}
 \item 
-enum \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0b}{Ocs\+Share\+Type} \{ \\*
+enum \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0b}{Ocs\+Share\+Type} \{ \newline
 \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba8f9bfe9d1345237cb3b2b205864da075}{Ocs\+Share\+Type.\+User} = 0, 
 \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba03937134cedab9078be39a77ee3a48a0}{Ocs\+Share\+Type.\+Group} = 1, 
 \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba97e7c9a7d06eac006a28bf05467fcc8b}{Ocs\+Share\+Type.\+Link} = 3, 
 \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0baf8508f576cd3f742dfc268258dcdf0dd}{Ocs\+Share\+Type.\+Remote} = 6, 
-\\*
+\newline
 \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Share\+Type.\+None} = -\/1
  \}\begin{DoxyCompactList}\small\item\em Available share types. See {\ttfamily \href{https://doc.owncloud.org/server/8.2/developer_manual/core/ocs-share-api.html}{\tt https\+://doc.\+owncloud.\+org/server/8.\+2/developer\+\_\+manual/core/ocs-\/share-\/api.\+html}} for reference. \end{DoxyCompactList}
 \item 
@@ -39,73 +35,137 @@ enum \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{Ocs\+B
 \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af827cf462f62848df37c5e1e94a4da74}{Ocs\+Bool\+Param.\+True} = 1, 
 \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5a6adf97f83acf6453d4a6a4b1070f3754}{Ocs\+Bool\+Param.\+None} = -\/1
  \}\begin{DoxyCompactList}\small\item\em Boolean parameter. \end{DoxyCompactList}
+\item 
+enum \hyperlink{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685}{O\+C\+S\+User\+Attribute\+Key} \{ \hyperlink{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685a3b868ced6f60acf5ee565ac021d42941}{O\+C\+S\+User\+Attribute\+Key.\+Display\+Name} = 0, 
+\hyperlink{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685ad2d5c3e087f684e56b5b81d6212d7ccb}{O\+C\+S\+User\+Attribute\+Key.\+Quota} = 1, 
+\hyperlink{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685adc647eb65e6711e155375218212b3964}{O\+C\+S\+User\+Attribute\+Key.\+Password} = 2, 
+\hyperlink{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685a1dfcd881b8444c6f3effb453edaf9108}{O\+C\+S\+User\+Attribute\+Key.\+E\+Mail} = 2
+ \}\begin{DoxyCompactList}\small\item\em Defines the key value for Set\+User\+Attribute \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 
 
 \subsection{Enumeration Type Documentation}
-\hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{}\index{owncloudsharp@{owncloudsharp}!Ocs\+Bool\+Param@{Ocs\+Bool\+Param}}
+\mbox{\Hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}} 
+\index{owncloudsharp@{owncloudsharp}!Ocs\+Bool\+Param@{Ocs\+Bool\+Param}}
 \index{Ocs\+Bool\+Param@{Ocs\+Bool\+Param}!owncloudsharp@{owncloudsharp}}
-\subsubsection[{Ocs\+Bool\+Param}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf owncloudsharp.\+Ocs\+Bool\+Param}\hspace{0.3cm}{\ttfamily [strong]}}\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}
+\subsubsection{\texorpdfstring{Ocs\+Bool\+Param}{OcsBoolParam}}
+{\footnotesize\ttfamily enum \hyperlink{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5}{owncloudsharp.\+Ocs\+Bool\+Param}\hspace{0.3cm}{\ttfamily [strong]}}
+
 
 
 Boolean parameter. 
 
-\begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{False@{False}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!False@{False}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af8320b26d30ab433c5a54546d21f414c}{}False\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af8320b26d30ab433c5a54546d21f414c}
-}]Boolean False. \index{True@{True}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!True@{True}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af827cf462f62848df37c5e1e94a4da74}{}True\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af827cf462f62848df37c5e1e94a4da74}
-}]Boolean True. \index{None@{None}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!None@{None}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5a6adf97f83acf6453d4a6a4b1070f3754}{}None\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5a6adf97f83acf6453d4a6a4b1070f3754}
-}]Not defined indicator. \end{description}
-\end{Desc}
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157}{}\index{owncloudsharp@{owncloudsharp}!Ocs\+Permission@{Ocs\+Permission}}
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{False@{False}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!False@{False}}}\mbox{\Hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af8320b26d30ab433c5a54546d21f414c}\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af8320b26d30ab433c5a54546d21f414c}} 
+False&Boolean False. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{True@{True}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!True@{True}}}\mbox{\Hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af827cf462f62848df37c5e1e94a4da74}\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5af827cf462f62848df37c5e1e94a4da74}} 
+True&Boolean True. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!None@{None}}}\mbox{\Hypertarget{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5a6adf97f83acf6453d4a6a4b1070f3754}\label{namespaceowncloudsharp_a7d494b18f174086318df1bdf916068b5a6adf97f83acf6453d4a6a4b1070f3754}} 
+None&Not defined indicator. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157}} 
+\index{owncloudsharp@{owncloudsharp}!Ocs\+Permission@{Ocs\+Permission}}
 \index{Ocs\+Permission@{Ocs\+Permission}!owncloudsharp@{owncloudsharp}}
-\subsubsection[{Ocs\+Permission}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf owncloudsharp.\+Ocs\+Permission}\hspace{0.3cm}{\ttfamily [strong]}}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157}
+\subsubsection{\texorpdfstring{Ocs\+Permission}{OcsPermission}}
+{\footnotesize\ttfamily enum \hyperlink{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157}{owncloudsharp.\+Ocs\+Permission}\hspace{0.3cm}{\ttfamily [strong]}}
+
 
 
 Share permissions. Add values to a int in order to set multiple permissions. See {\ttfamily \href{https://doc.owncloud.org/server/8.2/developer_manual/core/ocs-share-api.html}{\tt https\+://doc.\+owncloud.\+org/server/8.\+2/developer\+\_\+manual/core/ocs-\/share-\/api.\+html}} for reference. 
 
-\begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{Read@{Read}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Read@{Read}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a7a1a5f3e79fdc91edf2f5ead9d66abb4}{}Read\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a7a1a5f3e79fdc91edf2f5ead9d66abb4}
-}]Read permission. \index{Update@{Update}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Update@{Update}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a06933067aafd48425d67bcb01bba5cb6}{}Update\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a06933067aafd48425d67bcb01bba5cb6}
-}]Update permission. \index{Create@{Create}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Create@{Create}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a686e697538050e4664636337cc3b834f}{}Create\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a686e697538050e4664636337cc3b834f}
-}]Create permission. \index{Delete@{Delete}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Delete@{Delete}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157af2a6c498fb90ee345d997f888fce3b18}{}Delete\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157af2a6c498fb90ee345d997f888fce3b18}
-}]Delete permission. \index{Share@{Share}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Share@{Share}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178}{}Share\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178}
-}]Share permission. \index{All@{All}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!All@{All}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157ab1c94ca2fbc3e78fc30069c8d0f01680}{}All\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157ab1c94ca2fbc3e78fc30069c8d0f01680}
-}]All permissions. \index{None@{None}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!None@{None}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}{}None\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}
-}]Not defined indicator. \end{description}
-\end{Desc}
-\hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0b}{}\index{owncloudsharp@{owncloudsharp}!Ocs\+Share\+Type@{Ocs\+Share\+Type}}
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Read@{Read}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Read@{Read}}}\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a7a1a5f3e79fdc91edf2f5ead9d66abb4}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a7a1a5f3e79fdc91edf2f5ead9d66abb4}} 
+Read&Read permission. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Update@{Update}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Update@{Update}}}\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a06933067aafd48425d67bcb01bba5cb6}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a06933067aafd48425d67bcb01bba5cb6}} 
+Update&Update permission. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Create@{Create}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Create@{Create}}}\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a686e697538050e4664636337cc3b834f}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a686e697538050e4664636337cc3b834f}} 
+Create&Create permission. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Delete@{Delete}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Delete@{Delete}}}\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157af2a6c498fb90ee345d997f888fce3b18}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157af2a6c498fb90ee345d997f888fce3b18}} 
+Delete&Delete permission. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Share@{Share}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Share@{Share}}}\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178}} 
+Share&Share permission. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{All@{All}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!All@{All}}}\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157ab1c94ca2fbc3e78fc30069c8d0f01680}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157ab1c94ca2fbc3e78fc30069c8d0f01680}} 
+All&All permissions. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!None@{None}}}\mbox{\Hypertarget{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}\label{namespaceowncloudsharp_a86ba7b86b85c7f5be2304a1ef7ae3157a6adf97f83acf6453d4a6a4b1070f3754}} 
+None&Not defined indicator. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0b}\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0b}} 
+\index{owncloudsharp@{owncloudsharp}!Ocs\+Share\+Type@{Ocs\+Share\+Type}}
 \index{Ocs\+Share\+Type@{Ocs\+Share\+Type}!owncloudsharp@{owncloudsharp}}
-\subsubsection[{Ocs\+Share\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf owncloudsharp.\+Ocs\+Share\+Type}\hspace{0.3cm}{\ttfamily [strong]}}\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0b}
+\subsubsection{\texorpdfstring{Ocs\+Share\+Type}{OcsShareType}}
+{\footnotesize\ttfamily enum \hyperlink{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0b}{owncloudsharp.\+Ocs\+Share\+Type}\hspace{0.3cm}{\ttfamily [strong]}}
+
 
 
 Available share types. See {\ttfamily \href{https://doc.owncloud.org/server/8.2/developer_manual/core/ocs-share-api.html}{\tt https\+://doc.\+owncloud.\+org/server/8.\+2/developer\+\_\+manual/core/ocs-\/share-\/api.\+html}} for reference. 
 
-\begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{User@{User}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!User@{User}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba8f9bfe9d1345237cb3b2b205864da075}{}User\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba8f9bfe9d1345237cb3b2b205864da075}
-}]User Share. \index{Group@{Group}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Group@{Group}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba03937134cedab9078be39a77ee3a48a0}{}Group\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba03937134cedab9078be39a77ee3a48a0}
-}]Group Share. \index{Link@{Link}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Link@{Link}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba97e7c9a7d06eac006a28bf05467fcc8b}{}Link\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba97e7c9a7d06eac006a28bf05467fcc8b}
-}]Link Share. \index{Remote@{Remote}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Remote@{Remote}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0baf8508f576cd3f742dfc268258dcdf0dd}{}Remote\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0baf8508f576cd3f742dfc268258dcdf0dd}
-}]Remote Share. \index{None@{None}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!None@{None}}\item[{\em 
-\hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba6adf97f83acf6453d4a6a4b1070f3754}{}None\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba6adf97f83acf6453d4a6a4b1070f3754}
-}]Not defined indicator. \end{description}
-\end{Desc}
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{User@{User}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!User@{User}}}\mbox{\Hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba8f9bfe9d1345237cb3b2b205864da075}\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba8f9bfe9d1345237cb3b2b205864da075}} 
+User&User Share. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Group@{Group}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Group@{Group}}}\mbox{\Hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba03937134cedab9078be39a77ee3a48a0}\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba03937134cedab9078be39a77ee3a48a0}} 
+Group&Group Share. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Link@{Link}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Link@{Link}}}\mbox{\Hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba97e7c9a7d06eac006a28bf05467fcc8b}\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba97e7c9a7d06eac006a28bf05467fcc8b}} 
+Link&Link Share. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Remote@{Remote}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Remote@{Remote}}}\mbox{\Hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0baf8508f576cd3f742dfc268258dcdf0dd}\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0baf8508f576cd3f742dfc268258dcdf0dd}} 
+Remote&Remote Share. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!None@{None}}}\mbox{\Hypertarget{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba6adf97f83acf6453d4a6a4b1070f3754}\label{namespaceowncloudsharp_a51141c9a2e84eaced736ab96ea4b2f0ba6adf97f83acf6453d4a6a4b1070f3754}} 
+None&Not defined indicator. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685}\label{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685}} 
+\index{owncloudsharp@{owncloudsharp}!O\+C\+S\+User\+Attribute\+Key@{O\+C\+S\+User\+Attribute\+Key}}
+\index{O\+C\+S\+User\+Attribute\+Key@{O\+C\+S\+User\+Attribute\+Key}!owncloudsharp@{owncloudsharp}}
+\subsubsection{\texorpdfstring{O\+C\+S\+User\+Attribute\+Key}{OCSUserAttributeKey}}
+{\footnotesize\ttfamily enum \hyperlink{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685}{owncloudsharp.\+O\+C\+S\+User\+Attribute\+Key}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Defines the key value for Set\+User\+Attribute 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Display\+Name@{Display\+Name}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Display\+Name@{Display\+Name}}}\mbox{\Hypertarget{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685a3b868ced6f60acf5ee565ac021d42941}\label{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685a3b868ced6f60acf5ee565ac021d42941}} 
+Display\+Name&Users display name \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Quota@{Quota}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Quota@{Quota}}}\mbox{\Hypertarget{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685ad2d5c3e087f684e56b5b81d6212d7ccb}\label{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685ad2d5c3e087f684e56b5b81d6212d7ccb}} 
+Quota&Users storage quota \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Password@{Password}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!Password@{Password}}}\mbox{\Hypertarget{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685adc647eb65e6711e155375218212b3964}\label{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685adc647eb65e6711e155375218212b3964}} 
+Password&Users password \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\+Mail@{E\+Mail}!owncloudsharp@{owncloudsharp}}\index{owncloudsharp@{owncloudsharp}!E\+Mail@{E\+Mail}}}\mbox{\Hypertarget{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685a1dfcd881b8444c6f3effb453edaf9108}\label{namespaceowncloudsharp_a5896a4bf1799666b1f52193038b27685a1dfcd881b8444c6f3effb453edaf9108}} 
+E\+Mail&Users e-\/mail address \\
+\hline
+
+\end{DoxyEnumFields}
