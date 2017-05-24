@@ -37,22 +37,22 @@ namespace owncloudsharp.Types
 		/// Gets or sets the free storage space in bytes.
 		/// </summary>
 		/// <value>The free.</value>
-		public long Free { get; set; }
+		public double Free { get; set; }
 		/// <summary>
 		/// Gets or sets the used storage space in bytes.
 		/// </summary>
 		/// <value>The used.</value>
-		public long Used { get; set; }
+		public double Used { get; set; }
 		/// <summary>
 		/// Gets or sets the total storage space in bytes.
 		/// </summary>
 		/// <value>The total.</value>
-		public long Total { get; set; }
+		public double Total { get; set; }
 		/// <summary>
 		/// Gets or sets the relative storage space in bytes.
 		/// </summary>
 		/// <value>The relative.</value>
-		public long Relative { get; set; }
+		public double Relative { get; set; }
 	}
 }
 

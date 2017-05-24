@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -601,13 +602,13 @@ namespace owncloudsharp
 		/// <param name="username">name of user to modify.</param>
 		/// <param name="key">key of the attribute to set.</param>
 		/// <param name="value">value to set.</param>
-		public bool SetUserAttribute(string username, string key, string value) {
+		public bool SetUserAttribute(string username, OCSUserAttributeKey key, string value) {
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.PUT);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
 			request.AddUrlSegment ("userid", username);
-			request.AddQueryParameter ("key", key);
-			request.AddQueryParameter ("value", value);
+			request.AddParameter ("key", OCSUserAttributeKeyName[Convert.ToInt32(key)]);
+			request.AddParameter ("value", value);
 
 			var response = rest.Execute<OCS>(request);
 			if (response.Data != null) {
@@ -831,29 +832,36 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if group exists, <c>false</c> otherwise.</returns>
 		/// <param name="groupName">name of group to be checked.</param>
 		public bool GroupExists(string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "?search={groupid}", Method.GET);
-			request.AddHeader("OCS-APIREQUEST", "true");
-
-			request.AddUrlSegment ("groupid", groupName);
-
-			var response = rest.Execute<OCS>(request);
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
-					return true;
-				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
-			}
-
-			return false;
+            var results = SearchGroups(groupName);
+            return results.Contains(groupName);
 		}
-		#endregion
 
-		#region Config
-		/// <summary>
-		/// Returns ownCloud config information.
+        /// <summary>
+		/// Searches for groups via provisioning API.
 		/// </summary>
-		/// <returns>The config.</returns>
-		public Config GetConfig() {
+		/// <returns>list of groups.</returns>
+		/// <param name="name">name of group to be searched for.</param>
+		public List<string> SearchGroups(string name)
+        {
+            var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "?search={groupid}", Method.GET);
+            request.AddHeader("OCS-APIREQUEST", "true");
+
+            request.AddUrlSegment("groupid", name);
+
+            var response = rest.Execute(request);
+
+            CheckOcsStatus(response);
+
+            return GetDataElements(response.Content);
+        }
+        #endregion
+
+        #region Config
+        /// <summary>
+        /// Returns ownCloud config information.
+        /// </summary>
+        /// <returns>The config.</returns>
+        public Config GetConfig() {
 			var request = new RestRequest(GetOcsPath("", "config"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
@@ -1312,21 +1320,21 @@ namespace owncloudsharp
 
 					node = element.Element(XName.Get("free"));
 					if (node != null)
-						quota.Free = Convert.ToInt64(node.Value);
+						quota.Free = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					node = element.Element(XName.Get("used"));
+                    node = element.Element(XName.Get("used"));
 					if (node != null)
-						quota.Used = Convert.ToInt64(node.Value);
+						quota.Used = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					node = element.Element(XName.Get("total"));
+                    node = element.Element(XName.Get("total"));
 					if (node != null)
-						quota.Total = Convert.ToInt64(node.Value);
+						quota.Total = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					node = element.Element(XName.Get("relative"));
-					if (node != null)
-						quota.Relative = Convert.ToInt64(node.Value);
+                    node = element.Element(XName.Get("relative"));
+                    if (node != null)
+                        quota.Relative = double.Parse(node.Value, CultureInfo.InvariantCulture);
 
-					user.Quota = quota;
+                    user.Quota = quota;
 				}
 			}
 
@@ -1431,6 +1439,15 @@ namespace owncloudsharp
 
 			return result;
 		}
+        #endregion
+
+        #region Helpers
+        public static string[] OCSUserAttributeKeyName = new string[] {
+        "display",
+        "quota",
+        "password",
+        "email"
+        };
         #endregion
     }
 }
