@@ -1,10 +1,10 @@
 var searchData=
 [
+  ['searchgroups',['SearchGroups',['../classowncloudsharp_1_1_client.html#af303c729824dbe2ab788273f58f0804a',1,'owncloudsharp::Client']]],
   ['searchusers',['SearchUsers',['../classowncloudsharp_1_1_client.html#ae50362f45f53ffe21fde6651f0873c0e',1,'owncloudsharp::Client']]],
   ['setattribute',['SetAttribute',['../classowncloudsharp_1_1_client.html#a0939782439f44c5250d66147755d4c25',1,'owncloudsharp::Client']]],
-  ['setuserattribute',['SetUserAttribute',['../classowncloudsharp_1_1_client.html#a788f66e2d774a7c47e0a46918a50c5b5',1,'owncloudsharp::Client']]],
-  ['share',['Share',['../classowncloudsharp_1_1_types_1_1_share.html',1,'owncloudsharp::Types']]],
-  ['share',['Share',['../namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178',1,'owncloudsharp']]],
+  ['setuserattribute',['SetUserAttribute',['../classowncloudsharp_1_1_client.html#af1329fb22579de086775bf5d029cc6e3',1,'owncloudsharp::Client']]],
+  ['share',['Share',['../classowncloudsharp_1_1_types_1_1_share.html',1,'owncloudsharp.Types.Share'],['../namespaceowncloudsharp.html#a86ba7b86b85c7f5be2304a1ef7ae3157a5a95a425f74314a96f13a2f136992178',1,'owncloudsharp.Share()']]],
   ['sharedwith',['SharedWith',['../classowncloudsharp_1_1_types_1_1_group_share.html#a6b51436f6f51780137ff9640b15d9e9c',1,'owncloudsharp.Types.GroupShare.SharedWith()'],['../classowncloudsharp_1_1_types_1_1_user_share.html#a1d253a1b33f697479bf7a14f4b78bb4e',1,'owncloudsharp.Types.UserShare.SharedWith()']]],
   ['shareid',['ShareId',['../classowncloudsharp_1_1_types_1_1_share.html#ada18f7c002805affd1fb26d1a11ea7a9',1,'owncloudsharp::Types::Share']]],
   ['sharewithdisplayname',['ShareWithDisplayname',['../classowncloudsharp_1_1_types_1_1_advanced_share_properties.html#a4fdad7e38248634f5ccb65f0afcd7908',1,'owncloudsharp::Types::AdvancedShareProperties']]],

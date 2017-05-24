@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['group',['Group',['../namespaceowncloudsharp.html#a51141c9a2e84eaced736ab96ea4b2f0ba03937134cedab9078be39a77ee3a48a0',1,'owncloudsharp']]]
+  ['false',['False',['../namespaceowncloudsharp.html#a7d494b18f174086318df1bdf916068b5af8320b26d30ab433c5a54546d21f414c',1,'owncloudsharp']]]
 ];

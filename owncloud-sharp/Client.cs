@@ -1442,6 +1442,9 @@ namespace owncloudsharp
         #endregion
 
         #region Helpers
+        /// <summary>
+        /// Provides the string values for the OCSUserAttributeKey enum
+        /// </summary>
         public static string[] OCSUserAttributeKeyName = new string[] {
         "display",
         "quota",
