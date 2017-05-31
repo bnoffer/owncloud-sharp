@@ -102,7 +102,7 @@ namespace owncloudsharp
         /// <summary>
         /// Users e-mail address
         /// </summary>
-        EMail = 2
+        EMail = 3
     }
 }
 
