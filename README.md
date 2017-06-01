@@ -1,4 +1,5 @@
-﻿#C# client library for ownCloud
+﻿C# client library for ownCloud
+==============================
 
 A portable class library to interact with ownCloud servers through WebDAV and the ownCloud OCS API.
 
@@ -6,6 +7,11 @@ Project status
 ==============
 
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/6488/badge.svg)](https://scan.coverity.com/projects/bnoffer-owncloud-sharp)
+
+Current code base has been tested to work on:
+
+* ownCloud 8.2 - 9.1
+* NextCloud 12
 
 Instructions
 ============
