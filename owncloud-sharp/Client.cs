@@ -73,6 +73,7 @@ namespace owncloudsharp
 			this.rest.BaseUrl = new Uri (url + "/" + ocspath);
 			// Configure RestSharp for BasicAuth
 			this.rest.Authenticator = new HttpBasicAuthenticator (user_id, password);
+            this.rest.AddDefaultParameter("format", "xml");
 
 			// WebDavNet initialisation
 			this.dav = new WebDavManager ();
@@ -512,7 +513,7 @@ namespace owncloudsharp
 		public bool CreateUser(string username, string initialPassword) {
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users"), Method.POST);
 			request.AddHeader("OCS-APIREQUEST", "true");
-
+            
 			request.AddParameter ("userid", username);
 			request.AddParameter ("password", initialPassword);
 
