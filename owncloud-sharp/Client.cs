@@ -898,7 +898,7 @@ namespace owncloudsharp
 
 			var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
-
+            
 			var response = rest.Execute (request);
 
 			CheckOcsStatus (response);

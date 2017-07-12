@@ -10,7 +10,7 @@ Project status
 
 Current code base has been tested to work on:
 
-* ownCloud 8.2 - 9.1
+* ownCloud 8.2 - 10
 * NextCloud 12
 
 Instructions
