@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>ownCloud#</title>
+    <authors>Bastian Noffer</authors>
+    <owners>Bastion Noffer</owners>
+    <licenseUrl>https://github.com/bnoffer/owncloud-sharp/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/bnoffer/owncloud-sharp</projectUrl>
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A portable class library to interact with ownCloud servers through WebDAV and the ownCloud OCS API.</description>
+    <releaseNotes>First release based on version 0.3.0</releaseNotes>
+    <copyright>Copyright 2015 Bastian Noffer</copyright>
+    <tags>ownCloud WebDAV</tags>
+  </metadata>
+</package>

@@ -32,6 +32,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "webdavnet\WebC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webdavnet", "webdavnet\webdavnet\webdavnet.csproj", "{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{16BC7E5C-E7F7-4790-BD12-52E51C371993}"
+	ProjectSection(SolutionItems) = preProject
+		Nuget\nuget.png = Nuget\nuget.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +72,7 @@ Global
 		{1C5E5AC4-DFEF-4B54-A2A5-511F41AAF2E6} = {272AFCD1-32AC-4F20-A2CC-11C2D4D8FC8F}
 		{A6075667-C782-4762-9594-72091CAAC54C} = {1C5E5AC4-DFEF-4B54-A2A5-511F41AAF2E6}
 		{DF6104F5-3448-4266-A9CF-DCBE6ECD5F56} = {1C5E5AC4-DFEF-4B54-A2A5-511F41AAF2E6}
+		{16BC7E5C-E7F7-4790-BD12-52E51C371993} = {272AFCD1-32AC-4F20-A2CC-11C2D4D8FC8F}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		description = A portable class library to interact with ownCloud servers through WebDAV and the ownCloud OCS API.
