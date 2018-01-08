@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -53,25 +54,41 @@
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <ItemGroup />
   <ItemGroup>
-    <Reference Include="RestSharp.Build">
-      <HintPath>..\Binaries\RestSharp.Build.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\Binaries\RestSharp.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="owncloud-sharp.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\webdavnet\WebClient\WebClient.csproj">
-      <Project>{47C1D318-90F3-44DC-8307-9A4ADC556E2E}</Project>
-      <Name>WebClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\webdavnet\webdavnet\webdavnet.csproj">
-      <Project>{4AD0BDDE-D9AF-49F8-912C-4B6970CBE1BA}</Project>
-      <Name>webdavnet</Name>
-    </ProjectReference>
+    <Reference Include="FubarCoder.RestSharp.Portable.Core">
+      <HintPath>..\packages\FubarCoder.RestSharp.Portable.Core.4.0.8\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FubarCoder.RestSharp.Portable.Encodings">
+      <HintPath>..\packages\FubarCoder.RestSharp.Portable.Encodings.4.0.8\lib\portable40-net40+sl5+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.Encodings.dll</HintPath>
+    </Reference>
+    <Reference Include="FubarCoder.RestSharp.Portable.WebRequest">
+      <HintPath>..\packages\FubarCoder.RestSharp.Portable.WebRequest.4.0.8\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Requests" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="FubarCoder.RestSharp.Portable.HttpClient">
+      <HintPath>..\packages\FubarCoder.RestSharp.Portable.HttpClient.4.0.8\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.HttpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="WebClient">
+      <HintPath>..\packages\bnoffer.webclient.1.0.3\lib\portable45-net45+win8+wp8\WebClient.dll</HintPath>
+    </Reference>
+    <Reference Include="webdavnet">
+      <HintPath>..\packages\bnoffer.webdavnet.1.0.2\lib\portable45-net45+win8+wp8\webdavnet.dll</HintPath>
+    </Reference>
   </ItemGroup>
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.targets')" />
 </Project>

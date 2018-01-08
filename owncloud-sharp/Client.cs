@@ -6,8 +6,9 @@ using System.Net;
 using System.Xml;
 using System.Xml.Linq;
 
-using RestSharp;
-using RestSharp.Authenticators;
+using RestSharp.Portable;
+using RestSharp.Portable.Authenticators;
+using RestSharp.Portable.WebRequest;
 using WebDav;
 using WebClient;
 
@@ -24,7 +25,7 @@ namespace owncloudsharp
 		/// <summary>
 		/// RestSharp instance.
 		/// </summary>
-		private RestClient rest;
+        private RestClient rest;
 		/// <summary>
 		/// WebDavNet instance.
 		/// </summary>
@@ -67,8 +68,9 @@ namespace owncloudsharp
 			// Store ownCloud base URL
 			this.url = url;
 
-			// RestSharp initialisation
-			this.rest = new RestClient ();
+            // RestSharp initialisation
+
+            this.rest = new RestClient();
 			// Set the base path as the OCS API root
 			this.rest.BaseUrl = new Uri (url + "/" + ocspath);
 			// Configure RestSharp for BasicAuth
@@ -241,7 +243,7 @@ namespace owncloudsharp
 		public object ListOpenRemoteShare() {
 			var request = new RestRequest(GetOcsPath(ocsServiceShare, "remote_shares"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -260,7 +262,7 @@ namespace owncloudsharp
 			request.AddUrlSegment("id", "" + shareId);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -281,7 +283,7 @@ namespace owncloudsharp
 			request.AddUrlSegment("id", "" + shareId);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -304,7 +306,7 @@ namespace owncloudsharp
 			request.AddUrlSegment("id", "" + shareId);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -340,7 +342,7 @@ namespace owncloudsharp
 			else if (public_upload == OcsBoolParam.False)
 				request.AddQueryParameter ("publicUpload", "false");
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -375,7 +377,7 @@ namespace owncloudsharp
 			else if (public_upload == OcsBoolParam.False)
 				request.AddParameter ("publicUpload", "false");
 
-			var response = rest.Execute (request);
+            var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -415,7 +417,7 @@ namespace owncloudsharp
 				request.AddParameter("permissions", Convert.ToInt32(OcsPermission.Read) + "");
 			request.AddParameter ("shareWith", username);
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -450,7 +452,7 @@ namespace owncloudsharp
 				request.AddParameter("permissions", Convert.ToInt32(OcsPermission.Read) + "");
 			request.AddParameter ("shareWith", groupName);
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -495,7 +497,7 @@ namespace owncloudsharp
 			else if (subfiles == OcsBoolParam.False)
 				request.AddQueryParameter("subfiles", "false");
 			
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -517,7 +519,7 @@ namespace owncloudsharp
 			request.AddParameter ("userid", username);
 			request.AddParameter ("password", initialPassword);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -539,7 +541,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("userid", username);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -571,7 +573,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("userid", username);
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -589,7 +591,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("userid", username);
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -611,7 +613,7 @@ namespace owncloudsharp
 			request.AddParameter ("key", OCSUserAttributeKeyName[Convert.ToInt32(key)]);
 			request.AddParameter ("value", value);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -635,7 +637,7 @@ namespace owncloudsharp
 			request.AddUrlSegment ("userid", username);
 			request.AddParameter ("groupid", groupName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -657,7 +659,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("userid", username);
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -688,7 +690,7 @@ namespace owncloudsharp
 			request.AddUrlSegment ("userid", username);
 			request.AddParameter ("groupid", groupName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -712,7 +714,7 @@ namespace owncloudsharp
 			request.AddUrlSegment ("userid", username);
 			request.AddParameter ("groupid", groupName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -734,7 +736,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("userid", username);
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			try {
 				CheckOcsStatus (response);
@@ -770,7 +772,7 @@ namespace owncloudsharp
 			request.AddUrlSegment ("userid", username);
 			request.AddParameter ("groupid", groupName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -794,7 +796,7 @@ namespace owncloudsharp
 
 			request.AddParameter ("groupid", groupName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -816,7 +818,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("groupid", groupName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -849,7 +851,7 @@ namespace owncloudsharp
 
             request.AddUrlSegment("groupid", name);
 
-            var response = rest.Execute(request);
+            var response = rest.Execute(request).Result;
 
             CheckOcsStatus(response);
 
@@ -866,7 +868,7 @@ namespace owncloudsharp
 			var request = new RestRequest(GetOcsPath("", "config"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -899,7 +901,7 @@ namespace owncloudsharp
 			var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
             
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -920,7 +922,7 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 			request.AddParameter ("value", value);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -943,7 +945,7 @@ namespace owncloudsharp
 			var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.DELETE);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -964,7 +966,7 @@ namespace owncloudsharp
 			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps"), Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -981,7 +983,7 @@ namespace owncloudsharp
 			request.AddHeader("OCS-APIREQUEST", "true");
 			request.AddUrlSegment ("appid", appName);
 
-			var response = rest.Execute (request);
+			var response = rest.Execute (request).Result;
 
 			CheckOcsStatus (response);
 
@@ -999,7 +1001,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("appid", appName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -1021,7 +1023,7 @@ namespace owncloudsharp
 
 			request.AddUrlSegment ("appid", appName);
 
-			var response = rest.Execute<OCS>(request);
+			var response = rest.Execute<OCS>(request).Result;
 			if (response.Data != null) {
 				if (response.Data.Meta.StatusCode == 100)
 					return true;
@@ -1251,8 +1253,8 @@ namespace owncloudsharp
 		/// </summary>
 		/// <param name="response">OCS Response.</param>
 		private void CheckOcsStatus(IRestResponse response) {
-			if (response.Content == null)
-				throw new ResponseError (response.ErrorMessage);
+            if (response.Content == null)
+                throw new ResponseError(response.StatusDescription);
 			else {
 				var ocsStatus = GetFromMeta (response.Content, "statuscode");
 				if (ocsStatus == null)
