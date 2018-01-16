@@ -22,11 +22,39 @@ namespace owncloudsharp.Types
 		/// </summary>
 		/// <value>The display name.</value>
 		public string DisplayName { get; set; }
-		/// <summary>
+        /// <summary>
+        /// Path to users home directory on the server
+        /// </summary>
+        /// <value>path to home directory</value>
+        public string Home { get; set; }
+        /// <summary>
+        /// Indicates if two factor authentication has been enabled
+        /// </summary>
+        /// <value><c>true</c> if two factor auth enabled; otherwise, <c>false</c>.</value>
+        public bool TwoFactorAuthEnabled { get; set; }
+        /// <summary>
 		/// Gets or sets the users storage quota.
 		/// </summary>
 		/// <value>The quota.</value>
 		public Quota Quota { get; set; }
+
+        /// <summary>
+        /// Converts a dynamic JSON object to a User instance
+        /// </summary>
+        /// <returns>User object instance</returns>
+        /// <param name="json">JSON to convert</param>
+        public static User JSonDeserialize(dynamic json)
+        {
+            return new User()
+            {
+                EMail = json.email,
+                Enabled = json.enabled,
+                DisplayName = json.displayname,
+                Home = json.home,
+                TwoFactorAuthEnabled = json.two_factor_auth_enabled,
+                Quota = Quota.JSonDeserialize(json.quota)
+            };
+        }
 	}
 
 	/// <summary>
@@ -53,6 +81,22 @@ namespace owncloudsharp.Types
 		/// </summary>
 		/// <value>The relative.</value>
 		public double Relative { get; set; }
+
+        /// <summary>
+        /// Converts a dynamic JSON object to a Quota instance
+        /// </summary>
+        /// <returns>Quota object instance.</returns>
+        /// <param name="json">JSON to convert.</param>
+        public static Quota JSonDeserialize(dynamic json)
+        {
+            return new Quota()
+            {
+                Free = json.free,
+                Used = json.used,
+                Total = json.total,
+                Relative = json.relative
+            };
+        }
 	}
 }
 

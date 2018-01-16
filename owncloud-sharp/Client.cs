@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Flurl;
+using Flurl.Http;
+using Flurl.Util;
 
-using RestSharp.Portable;
-using RestSharp.Portable.Authenticators;
-using RestSharp.Portable.WebRequest;
 using WebDav;
 using WebClient;
 
 using owncloudsharp.Exceptions;
 using owncloudsharp.Types;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace owncloudsharp
 {
@@ -25,7 +30,7 @@ namespace owncloudsharp
 		/// <summary>
 		/// RestSharp instance.
 		/// </summary>
-        private RestClient rest;
+        private FlurlClient rest;
 		/// <summary>
 		/// WebDavNet instance.
 		/// </summary>
@@ -51,7 +56,7 @@ namespace owncloudsharp
 		/// OCS Provisioning API path.
 		/// </summary>
 		private const string ocsServiceCloud = "cloud";
-		#endregion
+        #endregion
 
 		#region Constructor
 		/// <summary>
@@ -69,13 +74,17 @@ namespace owncloudsharp
 			this.url = url;
 
             // RestSharp initialisation
+            this.rest = new FlurlClient(new Uri(url + "/" + ocspath).ToString())
+                .WithBasicAuth(user_id, password)
+                .WithHeader("OCS-APIREQUEST", true)
+                .AllowAnyHttpStatus();
+            //this.rest = new RestClient();
+            // Set the base path as the OCS API root
+            //this.baseUrl = new Uri (url + "/" + ocspath).ToString();
+            // Configure RestSharp for BasicAuth
+            //this.rest.Authenticator = new HttpBasicAuthenticator (user_id, password);
+            //this.rest.AddDefaultParameter("format", "xml");
 
-            this.rest = new RestClient();
-			// Set the base path as the OCS API root
-			this.rest.BaseUrl = new Uri (url + "/" + ocspath);
-			// Configure RestSharp for BasicAuth
-			this.rest.Authenticator = new HttpBasicAuthenticator (user_id, password);
-            this.rest.AddDefaultParameter("format", "xml");
 
 			// WebDavNet initialisation
 			this.dav = new WebDavManager ();
@@ -241,15 +250,21 @@ namespace owncloudsharp
 		/// </summary>
 		/// <returns>List of remote shares.</returns>
 		public object ListOpenRemoteShare() {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "remote_shares"), Method.GET);
+            var urlSegments = GetOcsPath(ocsServiceShare, "remote_shares");
+            var request = rest.Request(urlSegments);
+
+            var response = request.GetJsonAsync<OCS>();
+            /*var request = new RestRequest(, Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
-			var response = rest.Execute (request).Result;
+			var response = rest.Execute (request).Result;*/
+
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			var content = response.Content; 
+            var content = response.Result; 
 			// TODO: Parse response
-			return content;
+            return content;
 		}
 
 		/// <summary>
@@ -258,16 +273,23 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if remote share was accepted, <c>false</c> otherwise.</returns>
 		/// <param name="shareId">Share identifier.</param>
 		public bool AcceptRemoteShare(int shareId) {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "remote_shares") + "/{id}", Method.POST);
+            var urlSegments = GetOcsPath(ocsServiceShare, "remote_shares");
+            var request = rest.Request(urlSegments);
+
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceShare, "remote_shares") + "/{id}", Method.POST);
 			request.AddUrlSegment("id", "" + shareId);
 			request.AddHeader("OCS-APIREQUEST", "true");
-
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            
+			var response = rest.Execute<OCS>(request).Result;*/
+            
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -279,16 +301,22 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if remote share was declined, <c>false</c> otherwise.</returns>
 		/// <param name="shareId">Share identifier.</param>
 		public bool DeclineRemoteShare(int shareId) {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "remote_shares") + "/{id}", Method.DELETE);
+            var urlSegments = GetOcsPath(ocsServiceShare, "remote_shares");
+            var request = rest.Request(urlSegments + String.Format("/{0}", shareId + ""));
+
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceShare, "remote_shares") + "/{id}", Method.DELETE);
 			request.AddUrlSegment("id", "" + shareId);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+			var response = rest.Execute<OCS>(request).Result;*/
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -302,16 +330,22 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if share was deleted, <c>false</c> otherwise.</returns>
 		/// <param name="shareId">Share identifier.</param>
 		public bool DeleteShare(int shareId) {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") + "/{id}", Method.DELETE);
+            var urlSegments = GetOcsPath(ocsServiceShare, "shares");
+            var request = rest.Request(urlSegments + String.Format("/{0}", shareId + ""));
+
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") + "/{id}", Method.DELETE);
 			request.AddUrlSegment("id", "" + shareId);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+			var response = rest.Execute<OCS>(request).Result;*/
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -329,11 +363,26 @@ namespace owncloudsharp
 			if ((perms == Convert.ToInt32(OcsPermission.None)) && (password == null) && (public_upload == OcsBoolParam.None))
 				return false;
 			
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") + "/{id}", Method.PUT);
-			request.AddUrlSegment("id", "" + shareId);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceShare, "shares");
+            var request = rest.Request(urlSegments + String.Format("/{0}", shareId + ""));
 
-			if (perms != Convert.ToInt32(OcsPermission.None))
+            /*var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") + "/{id}", Method.PUT);
+			
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            List<Object> parameters = new List<object>();
+            if (perms != Convert.ToInt32(OcsPermission.None))
+                parameters.Add(new { permissions = perms });
+            if (password != null)
+                parameters.Add(new { password = password });
+            if (public_upload == OcsBoolParam.True)
+                parameters.Add(new { publicUpload = true });
+            else if (public_upload == OcsBoolParam.False)
+                parameters.Add(new { publicUpload = false });
+
+            request.SetQueryParams(parameters.ToArray());
+
+			/*if (perms != Convert.ToInt32(OcsPermission.None))
 				request.AddQueryParameter ("permissions", Convert.ToInt32(perms) + "");
 			if (password != null)
 				request.AddQueryParameter ("password", password);
@@ -341,13 +390,16 @@ namespace owncloudsharp
 				request.AddQueryParameter ("publicUpload", "true");
 			else if (public_upload == OcsBoolParam.False)
 				request.AddQueryParameter ("publicUpload", "false");
+            
+			var response = rest.Execute<OCS>(request).Result;*/
+            var response = request.PutAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -362,10 +414,25 @@ namespace owncloudsharp
 		/// <param name="password">(optional) sets a password.</param>
 		/// <param name="public_upload">(optional) allows users to upload files or folders.</param>
 		public PublicShare ShareWithLink(string path, int perms = -1, string password = null, OcsBoolParam public_upload = OcsBoolParam.None) {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares"), Method.POST);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceShare, "shares");
+            var request = rest.Request(urlSegments);
 
-			request.AddParameter ("shareType", Convert.ToInt32 (OcsShareType.Link));
+            /*var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares"), Method.POST);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { shareType = Convert.ToInt32(OcsShareType.Link) });
+            parameters.Add(new { path = path });
+
+            if (perms != Convert.ToInt32(OcsPermission.None))
+                parameters.Add(new { permissions = perms });
+            if (password != null)
+                parameters.Add(new { password = password });
+            if (public_upload == OcsBoolParam.True)
+                parameters.Add(new { publicUpload = true });
+            else if (public_upload == OcsBoolParam.False)
+                parameters.Add(new { publicUpload = false });
+			/*request.AddParameter ("shareType", Convert.ToInt32 (OcsShareType.Link));
 			request.AddParameter ("path", path);
 
 			if (perms != Convert.ToInt32(OcsPermission.None))
@@ -377,18 +444,21 @@ namespace owncloudsharp
 			else if (public_upload == OcsBoolParam.False)
 				request.AddParameter ("publicUpload", "false");
 
-            var response = rest.Execute (request).Result;
+            var response = rest.Execute (request).Result;*/
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			PublicShare share = new PublicShare ();
+			/*PublicShare share = new PublicShare ();
 			share.ShareId = Convert.ToInt32(GetFromData(response.Content, "id"));
 			share.Url = GetFromData(response.Content, "url");
 			share.Token = GetFromData(response.Content, "token");
 			share.TargetPath = path;
-            share.Perms = (perms > -1) ? perms : Convert.ToInt32(OcsPermission.Read);
+            share.Perms = (perms > -1) ? perms : Convert.ToInt32(OcsPermission.Read);*/
 
-			return share;
+            return (PublicShare)response.Result.Data;
 		}
 
 		/// <summary>
@@ -403,10 +473,24 @@ namespace owncloudsharp
 			if ((perms == -1) || (perms > Convert.ToInt32 (OcsPermission.All)) || (username == null) || (username.Equals ("")))
 				return null;
 
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares"), Method.POST);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceShare, "shares");
+            var request = rest.Request(urlSegments);
+			/*var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares"), Method.POST);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
 
-			if (remoteUser == OcsBoolParam.True)
+            List<Object> parameters = new List<object>();
+            if (remoteUser == OcsBoolParam.True)
+                parameters.Add(new { shareType = Convert.ToInt32(OcsShareType.Remote) });
+            else
+                parameters.Add(new { shareType = Convert.ToInt32(OcsShareType.User) });
+            parameters.Add(new { path = path });
+            if (perms != Convert.ToInt32(OcsPermission.None))
+                parameters.Add(new { permissions = perms });
+            else
+                parameters.Add(new { permissions = Convert.ToInt32(OcsPermission.Read) });
+            parameters.Add(new { shareWith = username });
+
+			/*if (remoteUser == OcsBoolParam.True)
 				request.AddParameter ("shareType", Convert.ToInt32 (OcsShareType.Remote));
 			else
 				request.AddParameter ("shareType", Convert.ToInt32 (OcsShareType.User));
@@ -415,19 +499,22 @@ namespace owncloudsharp
 				request.AddParameter("permissions", perms + "");
 			else
 				request.AddParameter("permissions", Convert.ToInt32(OcsPermission.Read) + "");
-			request.AddParameter ("shareWith", username);
+			request.AddParameter ("shareWith", username);*/
 
-			var response = rest.Execute (request).Result;
+			//var response = rest.Execute (request).Result;
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-            var share = new UserShare();
+            /*var share = new UserShare();
 			share.ShareId = Convert.ToInt32(GetFromData(response.Content, "id"));
             share.TargetPath = path;
             share.Perms = perms;
-			share.SharedWith = username;
+			share.SharedWith = username;*/
 
-            return share;
+            return (UserShare)response.Result.Data;
 		}
 
 		/// <summary>
@@ -441,28 +528,43 @@ namespace owncloudsharp
 			if ((perms == -1) || (perms > Convert.ToInt32 (OcsPermission.All)) || (groupName == null) || (groupName.Equals ("")))
 				return null;
 
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares"), Method.POST);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceShare, "shares");
+            var request = rest.Request(urlSegments);
 
-			request.AddParameter ("shareType", Convert.ToInt32 (OcsShareType.Group));
+			/*var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares"), Method.POST);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { shareType = Convert.ToInt32(OcsShareType.Group) });
+            parameters.Add(new { path = path });
+            if (perms != Convert.ToInt32(OcsPermission.None))
+                parameters.Add(new { permissions = perms });
+            else
+                parameters.Add(new { permissions = Convert.ToInt32(OcsPermission.Read) });
+            parameters.Add(new { shareWith = groupName });
+
+			/*request.AddParameter ("shareType", Convert.ToInt32 (OcsShareType.Group));
 			request.AddParameter ("path", path);
 			if (perms != Convert.ToInt32(OcsPermission.None))
 				request.AddParameter("permissions", perms + "");
 			else
 				request.AddParameter("permissions", Convert.ToInt32(OcsPermission.Read) + "");
-			request.AddParameter ("shareWith", groupName);
+			request.AddParameter ("shareWith", groupName);*/
 
-			var response = rest.Execute (request).Result;
+			//var response = rest.Execute (request).Result;
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-            var share = new GroupShare();
+            /*var share = new GroupShare();
 			share.ShareId = Convert.ToInt32(GetFromData(response.Content, "id"));
             share.TargetPath = path;
             share.Perms = perms;
-			share.SharedWith = groupName;
+			share.SharedWith = groupName;*/
 
-            return share;
+            return (GroupShare)response.Result.Data;
         }
 
 		/// <summary>
@@ -483,10 +585,25 @@ namespace owncloudsharp
 		/// <param name="reshares">(optional) returns not only the shares from	the current user but all shares from the given file.</param>
 		/// <param name="subfiles">(optional) returns all shares within	a folder, given that path defines a folder.</param>
 		public List<Share> GetShares(string path, OcsBoolParam reshares = OcsBoolParam.None, OcsBoolParam subfiles = OcsBoolParam.None) {
-			var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") , Method.GET);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceShare, "shares");
+            var request = rest.Request(urlSegments);
 
-			if ((path != null) && (!path.Equals("")))
+			/*var request = new RestRequest(GetOcsPath(ocsServiceShare, "shares") , Method.GET);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            List<Object> parameters = new List<object>();
+            if ((path != null) && (!path.Equals("")))
+                parameters.Add(new { path = path });
+            if (reshares == OcsBoolParam.True)
+                parameters.Add(new { reshares = true });
+            else if (reshares == OcsBoolParam.False)
+                parameters.Add(new { reshares = false });
+            if (subfiles == OcsBoolParam.True)
+                parameters.Add(new { subfiles = true });
+            else if (subfiles == OcsBoolParam.False)
+                parameters.Add(new { subfiles = false });
+
+			/*if ((path != null) && (!path.Equals("")))
             	request.AddQueryParameter("path", path);
 			if (reshares == OcsBoolParam.True)
 				request.AddQueryParameter("reshares", "true");
@@ -495,13 +612,17 @@ namespace owncloudsharp
 			if (subfiles == OcsBoolParam.True)
 				request.AddQueryParameter("subfiles", "true");
 			else if (subfiles == OcsBoolParam.False)
-				request.AddQueryParameter("subfiles", "false");
+				request.AddQueryParameter("subfiles", "false");*/
 			
-			var response = rest.Execute (request).Result;
+			//var response = rest.Execute (request).Result;
+
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			return GetShareList (response.Content);
+            return (List<Share>)response.Result.Data;
 		}
 		#endregion
 
@@ -513,19 +634,36 @@ namespace owncloudsharp
 		/// <param name="username">name of user to be created.</param>
 		/// <param name="initialPassword">password for user being created.</param> 
 		public bool CreateUser(string username, string initialPassword) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users"), Method.POST);
-			request.AddHeader("OCS-APIREQUEST", "true");
-            
-			request.AddParameter ("userid", username);
-			request.AddParameter ("password", initialPassword);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments);
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users"), Method.POST);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            List<Object> parameters = new List<object>();
+            parameters.Add(new QueryParameter("userid", username));
+            parameters.Add(new QueryParameter("password", initialPassword));
+            parameters.Add(new QueryParameter("format", "json"));
+            
+			/*request.AddParameter ("userid", username);
+			request.AddParameter ("password", initialPassword);*/
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<dynamic>();
+            response.Wait();
+
+            var content = OCS.JSonDeserialize(response.Result, typeof(User));
+            /*var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
-			}
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
+			}*/
 
 			return false;
 		}
@@ -536,17 +674,24 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if user was deleted, <c>false</c> otherwise.</returns>
 		/// <param name="username">name of user to be deleted.</param>
 		public bool DeleteUser(string username) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.DELETE);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.DELETE);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            //var response = rest.Execute<OCS>(request).Result;
+
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -568,16 +713,22 @@ namespace owncloudsharp
 		/// <returns>list of users.</returns>
 		/// <param name="username">name of user to be searched for.</param>
 		public List<string> SearchUsers(string username) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "?search={userid}", Method.GET);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("?search={0}", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "?search={userid}", Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute (request).Result;
+            //var response = rest.Execute (request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			return GetDataElements (response.Content);
+            return (List<string>)response.Result.Data;
 		}
 
 		/// <summary>
@@ -586,16 +737,26 @@ namespace owncloudsharp
 		/// <returns>The user attributes.</returns>
 		/// <param name="username">Username.</param>
 		public User GetUserAttributes(string username) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.GET);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute (request).Result;
+            //var response = rest.Execute (request).Result;
+            var parameters = new List<QueryParameter>();
+            parameters.Add(new QueryParameter("format", "json"));
 
-			CheckOcsStatus (response);
+            request.SetQueryParams(parameters);
+            var response = request.GetJsonAsync<dynamic>();
+            response.Wait();
 
-			return GetUser (response.Content);
+            var content = OCS.JSonDeserialize(response.Result, typeof(User));
+            //CheckOcsStatus ();
+
+            return (User)content.Data;
 		}
 
 		/// <summary>
@@ -606,19 +767,35 @@ namespace owncloudsharp
 		/// <param name="key">key of the attribute to set.</param>
 		/// <param name="value">value to set.</param>
 		public bool SetUserAttribute(string username, OCSUserAttributeKey key, string value) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.PUT);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}", Method.PUT);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
-			request.AddParameter ("key", OCSUserAttributeKeyName[Convert.ToInt32(key)]);
-			request.AddParameter ("value", value);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            var parameters = new List<QueryParameter>();
+            parameters.Add(new QueryParameter("key", OCSUserAttributeKeyName[Convert.ToInt32(key)]));
+            parameters.Add(new QueryParameter("value", value ));
+            parameters.Add(new QueryParameter("format", "json"));
+
+			/*request.AddParameter ("key", OCSUserAttributeKeyName[Convert.ToInt32(key)]);
+			request.AddParameter ("value", value);*/
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PutAsync(new StringContent("")).ReceiveJson<dynamic>();
+            response.Wait();
+
+            var content = OCS.JSonDeserialize(response.Result, typeof(User));
+
+            if (content != null) {
+                if (content.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (content.Meta.Message, content.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -631,18 +808,30 @@ namespace owncloudsharp
 		/// <param name="username">name of user to be added.</param>
 		/// <param name="groupName">name of group user is to be added to.</param>
 		public bool AddUserToGroup(string username, string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/groups", Method.POST);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}/groups", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/groups", Method.POST);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
-			request.AddParameter ("groupid", groupName);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { groupid = groupName });
+
+			//request.AddParameter ("groupid", groupName);
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -654,16 +843,22 @@ namespace owncloudsharp
 		/// <returns>list of groups.</returns>
 		/// <param name="username">name of user to list groups.</param>
 		public List<string> GetUserGroups (string username) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/groups", Method.GET);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}/groups", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/groups", Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute (request).Result;
+            //var response = rest.Execute (request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			return GetDataElements (response.Content);
+            return (List<string>)response.Result.Data;
 		}
 
 		/// <summary>
@@ -684,18 +879,30 @@ namespace owncloudsharp
 		/// <param name="username">name of user to be removed.</param>
 		/// <param name="groupName">name of group user is to be removed from.</param>
 		public bool RemoveUserFromGroup(string username, string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/groups", Method.DELETE);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}/groups", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/groups", Method.DELETE);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
-			request.AddParameter ("groupid", groupName);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { groupid = groupName });
+
+			//request.AddParameter ("groupid", groupName);
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -708,18 +915,30 @@ namespace owncloudsharp
 		/// <param name="username">name of user to be added to subadmin group.</param>
 		/// <param name="groupName">name of subadmin group.</param>
 		public bool AddUserToSubAdminGroup(string username, string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.POST);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}/subadmins", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.POST);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
-			request.AddParameter ("groupid", groupName);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { groupid = groupName });
+
+			//request.AddParameter ("groupid", groupName);
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -731,12 +950,18 @@ namespace owncloudsharp
 		/// <returns>list of subadmin groups.</returns>
 		/// <param name="username">name of user.</param>
 		public List<string> GetUserSubAdminGroups (string username) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.GET);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}/subadmins", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.GET);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
+			request.AddUrlSegment ("userid", username);*/
 
-			var response = rest.Execute (request).Result;
+            //var response = rest.Execute (request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			try {
 				CheckOcsStatus (response);
@@ -745,7 +970,7 @@ namespace owncloudsharp
 					return new List<string> ();
 			}
 
-			return GetDataElements (response.Content);
+            return (List<string>)response.Result.Data;
 		}
 
 		/// <summary>
@@ -766,18 +991,30 @@ namespace owncloudsharp
 		/// <param name="username">Username.</param>
 		/// <param name="groupName">Group name.</param>
 		public bool RemoveUserFromSubAdminGroup(string username, string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.DELETE);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "users");
+            var request = rest.Request(urlSegments + String.Format("/{0}/subadmins", username));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "users") + "/{userid}/subadmins", Method.DELETE);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("userid", username);
-			request.AddParameter ("groupid", groupName);
+			request.AddUrlSegment ("userid", username);*/
+			
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { groupid = groupName });
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            //request.AddParameter ("groupid", groupName);
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -791,17 +1028,28 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if group was created, <c>false</c> otherwise.</returns>
 		/// <param name="groupName">name of group to be created.</param>
 		public bool CreateGroup(string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups"), Method.POST);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceCloud, "groups");
+            var request = rest.Request(urlSegments);
 
-			request.AddParameter ("groupid", groupName);
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups"), Method.POST);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { groupid = groupName });
+
+			//request.AddParameter ("groupid", groupName);
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -813,17 +1061,24 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if group was deleted, <c>false</c> otherwise.</returns>
 		/// <param name="groupName">Group name.</param>
 		public bool DeleteGroup(string groupName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "/{groupid}", Method.DELETE);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "groups");
+            var request = rest.Request(urlSegments + String.Format("/{0}", groupName));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "/{groupid}", Method.DELETE);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("groupid", groupName);
+			request.AddUrlSegment ("groupid", groupName);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -846,16 +1101,22 @@ namespace owncloudsharp
 		/// <param name="name">name of group to be searched for.</param>
 		public List<string> SearchGroups(string name)
         {
-            var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "?search={groupid}", Method.GET);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "groups");
+            var request = rest.Request(urlSegments + String.Format("?search={0}", name));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "groups") + "?search={groupid}", Method.GET);
             request.AddHeader("OCS-APIREQUEST", "true");
 
-            request.AddUrlSegment("groupid", name);
+            request.AddUrlSegment("groupid", name);*/
 
-            var response = rest.Execute(request).Result;
+            //var response = rest.Execute(request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
             CheckOcsStatus(response);
 
-            return GetDataElements(response.Content);
+            return (List<string>)response.Result.Data;
         }
         #endregion
 
@@ -865,21 +1126,28 @@ namespace owncloudsharp
         /// </summary>
         /// <returns>The config.</returns>
         public Config GetConfig() {
-			var request = new RestRequest(GetOcsPath("", "config"), Method.GET);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath("", "config");
+            var request = rest.Request(urlSegments);
 
-			var response = rest.Execute (request).Result;
+            /*var request = new RestRequest(GetOcsPath("", "config"), Method.GET);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            //var response = rest.Execute (request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
-
+            /*
 			Config cfg = new Config ();
 			cfg.Contact = GetFromData (response.Content, "contact");
 			cfg.Host = GetFromData (response.Content, "host");
 			cfg.Ssl  = GetFromData (response.Content, "ssl");
 			cfg.Version = GetFromData (response.Content, "version");
 			cfg.website = GetFromData (response.Content, "website");
+            */
 
-			return cfg;
+            return (Config)response.Result.Data;
 		}
 		#endregion
 
@@ -898,14 +1166,20 @@ namespace owncloudsharp
 					path += "/" + WebUtility.UrlEncode (key);
 			}
 
-			var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.GET);
-			request.AddHeader("OCS-APIREQUEST", "true");
-            
-			var response = rest.Execute (request).Result;
+            var urlSegments = GetOcsPath(ocsServiceData, path);
+            var request = rest.Request(urlSegments);
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.GET);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            //var response = rest.Execute (request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			return GetAttributeList (response.Content);
+            return (List<AppAttribute>)response.Result.Data;
 		}
 
 		/// <summary>
@@ -918,16 +1192,28 @@ namespace owncloudsharp
 		public bool SetAttribute(string app, string key, string value) {
 			var path = "setattribute" + "/" + app + "/" + WebUtility.UrlEncode (key);
 
-			var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.POST);
-			request.AddHeader("OCS-APIREQUEST", "true");
-			request.AddParameter ("value", value);
+            var urlSegments = GetOcsPath(ocsServiceData, path);
+            var request = rest.Request(urlSegments);
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+			/*var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.POST);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            List<Object> parameters = new List<object>();
+            parameters.Add(new { value = value });
+
+			//request.AddParameter ("value", value);
+
+			//var response = rest.Execute<OCS>(request).Result;
+			
+            request.SetQueryParams(parameters.ToArray());
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -942,15 +1228,22 @@ namespace owncloudsharp
 		public bool DeleteAttribute(string app, string key) {
 			var path = "deleteattribute" + "/" + app + "/" + WebUtility.UrlEncode (key);
 
-			var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.DELETE);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceData, path);
+            var request = rest.Request(urlSegments);
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            /*var request = new RestRequest(GetOcsPath(ocsServiceData, path), Method.DELETE);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            //var response = rest.Execute<OCS>(request).Result;
+
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -963,14 +1256,20 @@ namespace owncloudsharp
 		/// </summary>
 		/// <returns>a list of apps and their enabled state.</returns>
 		public List<string> GetApps() {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps"), Method.GET);
-			request.AddHeader("OCS-APIREQUEST", "true");
+            var urlSegments = GetOcsPath(ocsServiceCloud, "apps");
+            var request = rest.Request(urlSegments);
 
-			var response = rest.Execute (request).Result;
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps"), Method.GET);
+			request.AddHeader("OCS-APIREQUEST", "true");*/
+
+            //var response = rest.Execute (request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			return GetDataElements (response.Content);
+            return (List<string>)response.Result.Data;
 		}
 
 		/// <summary>
@@ -979,15 +1278,21 @@ namespace owncloudsharp
 		/// <returns>App information.</returns>
 		/// <param name="appName">App name.</param>
 		public AppInfo GetApp(string appName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps") + "/{appid}", Method.GET);
-			request.AddHeader("OCS-APIREQUEST", "true");
-			request.AddUrlSegment ("appid", appName);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "apps");
+            var request = rest.Request(urlSegments + String.Format("/{0}", appName));
 
-			var response = rest.Execute (request).Result;
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps") + "/{appid}", Method.GET);
+			request.AddHeader("OCS-APIREQUEST", "true");
+			request.AddUrlSegment ("appid", appName);*/
+
+            //var response = rest.Execute (request).Result;
+
+            var response = request.GetJsonAsync<OCS>();
+            response.Wait();
 
 			CheckOcsStatus (response);
 
-			return GetAppInfo (response.Content);
+            return (AppInfo)response.Result.Data;
 		}
 
 		/// <summary>
@@ -996,17 +1301,24 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if app was enabled, <c>false</c> otherwise.</returns>
 		/// <param name="appName">Name of app to be enabled.</param>
 		public bool EnableApp(string appName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps") + "/{appid}", Method.POST);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "apps");
+            var request = rest.Request(urlSegments + String.Format("/{0}", appName));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps") + "/{appid}", Method.POST);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("appid", appName);
+			request.AddUrlSegment ("appid", appName);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            //var response = rest.Execute<OCS>(request).Result;
+
+            var response = request.PostAsync(new StringContent("")).ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -1018,17 +1330,24 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if app was disabled, <c>false</c> otherwise.</returns>
 		/// <param name="appName">Name of app to be disabled.</param>
 		public bool DisableApp(string appName) {
-			var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps") + "/{appid}", Method.DELETE);
+            var urlSegments = GetOcsPath(ocsServiceCloud, "apps");
+            var request = rest.Request(urlSegments + String.Format("/{0}", appName));
+
+            /*var request = new RestRequest(GetOcsPath(ocsServiceCloud, "apps") + "/{appid}", Method.DELETE);
 			request.AddHeader("OCS-APIREQUEST", "true");
 
-			request.AddUrlSegment ("appid", appName);
+			request.AddUrlSegment ("appid", appName);*/
 
-			var response = rest.Execute<OCS>(request).Result;
-			if (response.Data != null) {
-				if (response.Data.Meta.StatusCode == 100)
+            //var response = rest.Execute<OCS>(request).Result;
+
+            var response = request.DeleteAsync().ReceiveJson<OCS>();
+            response.Wait();
+
+            if (response.Result != null) {
+                if (response.Result.Meta.StatusCode == 100)
 					return true;
 				else
-					throw new OCSResponseError (response.Data.Meta.Message, response.Data.Meta.StatusCode + "");
+                    throw new OCSResponseError (response.Result.Meta.Message, response.Result.Meta.StatusCode + "");
 			}
 
 			return false;
@@ -1252,15 +1571,15 @@ namespace owncloudsharp
 		/// Checks the validity of the OCS Request. If invalid a exception is thrown.
 		/// </summary>
 		/// <param name="response">OCS Response.</param>
-		private void CheckOcsStatus(IRestResponse response) {
-            if (response.Content == null)
-                throw new ResponseError(response.StatusDescription);
+        private void CheckOcsStatus(Task<OCS> response) {
+            if (response.Result == null)
+                throw new ResponseError(response.Result.Meta.Message);
 			else {
-				var ocsStatus = GetFromMeta (response.Content, "statuscode");
+                var ocsStatus = response.Result.Meta.Status;
 				if (ocsStatus == null)
 					throw new ResponseError ("Empty response");
 				if (!ocsStatus.Equals ("100"))
-					throw new OCSResponseError (GetFromMeta (response.Content, "message"), ocsStatus);
+                    throw new OCSResponseError (GetFromMeta (response.Result.Meta.Message, ocsStatus));
 			}
 		}
 

@@ -10,7 +10,7 @@ namespace ocsharpdemo
 	{
 		public static void Main (string[] args)
 		{
-            var c = new Client ("https://octest.myvpx.de/owncloud10", "demo", "demo");
+            var c = new Client ("https://octest.myvpx.de/owncloud10", "admin", "OcTest2017!");
             /*Console.Write ("Testing DAV:List ... ");
 			var list = c.List ("/");
 			Console.WriteLine ("Received " + list.Count + " item(s)");
@@ -40,22 +40,29 @@ namespace ocsharpdemo
 				} else
 					continue;
 			}*/
-            Console.Write ("Testing OCS:ListOpenRemoteShare ... ");
+            /*Console.Write ("Testing OCS:ListOpenRemoteShare ... ");
             if (!c.Exists("/demo"))
                 c.CreateDirectory("/demo");
+            
+            string user1 = "usrA3";
+            string user2 = "usrA4";
+            string group = "grpA1";
 
-            var a = c.CreateUser("test", "D8!di7As1");
-            a = c.CreateUser("demo001", "D8!di7As0");
-            a = c.CreateGroup("Test123");
-            a = c.AddUserToGroup("test", "Test123");
+            var a = c.CreateUser(user1, "D8!di7As1");
+            a = c.CreateUser(user2, "D8!di7As0");
+            a = c.CreateGroup(group);
+            a = c.AddUserToGroup(user1, group);
 
             var ps = c.ShareWithLink("/demo", Convert.ToInt32(OcsPermission.All), "demo", OcsBoolParam.True);
-            var us = c.ShareWithUser("/demo", "test", Convert.ToInt32(OcsPermission.All), OcsBoolParam.False);
-            var gs = c.ShareWithGroup("/demo", "Test123", Convert.ToInt32(OcsPermission.All));
+            var us = c.ShareWithUser("/demo", user1, Convert.ToInt32(OcsPermission.All), OcsBoolParam.False);
+            var gs = c.ShareWithGroup("/demo", group, Convert.ToInt32(OcsPermission.All));
             var result = c.IsShared("/demo") ? "is shared" : "is not shared";
 			Console.WriteLine ("/demo " + result + ".");
-            var r1 = c.SetUserAttribute("demo001", OCSUserAttributeKey.Password , "D8!di7Ab9"); // "D8!di7As1"
-            Console.WriteLine(r1);
+            var r1 = c.SetUserAttribute(user2, OCSUserAttributeKey.Password , "D8!di7Ab9"); // "D8!di7As1"
+            Console.WriteLine(r1);*/
+
+            var b = c.SetUserAttribute("admin", OCSUserAttributeKey.EMail, "info@bnotech.com");
+            var a = c.GetUserAttributes("admin");
             Console.ReadLine();
         }
     }
