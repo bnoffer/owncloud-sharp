@@ -30,6 +30,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="WebClient">
+      <HintPath>..\packages\bnoffer.webclient.1.0.4\lib\portable45-net45+win8+wpa81\WebClient.dll</HintPath>
+    </Reference>
+    <Reference Include="webdavnet">
+      <HintPath>..\packages\bnoffer.webdavnet.1.0.4\lib\portable45-net45+win8+wpa81\webdavnet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -41,5 +47,8 @@
       <Project>{E2015378-CEFF-4913-A4A6-48706F2625D4}</Project>
       <Name>owncloud-sharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
