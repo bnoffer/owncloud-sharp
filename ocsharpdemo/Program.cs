@@ -10,7 +10,7 @@ namespace ocsharpdemo
 	{
 		public static void Main (string[] args)
 		{
-            var c = new Client ("https://octest.myvpx.de/owncloud10", "admin", "OcTest2017!");
+            var c = new Client ("https://octest.myvpx.de/owncloud10", "admin", "pw");
             /*Console.Write ("Testing DAV:List ... ");
 			var list = c.List ("/");
 			Console.WriteLine ("Received " + list.Count + " item(s)");
