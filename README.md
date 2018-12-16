@@ -31,7 +31,7 @@ API reference
 
 A up-to-date API reference generated using Doxygen is available in the */doc* folder.
 
-You can view the API reference online [here](https://rawgit.com/bnoffer/owncloud-sharp/master/doc/html/index.html) .
+You can view the API reference online [here](https://combinatronics.com/bnoffer/owncloud-sharp/master/doc/html/index.html) .
 
 Sample Code
 ===========
