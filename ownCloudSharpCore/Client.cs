@@ -22,9 +22,13 @@ namespace owncloudsharp
 		/// </summary>
 		private WebDavManager _dav;
 		/// <summary>
-        /// REST API Client for OCS API
+        /// REST API Client for OCS Share API
         /// </summary>
-		private OcsApiComponent _ocs;
+		private OcsShareApiComponent _ocsShare;
+		/// <summary>
+		/// REST API Client for OCS Provisioning API
+		/// </summary>
+		private OcsProvisioningApiComponent _ocsProvisioning;
 		/// <summary>
 		/// ownCloud Base URL.
 		/// </summary>
@@ -61,7 +65,8 @@ namespace owncloudsharp
 			this._url = url;
 
 			// REST Client initialization
-			this._ocs = new OcsApiComponent(this._url, user_id, password);
+			this._ocsShare = new OcsShareApiComponent(this._url, user_id, password);
+			this._ocsProvisioning = new OcsProvisioningApiComponent(this._url, user_id, password);
 
 			// WebDavNet initialisation
 			this._dav = new WebDavManager();
