@@ -87,7 +87,13 @@ namespace owncloudsharp.Abstractions
         }
 
         #endregion
-        
+
+        public string FormatBasicAuthHeader(string username, string password)
+        {
+            var token = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+            return $"Basic {token}";
+        }
+
         protected T GetRestService<T>(string baseUrl)
         {
             var httpClient = new HttpClient(new HttpLoggingHandler()) { BaseAddress = new Uri(baseUrl) };

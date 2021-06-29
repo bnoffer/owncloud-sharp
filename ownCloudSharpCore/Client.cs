@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 using WebDav;
 
+using owncloudsharp.Components;
 using owncloudsharp.Models;
+using owncloudsharp.Schemas;
 
 namespace owncloudsharp
 {
@@ -18,19 +20,19 @@ namespace owncloudsharp
 		/// <summary>
 		/// WebDavNet instance.
 		/// </summary>
-		private WebDavManager dav;
+		private WebDavManager _dav;
+		/// <summary>
+        /// REST API Client for OCS API
+        /// </summary>
+		private OcsApiComponent _ocs;
 		/// <summary>
 		/// ownCloud Base URL.
 		/// </summary>
-		private string url;
+		private string _url;
 		/// <summary>
 		/// ownCloud WebDAV access path.
 		/// </summary>
-		private const string davpath = "remote.php/webdav";
-		/// <summary>
-		/// ownCloud OCS API access path.
-		/// </summary>
-		private const string ocspath = "ocs/v1.php/";
+		private const string _davpath = "remote.php/webdav";
 		/// <summary>
 		/// OCS Share API path.
 		/// </summary>
@@ -56,26 +58,16 @@ namespace owncloudsharp
 				url = url.TrimEnd(new[] { '/' });
 
 			// Store ownCloud base URL
-			this.url = url;
+			this._url = url;
 
-			// RestSharp initialisation
-			//this.rest = new FlurlClient(new Uri(url + "/" + ocspath).ToString())
-			//	.WithBasicAuth(user_id, password)
-			//	.WithHeader("OCS-APIREQUEST", true)
-			//	.AllowAnyHttpStatus();
-			//this.rest = new RestClient();
-			// Set the base path as the OCS API root
-			//this.baseUrl = new Uri (url + "/" + ocspath).ToString();
-			// Configure RestSharp for BasicAuth
-			//this.rest.Authenticator = new HttpBasicAuthenticator (user_id, password);
-			//this.rest.AddDefaultParameter("format", "xml");
-
+			// REST Client initialization
+			this._ocs = new OcsApiComponent(this._url, user_id, password);
 
 			// WebDavNet initialisation
-			this.dav = new WebDavManager();
+			this._dav = new WebDavManager();
 			// Configure WebDavNet for BasicAuth
-			this.dav.Credential = new WebDavCredential(user_id, password);
-			this.dav.Credential.AuthenticationType = AuthType.Basic;
+			this._dav.Credential = new WebDavCredential(user_id, password);
+			this._dav.Credential.AuthenticationType = AuthType.Basic;
 		}
 		#endregion
 
@@ -88,7 +80,7 @@ namespace owncloudsharp
 		public List<ResourceInfo> List(string path)
 		{
 			List<ResourceInfo> resources = new List<ResourceInfo>();
-			var result = this.dav.List(GetDavUri(path));
+			var result = this._dav.List(GetDavUri(path));
 
 			foreach (var item in result)
 			{
@@ -107,7 +99,7 @@ namespace owncloudsharp
 				res.QuotaAvailable = item.QutoaAvailable;
 				res.QuotaUsed = item.QuotaUsed;
 				res.Size = item.Size;
-				res.Path = item.Uri.AbsolutePath.Replace("/" + davpath, "");
+				res.Path = item.Uri.AbsolutePath.Replace("/" + _davpath, "");
 				if (!res.ContentType.Equals("dav/directory")) // if resource not a directory, remove the file name from remote path.
 					res.Path = res.Path.Replace("/" + res.Name, "");
 				resources.Add(res);
@@ -123,7 +115,7 @@ namespace owncloudsharp
 		/// <param name="path">remote Path.</param>
 		public ResourceInfo GetResourceInfo(string path)
 		{
-			var result = this.dav.List(GetDavUri(path));
+			var result = this._dav.List(GetDavUri(path));
 
 			if (result.Count > 0)
 			{
@@ -140,7 +132,7 @@ namespace owncloudsharp
 				res.QuotaAvailable = item.QutoaAvailable;
 				res.QuotaUsed = item.QuotaUsed;
 				res.Size = item.Size;
-				res.Path = item.Uri.AbsolutePath.Replace("/" + davpath, "");
+				res.Path = item.Uri.AbsolutePath.Replace("/" + _davpath, "");
 				if (!res.ContentType.Equals("dav/directory")) // if resource not a directory, remove the file name from remote path.
 					res.Path = res.Path.Replace("/" + res.Name, "");
 				return res;
@@ -156,7 +148,7 @@ namespace owncloudsharp
 		/// <returns>File contents.</returns>
 		public Stream Download(string path)
 		{
-			return dav.DownloadFile(GetDavUri(path));
+			return _dav.DownloadFile(GetDavUri(path));
 		}
 
 		/// <summary>
@@ -168,7 +160,7 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if upload successful, <c>false</c> otherwise.</returns>
 		public bool Upload(string path, Stream data, string contentType)
 		{
-			return dav.UploadFile(GetDavUri(path), data, contentType);
+			return _dav.UploadFile(GetDavUri(path), data, contentType);
 		}
 
 		/// <summary>
@@ -178,7 +170,7 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if remote path exists, <c>false</c> otherwise.</returns>
 		public bool Exists(string path)
 		{
-			return dav.Exists(GetDavUri(path));
+			return _dav.Exists(GetDavUri(path));
 		}
 
 		/// <summary>
@@ -188,7 +180,7 @@ namespace owncloudsharp
 		/// <param name="path">remote Path.</param>
 		public bool CreateDirectory(string path)
 		{
-			return dav.CreateDirectory(GetDavUri(path));
+			return _dav.CreateDirectory(GetDavUri(path));
 		}
 
 		/// <summary>
@@ -198,7 +190,7 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if resource was deleted, <c>false</c> otherwise.</returns>
 		public bool Delete(string path)
 		{
-			return dav.Delete(GetDavUri(path));
+			return _dav.Delete(GetDavUri(path));
 		}
 
 		/// <summary>
@@ -209,7 +201,7 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if resource was copied, <c>false</c> otherwise.</returns>
 		public bool Copy(string source, string destination)
 		{
-			return dav.Copy(GetDavUri(source), GetDavUri(destination));
+			return _dav.Copy(GetDavUri(source), GetDavUri(destination));
 		}
 
 		/// <summary>
@@ -220,7 +212,7 @@ namespace owncloudsharp
 		/// <returns><c>true</c>, if resource was moved, <c>false</c> otherwise.</returns>
 		public bool Move(string source, string destination)
 		{
-			return dav.Move(GetDavUri(source), GetDavUri(destination));
+			return _dav.Move(GetDavUri(source), GetDavUri(destination));
 		}
 
 		/// <summary>
@@ -231,7 +223,7 @@ namespace owncloudsharp
 		public Stream DownloadDirectoryAsZip(string path)
 		{
 			var client = new WebClient.WebClient();
-			client.Credentials = dav.Credential;
+			client.Credentials = _dav.Credential;
 			//client.Proxy = dav.Proxy;
 			client.Timeout = new TimeSpan(0, 5, 0);
 
@@ -248,7 +240,7 @@ namespace owncloudsharp
 		/// <param name="path">remote Path.</param>
 		private Uri GetUri(string path)
 		{
-			return new Uri(this.url + path);
+			return new Uri(this._url + path);
 		}
 
 		/// <summary>
@@ -258,7 +250,7 @@ namespace owncloudsharp
 		/// <param name="path">remote Path.</param>
 		private Uri GetDavUri(string path)
 		{
-			return new Uri(this.url + "/" + davpath + path);
+			return new Uri(this._url + "/" + _davpath + path);
 		}
 
 		/// <summary>

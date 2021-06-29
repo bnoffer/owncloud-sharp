@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata minClientVersion="">
-    <id>bnoffer.webclient</id>
-    <version>2.0.0</version>
+    <id>bnoffer.owncloudsharp</id>
+    <version>1.0.0</version>
     <title></title>
     <authors>bnoffer</authors>
     <owners>bnoffer</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Web client is a wrapper around System.Net.Http.HttpClient</description>
+    <description>A C# client library for ownCloud 8.2+</description>
     <summary></summary>
     <releaseNotes></releaseNotes>
     <copyright>Bastian Noffer</copyright>
@@ -15,6 +15,8 @@
     <tags></tags>
     <dependencies>
       <group targetFramework=".NETStandard2.1">
+        <dependency id="Polly" version="7.2.2"/>
+        <dependency id="Refit" version="6.0.38"/>
         <dependency id="System.Net.Http" version="4.3.4"/>
       </group>
     </dependencies>
