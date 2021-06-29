@@ -49,14 +49,14 @@ namespace owncloudsharp.Components
             }
         }
 
-        private async Task<(HttpStatusCode Code, OcsResponseSchema Result)> AllSharesGET(string authentication, string path = null, bool? reshares = null, string shared_with_me = null, string state = null, bool? subfiles = null)
+        private async Task<(HttpStatusCode Code, OcsShareResponseSchema Result)> AllSharesGET(string authentication, string path = null, bool? reshares = null, string shared_with_me = null, string state = null, bool? subfiles = null)
         {
             var tag = $"{this}.AllSharesGET";
             try
             {
                 var apiResponse = RestService.For<IOcsApi>(_baseUrl);
 
-                PolicyResult<ApiResponse<OcsResponseSchema>> pollyResult = null;
+                PolicyResult<ApiResponse<OcsShareResponseSchema>> pollyResult = null;
 
                 pollyResult = await Policy.ExecuteAndCaptureAsync(async () => await apiResponse.GetAllShares(authentication, path, reshares, shared_with_me, state, subfiles));
 

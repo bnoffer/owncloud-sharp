@@ -90,7 +90,7 @@ namespace owncloudsharp.Interfaces
 
         [Post("/ocs/v1.php/cloud/users?format=json")]
         Task<ApiResponse<OcsShareResponseSchema>> CreateUser([Header("Authorization")] string authorization,
-                                                             [Body(BodySerializationMethod.Serialized)] CreateUserRequest body);
+                                                             [Body(BodySerializationMethod.Serialized)] OcsCreateUserRequest body);
 
         [Get("/ocs/v1.php/cloud/users?format=json")]
         Task<ApiResponse<OcsShareResponseSchema>> GetUsers([Header("Authorization")] string authorization,
@@ -105,7 +105,7 @@ namespace owncloudsharp.Interfaces
         [Put("/ocs/v1.php/cloud/users/{userid}?format=json")]
         Task<ApiResponse<OcsShareResponseSchema>> UpdateUser([Header("Authorization")] string authorization,
                                                              [AliasAs("userid")] string userid,
-                                                             [Body(BodySerializationMethod.Serialized)] UpdateUserRequest body);
+                                                             [Body(BodySerializationMethod.Serialized)] OcsUpdateUserRequest body);
 
         [Put("/ocs/v1.php/cloud/users/{userid}/enable?format=json")]
         Task<ApiResponse<OcsShareResponseSchema>> EnableUser([Header("Authorization")] string authorization,

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace owncloudsharp.Schemas
 {
-    public class CreateUserRequest
+    public class OcsCreateUserRequest
     {
         public string userid { get; set; }
         public string password { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace owncloudsharp.Schemas
 {
-    public class UpdateUserRequest
+    public class OcsUpdateUserRequest
     {
         public string key { get; set; }
         public string value { get; set; }
