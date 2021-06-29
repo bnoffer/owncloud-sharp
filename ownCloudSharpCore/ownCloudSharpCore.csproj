@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ReleaseVersion>0.1.0</ReleaseVersion>
+    <RootNamespace>owncloudsharp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="System.Net.Http" />
+    <None Remove="Polly" />
+    <None Remove="Refit" />
+    <None Remove="Abstractions\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Logging\" />
+    <None Remove="Models\" />
+    <None Remove="Schemas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="Polly" Version="7.2.2" />
+    <PackageReference Include="Refit" Version="6.0.38" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\webclient\WebClientCore\WebClientCore.csproj" />
+    <ProjectReference Include="..\..\webdavnet\webdavnetCore\webdavnetCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Abstractions\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Logging\" />
+    <Folder Include="Models\" />
+    <Folder Include="Schemas\" />
+  </ItemGroup>
+</Project>

@@ -44,3 +44,6 @@ Binaries/RestSharp.xml
 Binaries/RestSharp.Build.dll
 Binaries/RestSharp.Build.pdb
 cov-int
+
+#Visual Studio
+.vs/

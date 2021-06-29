@@ -43,7 +43,13 @@ Project("{5DD5E4FA-CB73-4610-85AB-557B54E96AA9}") = "bnoffer.owncloudsharp", "Nu
 EndProject
 Project("{5DD5E4FA-CB73-4610-85AB-557B54E96AA9}") = "bnoffer.webdavnet", "webdavnet\Nuget\bnoffer.webdavnet\bnoffer.webdavnet.nuproj", "{F70E8C75-3D67-42D6-8DBB-1D5AA5EBBEF9}"
 EndProject
-Project("{5DD5E4FA-CB73-4610-85AB-557B54E96AA9}") = "bnoffer.webclient", "webdavnet\WebClient\Nuget\bnoffer.webclient\bnoffer.webclient.nuproj", "{B31ED2F7-8112-4018-B78E-E409A763D8EE}"
+Project("{5DD5E4FA-CB73-4610-85AB-557B54E96AA9}") = "bnoffer.webclient", "webdavnet\WebClient\Nuget\bnoffer.webclient\bnoffer.webclient.nuproj", "{02F498EF-52BB-4F0A-BF26-1B5ED191CC71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ownCloudSharpCore", "ownCloudSharpCore\ownCloudSharpCore.csproj", "{903191D0-599C-4FFB-870C-5C430D0E5A12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClientCore", "..\webclient\WebClientCore\WebClientCore.csproj", "{FCE8374F-103E-4C15-85A9-BD0E0EFDE1C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webdavnetCore", "..\webdavnet\webdavnetCore\webdavnetCore.csproj", "{FF9E76BE-EDCB-427A-AEAC-EE47DE7CC168}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +85,22 @@ Global
 		{F70E8C75-3D67-42D6-8DBB-1D5AA5EBBEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F70E8C75-3D67-42D6-8DBB-1D5AA5EBBEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F70E8C75-3D67-42D6-8DBB-1D5AA5EBBEF9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B31ED2F7-8112-4018-B78E-E409A763D8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B31ED2F7-8112-4018-B78E-E409A763D8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B31ED2F7-8112-4018-B78E-E409A763D8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B31ED2F7-8112-4018-B78E-E409A763D8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F498EF-52BB-4F0A-BF26-1B5ED191CC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F498EF-52BB-4F0A-BF26-1B5ED191CC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F498EF-52BB-4F0A-BF26-1B5ED191CC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F498EF-52BB-4F0A-BF26-1B5ED191CC71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903191D0-599C-4FFB-870C-5C430D0E5A12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903191D0-599C-4FFB-870C-5C430D0E5A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903191D0-599C-4FFB-870C-5C430D0E5A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903191D0-599C-4FFB-870C-5C430D0E5A12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCE8374F-103E-4C15-85A9-BD0E0EFDE1C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE8374F-103E-4C15-85A9-BD0E0EFDE1C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE8374F-103E-4C15-85A9-BD0E0EFDE1C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE8374F-103E-4C15-85A9-BD0E0EFDE1C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9E76BE-EDCB-427A-AEAC-EE47DE7CC168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9E76BE-EDCB-427A-AEAC-EE47DE7CC168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9E76BE-EDCB-427A-AEAC-EE47DE7CC168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9E76BE-EDCB-427A-AEAC-EE47DE7CC168}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,7 +113,7 @@ Global
 		{16BC7E5C-E7F7-4790-BD12-52E51C371993} = {272AFCD1-32AC-4F20-A2CC-11C2D4D8FC8F}
 		{5AC2BB1A-707B-4CF8-ACC5-E81E7F6FE46D} = {5A15BF0C-B3D3-4E68-BBBE-3BAA661ED21C}
 		{F70E8C75-3D67-42D6-8DBB-1D5AA5EBBEF9} = {5A15BF0C-B3D3-4E68-BBBE-3BAA661ED21C}
-		{B31ED2F7-8112-4018-B78E-E409A763D8EE} = {5A15BF0C-B3D3-4E68-BBBE-3BAA661ED21C}
+		{02F498EF-52BB-4F0A-BF26-1B5ED191CC71} = {5A15BF0C-B3D3-4E68-BBBE-3BAA661ED21C}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		description = A portable class library to interact with ownCloud servers through WebDAV and the ownCloud OCS API.
