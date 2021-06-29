@@ -183,6 +183,26 @@ namespace owncloudsharp.Interfaces
 
         #endregion
 
+        #region Apps
+
+        [Get("/ocs/v1.php/cloud/apps?format=json")]
+        Task<ApiResponse<OcsShareResponseSchema>> GetApps([Header("Authorization")] string authorization,
+                                                          string filter);
+
+        [Get("/ocs/v1.php/cloud/apps/{appid}?format=json")]
+        Task<ApiResponse<OcsShareResponseSchema>> GetApp([Header("Authorization")] string authorization,
+                                                         [AliasAs("appid")] string appid);
+
+        [Post("/ocs/v1.php/cloud/apps/{appid}?format=json")]
+        Task<ApiResponse<OcsShareResponseSchema>> EnableApp([Header("Authorization")] string authorization,
+                                                            [AliasAs("appid")] string appid);
+
+        [Delete("/ocs/v1.php/cloud/apps/{appid}?format=json")]
+        Task<ApiResponse<OcsShareResponseSchema>> DisableApp([Header("Authorization")] string authorization,
+                                                             [AliasAs("appid")] string appid);
+
+        #endregion
+
         #endregion
     }
 }
