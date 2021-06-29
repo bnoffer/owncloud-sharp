@@ -3,15 +3,6 @@ using System.Collections.Generic;
 
 namespace owncloudsharp.Schemas
 {
-    public class Meta
-    {
-        public string status { get; set; }
-        public int statuscode { get; set; }
-        public object message { get; set; }
-        public string totalitems { get; set; }
-        public string itemsperpage { get; set; }
-    }
-
     public class OwnCloud
     {
         public bool read { get; set; }
@@ -69,14 +60,14 @@ namespace owncloudsharp.Schemas
         public Context context { get; set; }
     }
 
-    public class Ocs
+    public class OcsShareResponse
     {
-        public Meta meta { get; set; }
+        public OcsMetaResponseScheme meta { get; set; }
         public List<Datum> data { get; set; }
     }
 
-    public class OcsResponseSchema
+    public class OcsShareResponseSchema
     {
-        public Ocs ocs { get; set; }
+        public OcsShareResponse ocs { get; set; }
     }
 }
