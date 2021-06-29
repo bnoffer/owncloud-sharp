@@ -64,10 +64,10 @@ namespace owncloudsharp.Components
                 {
                     var result = pollyResult.Result;
 
-                    return (HttpStatusCode.OK, result.Content);
+                    return (result.StatusCode, result.Content);
                 }
 
-                return (HttpStatusCode.BadRequest, null);
+                return (pollyResult.Result.StatusCode, null);
             }
             catch (UriFormatException ex)
             {
