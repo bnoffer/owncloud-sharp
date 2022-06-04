@@ -6,6 +6,10 @@ A portable class library to interact with ownCloud servers through WebDAV and th
 Project status
 ==============
 
+**THIS PROJECT IS NO LONGER MAINTAINED**
+
+Check out [CompuMaster.OpenCollaborationService](https://github.com/CompuMasterGmbH/CompuMaster.OpenCollaborationService) by [@CompuMasterGmbH](https://github.com/CompuMasterGmbH) as a up-to-date replacement.
+
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/6488/badge.svg)](https://scan.coverity.com/projects/bnoffer-owncloud-sharp)
 
 Current code base has been tested to work on:
